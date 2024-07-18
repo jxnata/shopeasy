@@ -1,0 +1,10 @@
+{
+	"translation": {
+		"intro": {
+			"welcome": "welcome!"
+		},
+		"home": {
+			"hello": "hello world"
+		}
+	}
+}
