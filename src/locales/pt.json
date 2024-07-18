@@ -1,0 +1,17 @@
+{
+	"translation": {
+		"intro": {
+			"description": "Desfrute de todos os recursos do ShopEasy e eleve sua experiência de compras ao próximo nível!",
+			"premium_features_title": "Recursos Premium:",
+			"feature1": "🔔 Alertas para suas compras",
+			"feature2": "🤑 Compare preços e economize",
+			"feature3": "📝 Compartilhe suas listas",
+			"feature4": "💸 Relatórios de gastos e economia",
+			"feature5": "👑 Acesso prioritário a novidades",
+			"subscribe_button": "Assinar agora"
+		},
+		"home": {
+			"hello": "hello world"
+		}
+	}
+}

@@ -1,7 +1,14 @@
 {
 	"translation": {
 		"intro": {
-			"welcome": "welcome!"
+			"description": "Enjoy all the features of ShopEasy and elevate your shopping experience to the next level!",
+			"premium_features_title": "Premium Features:",
+			"feature1": "🔔 Alerts for your purchases",
+			"feature2": "🤑 Compare prices and save",
+			"feature3": "📝 Share your lists",
+			"feature4": "💸 Spending and savings reports",
+			"feature5": "👑 Priority access to new features",
+			"subscribe_button": "Subscribe now"
 		},
 		"home": {
 			"hello": "hello world"

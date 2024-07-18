@@ -1,0 +1,17 @@
+{
+	"translation": {
+		"intro": {
+			"description": "¡Disfruta de todas las funciones de ShopEasy y eleva tu experiencia de compra al siguiente nivel!",
+			"premium_features_title": "Funciones Premium:",
+			"feature1": "🔔 Alertas para tus compras",
+			"feature2": "🤑 Compara precios y ahorra",
+			"feature3": "📝 Comparte tus listas",
+			"feature4": "💸 Informes de gastos y ahorros",
+			"feature5": "👑 Acceso prioritario a nuevas funciones",
+			"subscribe_button": "Suscribirse ahora"
+		},
+		"home": {
+			"hello": "hello world"
+		}
+	}
+}

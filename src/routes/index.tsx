@@ -10,7 +10,7 @@ import Intro from '../views/intro'
 const Stack = createNativeStackNavigator<StackParamList>()
 
 const Routes = () => {
-	const initialized = true
+	const initialized = false
 
 	if (!initialized) {
 		return (

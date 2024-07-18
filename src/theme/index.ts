@@ -1,28 +1,31 @@
 const any = {
-	primary: '#F7931A',
+	primary: '#2DD4BF',
+	focus: '#14B8A6',
+	secondary: '#EC4899',
+	secondaryFocus: '#DB2777',
 }
 
 export const light = {
-	background: '#FFFFFF',
-	foreground: '#000000',
-	text: '#5D5D5B',
-	boxBg: '#EBF0F0',
+	background: '#F3F4F6',
+	foreground: '#1F2937',
+	boxBg: '#E5E7EB',
 	dangerText: '#932338',
 	dangerBg: '#fad7dd',
 	successText: '#00864e',
 	successBg: '#ccf6e4',
 	...any,
+	logoText: require('../assets/images/logo-text-light.png'),
 }
 
 export const dark = {
-	background: '#000000',
-	foreground: '#FFFFFF',
-	text: '#adadad',
-	boxBg: '#171818',
+	background: '#374151',
+	foreground: '#F9FAFB',
+	boxBg: '#313a48',
 	dangerText: '#ef7f93',
 	dangerBg: '#2e0b11',
 	successText: '#5ce2aa',
 	successBg: '#002a18',
+	logoText: require('../assets/images/logo-text-dark.png'),
 	...any,
 }
 
