@@ -1,12 +1,45 @@
 import styled from 'styled-components/native'
-import { Font } from '../../theme/global'
+import { Button, Font } from '../../theme/global'
 
-export const Content = styled.View`
+export const Content = styled.SafeAreaView`
+	flex: 1;
+	background-color: ${props => props.theme.background};
+	padding: 10px;
+`
+export const Header = styled.View`
+	flex-direction: row;
+	width: 100%;
+	padding: 8px 12px;
+	align-items: center;
+	justify-content: space-between;
+`
+export const Body = styled.View`
+	flex: 1;
+`
+export const ListContainer = styled.ScrollView`
+	flex: 1;
+	margin-top: 12px;
+`
+export const Empty = styled.View`
 	flex: 1;
 	align-items: center;
 	justify-content: center;
-	background-color: ${props => props.theme.background};
-	padding: 10px;
+	gap: 8px;
+`
+export const CreateButton = styled(Button)`
+	width: auto;
+	padding: 4px 16px;
+`
+export const Avatar = styled.Image`
+	width: 32px;
+	height: 32px;
+	border-radius: 32px;
+	background: ${props => props.theme.boxBg};
+	border: solid 3px ${props => props.theme.boxBg};
+`
+export const Title = styled(Font)`
+	font-size: 24px;
+	font-weight: bold;
 `
 export const Text = styled(Font)`
 	font-size: 18px;

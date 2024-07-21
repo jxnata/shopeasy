@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { StatusBar, useColorScheme } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { SettingsProvider } from './src/contexts'
 import Toast from 'react-native-toast-message'
 import { ThemeProvider } from 'styled-components'
-
 import { SWRConfig } from 'swr'
 import { cacheProvider, populateCache } from './src/database/cache/provider'
 import Routes from './src/routes'
@@ -14,9 +14,7 @@ function App(): React.JSX.Element {
 
 	useEffect(populateCache, [])
 
-	if (!scheme) {
-		return <></>
-	}
+	if (!scheme) return <></>
 
 	const colors = theme[scheme]
 
@@ -28,7 +26,9 @@ function App(): React.JSX.Element {
 			/>
 			<ThemeProvider theme={theme[scheme]}>
 				<SWRConfig value={{ provider: cacheProvider }}>
-					<Routes />
+					<SettingsProvider>
+						<Routes />
+					</SettingsProvider>
 				</SWRConfig>
 			</ThemeProvider>
 			<Toast position='bottom' />

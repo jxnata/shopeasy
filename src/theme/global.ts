@@ -17,6 +17,8 @@ export const Button = styled.TouchableOpacity`
     border-radius: 8px;
     align-items: center;
     justify-content: center;
+	border-bottom-width: 3px;
+	border-bottom-color: ${props => props.theme.focus};
 `
 export const Label = styled(Font)`
 	font-size: 16px;

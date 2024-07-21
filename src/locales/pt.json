@@ -11,7 +11,9 @@
 			"subscribe_button": "Assinar agora"
 		},
 		"home": {
-			"hello": "hello world"
+			"title": "Suas listas",
+			"no_lists": "Nenhuma lista criada",
+			"create_button": "Criar agora"
 		}
 	}
 }

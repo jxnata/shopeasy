@@ -6,11 +6,12 @@ import { populateCache } from '../database/cache/provider'
 import { StackParamList } from '../types/navigation/stack'
 import Home from '../views/home'
 import Intro from '../views/intro'
+import { useSettings } from '../contexts'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
 const Routes = () => {
-	const initialized = false
+	const { initialized } = useSettings()
 
 	if (!initialized) {
 		return (

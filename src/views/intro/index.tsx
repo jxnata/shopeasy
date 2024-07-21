@@ -4,9 +4,14 @@ import { useTranslation } from 'react-i18next'
 import { Button, Container, Label } from '../../theme/global'
 import * as S from './styles'
 import { Props } from './types'
+import { settings } from '../../database'
 
 function Intro({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'intro' })
+
+	const onClose = () => {
+		settings.set('initialized', true)
+	}
 
 	return (
 		<Container>
@@ -30,7 +35,7 @@ function Intro({ navigation }: Props) {
 						</S.FeatureList>
 					</S.Body>
 
-					<S.CloseButton>
+					<S.CloseButton onPress={onClose}>
 						<Label>✕</Label>
 					</S.CloseButton>
 					<Button>{<Label>{t('subscribe_button')}</Label>}</Button>
