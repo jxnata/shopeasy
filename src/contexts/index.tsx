@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
-import { settings } from '../database'
 import { useMMKVListener } from 'react-native-mmkv'
+
+import { settings } from '../database'
 
 type Settings = {
 	initialized: boolean

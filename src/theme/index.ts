@@ -8,6 +8,7 @@ const any = {
 export const light = {
 	background: '#F3F4F6',
 	foreground: '#1F2937',
+	base: '#1F293750',
 	boxBg: '#E5E7EB',
 	dangerText: '#932338',
 	dangerBg: '#fad7dd',
@@ -20,6 +21,7 @@ export const light = {
 export const dark = {
 	background: '#374151',
 	foreground: '#F9FAFB',
+	base: '#F9FAFB50',
 	boxBg: '#313a48',
 	dangerText: '#ef7f93',
 	dangerBg: '#2e0b11',

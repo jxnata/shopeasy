@@ -1,14 +1,15 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import { getLocales } from 'react-native-localize'
+
 import en from './en.json'
 import es from './es.json'
 import pt from './pt.json'
-import { getLocales } from "react-native-localize"
 
 const resources = {
-	en: en,
-	es: es,
-	pt: pt,
+	en,
+	es,
+	pt,
 }
 
 const locale = getLocales()[0].languageCode

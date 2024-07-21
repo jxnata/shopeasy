@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { StatusBar, useColorScheme } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { SettingsProvider } from './src/contexts'
 import Toast from 'react-native-toast-message'
 import { ThemeProvider } from 'styled-components'
 import { SWRConfig } from 'swr'
+
+import { SettingsProvider } from './src/contexts'
 import { cacheProvider, populateCache } from './src/database/cache/provider'
 import Routes from './src/routes'
 import theme from './src/theme'

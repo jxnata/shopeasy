@@ -12,13 +12,15 @@ export const Font = styled.Text`
 `
 export const Button = styled.TouchableOpacity`
 	background-color: ${props => props.theme.primary};
-    width: 100%;
-    height: 56px;
-    border-radius: 8px;
-    align-items: center;
-    justify-content: center;
+	width: 100%;
+	height: 56px;
+	border-radius: 8px;
+	align-items: center;
+	justify-content: center;
 	border-bottom-width: 3px;
 	border-bottom-color: ${props => props.theme.focus};
+	flex-direction: row;
+	gap: 4px;
 `
 export const Label = styled(Font)`
 	font-size: 16px;

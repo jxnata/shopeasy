@@ -1,10 +1,10 @@
 import React from 'react'
-
 import { useTranslation } from 'react-i18next'
-import { Button, Container, Label } from '../../theme/global'
+
 import * as S from './styles'
 import { Props } from './types'
 import { settings } from '../../database'
+import { Button, Container, Label } from '../../theme/global'
 
 function Intro({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'intro' })
@@ -38,7 +38,9 @@ function Intro({ navigation }: Props) {
 					<S.CloseButton onPress={onClose}>
 						<Label>✕</Label>
 					</S.CloseButton>
-					<Button>{<Label>{t('subscribe_button')}</Label>}</Button>
+					<Button>
+						<Label>{t('subscribe_button')}</Label>
+					</Button>
 				</S.Content>
 			</S.SafeAreaView>
 		</Container>

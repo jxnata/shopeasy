@@ -1,4 +1,9 @@
 export type StackParamList = {
-    home: undefined
-    intro: undefined
+	home: undefined
+	create: undefined
+	add: {
+		items: string[]
+		setItems: (items: string[]) => void
+	}
+	intro: undefined
 }

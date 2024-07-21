@@ -1,5 +1,5 @@
-
 import { Cache } from 'swr'
+
 import { cache } from '..'
 import KEYS from '../types/keys'
 

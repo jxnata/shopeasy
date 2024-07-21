@@ -12,8 +12,18 @@
 		},
 		"home": {
 			"title": "Suas listas",
-			"no_lists": "Nenhuma lista criada",
+			"no_lists": "Você ainda não tem listas.",
 			"create_button": "Criar agora"
+		},
+		"create": {
+			"title": "Criar lista",
+			"list_name": "Nome da lista",
+			"add_items": "Adicionar items",
+			"create_button": "Salvar"
+		},
+		"add": {
+			"title": "Adicionar items",
+			"search_placeholder": "O que deseja comprar?"
 		}
 	}
 }

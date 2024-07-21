@@ -1,24 +1,22 @@
 import styled from 'styled-components/native'
 
 import { Font } from '../../theme/global'
+import Icon from '../icon'
 
 export const Container = styled.TouchableOpacity`
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-between;
 	padding: 12px;
-	gap: 4px;
+	gap: 6px;
 	background: ${props => props.theme.boxBg};
 	border-radius: 12px;
 	margin-bottom: 8px;
+	width: auto;
 `
-export const Title = styled(Font)`
-	font-size: 18px;
-	font-weight: 700;
-`
-export const Description = styled(Font)`
+export const Text = styled(Font)`
 	font-size: 14px;
+	font-weight: bold;
 `
-export const Column = styled.View`
-	flex-direction: column;
+export const RightIcon = styled(Icon)`
+	color: ${props => (props['aria-checked'] ? props.theme.successText : props.theme.foreground)};
 `

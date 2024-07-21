@@ -2,11 +2,13 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 
+import { useSettings } from '../contexts'
 import { populateCache } from '../database/cache/provider'
 import { StackParamList } from '../types/navigation/stack'
+import Add from '../views/add'
+import Create from '../views/create'
 import Home from '../views/home'
 import Intro from '../views/intro'
-import { useSettings } from '../contexts'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -27,6 +29,8 @@ const Routes = () => {
 		<NavigationContainer onStateChange={populateCache}>
 			<Stack.Navigator initialRouteName='home' screenOptions={{ headerShown: false }}>
 				<Stack.Screen name='home' component={Home} />
+				<Stack.Screen name='create' component={Create} />
+				<Stack.Screen name='add' component={Add} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)
