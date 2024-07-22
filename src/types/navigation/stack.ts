@@ -6,4 +6,5 @@ export type StackParamList = {
 		setItems: (items: string[]) => void
 	}
 	intro: undefined
+	auth: undefined
 }

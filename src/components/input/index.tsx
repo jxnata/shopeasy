@@ -13,11 +13,7 @@ const Input = forwardRef<TextInput, InputProps>((props, ref) => {
 
 	return (
 		<S.Container>
-			{!!props.label && (
-				<S.LabelContainer>
-					<S.Label>{props.label}</S.Label>
-				</S.LabelContainer>
-			)}
+			{!!props.label && <S.Label>{props.label}</S.Label>}
 			<S.Input
 				ref={ref}
 				{...props}

@@ -12,14 +12,12 @@ export const Container = styled.View`
 	align-items: flex-start;
 `
 export const LabelContainer = styled.View`
-	background-color: ${props => props.theme.border};
-	border-radius: 5px;
-	padding: 2px 10px;
-	margin-bottom: 5px;
+	margin-bottom: 4px;
 `
 export const Label = styled(Font)`
 	font-size: 12px;
-	font-weight: 600;
+	font-weight: bold;
+	margin-bottom: 4px;
 `
 export const RightContainer = styled.View`
 	position: absolute;

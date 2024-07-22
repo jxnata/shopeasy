@@ -24,6 +24,15 @@
 		"add": {
 			"title": "Adicionar items",
 			"search_placeholder": "O que deseja comprar?"
+		},
+		"auth": {
+			"auth_failed": "Ocorreu um erro na autenticação.",
+			"auth_expired": "O token de autenticação expirou. Por favor, faça login novamente.",
+			"email_label": "Seu melhor e-mail",
+			"email_placeholder": "Insira seu e-mail",
+			"auth_button": "Entrar",
+			"check_email": "Toque no link enviado para o seu e-mail para confirmar a conta.",
+			"description": "Crie listas de compras, compare preços e economize dinheiro."
 		}
 	}
 }

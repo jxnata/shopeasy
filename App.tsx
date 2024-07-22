@@ -5,7 +5,9 @@ import Toast from 'react-native-toast-message'
 import { ThemeProvider } from 'styled-components'
 import { SWRConfig } from 'swr'
 
-import { SettingsProvider } from './src/contexts'
+import { toastConfig } from './src/components/toast'
+import { SessionProvider } from './src/contexts/session'
+import { SettingsProvider } from './src/contexts/settings'
 import { cacheProvider, populateCache } from './src/database/cache/provider'
 import Routes from './src/routes'
 import theme from './src/theme'
@@ -27,12 +29,14 @@ function App(): React.JSX.Element {
 			/>
 			<ThemeProvider theme={theme[scheme]}>
 				<SWRConfig value={{ provider: cacheProvider }}>
-					<SettingsProvider>
-						<Routes />
-					</SettingsProvider>
+					<SessionProvider>
+						<SettingsProvider>
+							<Routes />
+						</SettingsProvider>
+					</SessionProvider>
 				</SWRConfig>
 			</ThemeProvider>
-			<Toast position='bottom' />
+			<Toast position='bottom' config={toastConfig(scheme)} bottomOffset={120} />
 		</SafeAreaProvider>
 	)
 }

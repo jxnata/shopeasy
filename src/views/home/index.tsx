@@ -6,6 +6,7 @@ import * as S from './styles'
 import { Props } from './types'
 import Icon from '../../components/icon'
 import ListItem from '../../components/list-item'
+import { useSession } from '../../contexts/session'
 import { useLists } from '../../hooks/lists'
 import { Container, Label } from '../../theme/global'
 import { avatar } from '../../utils/avatar'
@@ -13,8 +14,10 @@ import { avatar } from '../../utils/avatar'
 function Home({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'home' })
 	const { lists, loading, mutate } = useLists()
+	const { logout } = useSession()
 
-	const onCreate = () => {
+	const onCreate = async () => {
+		await logout()
 		navigation.navigate('create')
 	}
 

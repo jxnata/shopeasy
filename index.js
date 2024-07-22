@@ -1,7 +1,4 @@
-/**
- * @format
- */
-
+import 'url-search-params-polyfill'
 import { AppRegistry } from 'react-native'
 
 import App from './App'
