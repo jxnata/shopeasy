@@ -1,14 +1,17 @@
 import React from 'react'
 
 import * as S from './styles'
+import { List } from '../../types/models/list'
 import Icon from '../icon'
 
-const ListItem = ({ item }: any) => {
+const ListItem = ({ item, onPress }: Props) => {
+	const open = () => onPress(item)
+
 	return (
-		<S.Container>
+		<S.Container onPress={open}>
 			<S.Column>
-				<S.Title>{item.title}</S.Title>
-				<S.Description>{item.description}</S.Description>
+				<S.Title>{item.name}</S.Title>
+				<S.Description>{item.count} items</S.Description>
 			</S.Column>
 			<Icon name='chevron-forward' />
 		</S.Container>
@@ -16,3 +19,8 @@ const ListItem = ({ item }: any) => {
 }
 
 export default ListItem
+
+type Props = {
+	item: List
+	onPress: (item: List) => void
+}

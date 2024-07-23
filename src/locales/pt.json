@@ -19,7 +19,8 @@
 			"title": "Criar lista",
 			"list_name": "Nome da lista",
 			"add_items": "Adicionar items",
-			"create_button": "Salvar"
+			"create_button": "Salvar",
+			"create_error": "Ocorreu um erro ao criar a lista."
 		},
 		"add": {
 			"title": "Adicionar items",

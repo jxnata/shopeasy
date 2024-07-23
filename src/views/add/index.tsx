@@ -1,6 +1,8 @@
+import { ID } from 'appwrite'
 import debounce from 'lodash/debounce'
+import flatten from 'lodash/flatten'
 import toLower from 'lodash/toLower'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TextInput } from 'react-native'
 
@@ -9,20 +11,48 @@ import { Props } from './types'
 import suggestions from '../../assets/data/items.json'
 import Input from '../../components/input'
 import SuggestionItem from '../../components/suggestion-item'
+import { DB, MODELS } from '../../constants'
+import { useSession } from '../../contexts/session'
+import { useItems } from '../../hooks/items'
+import { databases } from '../../lib/appwrite'
 import { Container } from '../../theme/global'
+import { getPermissions } from '../../utils/getPermissions'
 import { randomItems } from '../../utils/random-items'
 
 function Add({ navigation, route }: Props) {
-	const { items, setItems } = route.params
+	const { items, listId, queries } = route.params
+	const { current } = useSession()
 	const [tempItems, setTempItems] = useState<string[]>(items)
 	const { t } = useTranslation('translation', { keyPrefix: 'add' })
 	const [search, setSearch] = useState<string>('')
 	const inputRef = useRef<TextInput>(null)
+	const { mutate } = useItems(queries)
 
-	const filteredSuggestions = useMemo(
-		() =>
-			search ? suggestions.filter(s => s.includes(toLower(search))).slice(0, 10) : randomItems(suggestions, 10),
-		[search]
+	const filteredSuggestions = useMemo(() => {
+		const flattened = flatten(suggestions.map(s => s.items))
+
+		if (!search) return randomItems(flattened, 10)
+
+		return flattened.filter(s => s.includes(toLower(search))).slice(0, 10)
+	}, [search])
+
+	const createItem = useCallback(
+		async (name: string) => {
+			if (!current || !name || !listId) return
+
+			try {
+				await databases.createDocument(
+					DB,
+					MODELS.ITEMS,
+					ID.unique(),
+					{ name, qty: 1, list: listId },
+					getPermissions(current.$id)
+				)
+			} catch {
+				setTempItems(tempItems.filter(i => i !== name))
+			}
+		},
+		[current, listId, tempItems]
 	)
 
 	const pressItem = useCallback(
@@ -31,19 +61,24 @@ function Add({ navigation, route }: Props) {
 			if (inputRef.current) inputRef.current.clear()
 
 			if (tempItems.includes(toLower(item))) {
-				setItems(tempItems.filter(i => i !== item))
 				setTempItems(tempItems.filter(i => i !== item))
 				return
 			}
-			setItems([toLower(item), ...tempItems])
 			setTempItems([toLower(item), ...tempItems])
+			createItem(item)
 		},
-		[tempItems, setItems]
+		[createItem, tempItems]
 	)
 
 	const debouncedSearch = debounce(async term => {
 		setSearch(term)
 	}, 500)
+
+	useEffect(() => {
+		return () => {
+			mutate()
+		}
+	}, [mutate])
 
 	return (
 		<Container>

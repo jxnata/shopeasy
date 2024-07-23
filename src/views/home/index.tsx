@@ -1,3 +1,4 @@
+import { Query } from 'appwrite'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, RefreshControl } from 'react-native'
@@ -6,19 +7,21 @@ import * as S from './styles'
 import { Props } from './types'
 import Icon from '../../components/icon'
 import ListItem from '../../components/list-item'
-import { useSession } from '../../contexts/session'
 import { useLists } from '../../hooks/lists'
 import { Container, Label } from '../../theme/global'
+import { List } from '../../types/models/list'
 import { avatar } from '../../utils/avatar'
 
 function Home({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'home' })
-	const { lists, loading, mutate } = useLists()
-	const { logout } = useSession()
+	const { lists, loading, mutate } = useLists([Query.select(['$id', 'name', 'count'])])
 
 	const onCreate = async () => {
-		await logout()
 		navigation.navigate('create')
+	}
+
+	const onOpenList = async (list: List) => {
+		navigation.navigate('create', { list })
 	}
 
 	return (
@@ -31,9 +34,9 @@ function Home({ navigation }: Props) {
 				<S.Body>
 					<FlatList
 						data={lists}
-						keyExtractor={item => item.hash}
+						keyExtractor={item => item.$id}
 						refreshControl={<RefreshControl onRefresh={mutate} refreshing={loading} />}
-						renderItem={({ item }) => <ListItem item={item} />}
+						renderItem={({ item }) => <ListItem item={item} onPress={onOpenList} />}
 						showsVerticalScrollIndicator={false}
 						contentContainerStyle={{ flex: 1 }}
 						ListEmptyComponent={

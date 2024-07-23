@@ -20,7 +20,7 @@ function Auth({ navigation }: Props) {
 			await login(email)
 			setValidation(true)
 		} catch (err) {
-			console.log(err)
+			console.tron.log(err)
 			toast.error(t('auth_failed'))
 		}
 	}
