@@ -63,8 +63,10 @@ const ItemRow = ({ item, onPress, mutate }: Props) => {
 	const updateItem = async (form: Partial<Item>) => {
 		if (!form.price && !form.unit) return
 
+		const newPrice = typeof form.price === 'number' ? form.price : Number(form.price) * 100
+
 		const body = {
-			price: Number(form.price) * 100,
+			price: newPrice,
 			unit: form.unit,
 		}
 
