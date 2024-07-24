@@ -1,33 +1,34 @@
 import { Dimensions, FlatList } from 'react-native'
 import styled from 'styled-components/native'
 
+import { Font } from '../../theme/global'
+
 const { height } = Dimensions.get('window')
 
-export const DropdowContainer = styled.View`
-	margin-bottom: 10px;
-`
+export const DropdowContainer = styled.View``
 export const Input = styled.Pressable`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	width: 100%;
+	gap: 8px;
 	height: 50px;
-	padding: 14px 16px;
+	padding: 0 16px;
 	border-radius: 12px;
-	border: solid 1.5px ${({ theme }) => theme.border};
-	background-color: ${({ theme }) => theme.backgroundAlt};
+	border: solid 2px ${props => (props['aria-selected'] ? props.theme.foreground : props.theme.base)};
+	background: ${props => props.theme.background};
+	color: ${props => props.theme.foreground};
+	font-size: 16px;
+	font-family: 'Nunito';
 `
-export const Placeholder = styled.Text`
-	color: ${({ theme }) => theme.text};
-	font-size: 15px;
-	font-family: 'urbanist-medium';
+export const Placeholder = styled(Font)`
+	color: ${props => props.theme.foreground}60;
 `
 export const Container = styled.Pressable`
 	display: flex;
 	justify-content: flex-end;
 	width: 100%;
 	height: 100%;
-	background-color: ${({ theme }) => theme.background}90;
+	background-color: ${props => props.theme.background}90;
 `
 export const Content = styled.SafeAreaView`
 	display: flex;
@@ -35,21 +36,21 @@ export const Content = styled.SafeAreaView`
 	max-height: ${height * 0.6}px;
 	align-items: center;
 	border-radius: 10px;
-	background-color: ${({ theme }) => theme.backgroundAlt};
+	background-color: ${props => props.theme.boxBg};
 `
 export const Item = styled.Pressable`
 	flex-direction: row;
 	align-items: center;
 	border-radius: 12px;
-	background-color: ${({ theme }) => theme.background}70;
+	background-color: ${props => props.theme.background}70;
 	padding: 16px;
 	margin-top: 5px;
 	gap: 10px;
 `
 export const Label = styled.Text`
-	color: ${({ theme }) => theme.foreground};
+	color: ${props => props.theme.foreground};
 	font-size: 16px;
-	font-family: 'urbanist-medium';
+	font-family: 'Nunito';
 `
 export const Space = styled.View`
 	height: 30px;

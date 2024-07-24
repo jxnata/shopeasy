@@ -7,6 +7,6 @@ export interface Item extends Models.Document {
 	qty: number
 	unit?: string
 	price?: number
-	category: string
+	category: number
 	list: string | List
 }

@@ -12,12 +12,12 @@ const resources = {
 	pt,
 }
 
-const locale = getLocales()[0].languageCode
+const { languageTag } = getLocales()[0]
 
 i18n.use(initReactI18next).init({
 	compatibilityJSON: 'v3',
 	resources,
-	lng: locale,
+	lng: languageTag,
 	fallbackLng: 'en',
 })
 

@@ -41,7 +41,7 @@ function Create({ navigation, route }: Props) {
 
 	const onSave = async () => {
 		if (!current || !name) return
-		console.tron.log('entrou')
+
 		try {
 			const created: List = await databases.createDocument(
 				DB,
@@ -50,7 +50,6 @@ function Create({ navigation, route }: Props) {
 				{ name },
 				getPermissions(current.$id)
 			)
-			console.tron.log({ created })
 			setList(created)
 		} catch {
 			toast.error(t('create_error'))

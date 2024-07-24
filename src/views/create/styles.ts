@@ -15,7 +15,6 @@ export const Header = styled.View`
 	justify-content: space-between;
 `
 export const Body = styled.View`
-	padding: 12px 0;
 	flex: 1;
 `
 export const Scroll = styled.ScrollView`
