@@ -38,7 +38,9 @@ export const AddButton = styled(Button)`
 export const GhostButton = styled(Button)`
 	background: transparent;
 	border-bottom-width: 0;
-	width: auto;
+	width: 32px;
+	height: 32px;
+	padding: 0;
 `
 export const OptionButton = styled(Button)`
 	background: ${props => props.theme.background};
