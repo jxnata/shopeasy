@@ -5,17 +5,18 @@ import { Button, Font } from '../../theme/global'
 export const Content = styled.SafeAreaView`
 	flex: 1;
 	background-color: ${props => props.theme.background};
-	padding: 10px;
+	padding: 8px;
 `
 export const Header = styled.View`
 	flex-direction: row;
 	width: 100%;
-	padding: 8px 12px;
+	padding: 4px 8px;
 	align-items: center;
 	justify-content: space-between;
 `
 export const Body = styled.View`
 	flex: 1;
+	gap: 16px;
 `
 export const Scroll = styled.ScrollView`
 	margin-top: 8px;
@@ -35,4 +36,13 @@ export const AddButton = styled(Button)`
 	background: transparent;
 	border-bottom-width: 0;
 `
-export const SaveButton = styled(Button)``
+export const GhostButton = styled(Button)`
+	background: transparent;
+	border-bottom-width: 0;
+	width: auto;
+`
+export const OptionButton = styled(Button)`
+	background: ${props => props.theme.background};
+	border-bottom-width: 0;
+	margin-bottom: 8px;
+`

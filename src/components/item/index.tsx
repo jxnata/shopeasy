@@ -109,7 +109,7 @@ const ItemRow = ({ item, onPress, mutate }: Props) => {
 			{!!data.price && (
 				<S.SmallContainer>
 					<S.Small>
-						{format(data.price / 100)} • {quantity}
+						{format(data.price / 100)} • {t('needed')} {quantity}
 					</S.Small>
 					<S.Small>{data.unit ? data.unit : quantity > 1 ? t('unit_plural') : t('unit_singular')}</S.Small>
 				</S.SmallContainer>

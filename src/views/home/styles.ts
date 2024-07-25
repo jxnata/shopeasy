@@ -5,12 +5,12 @@ import { Button, Font } from '../../theme/global'
 export const Content = styled.SafeAreaView`
 	flex: 1;
 	background-color: ${props => props.theme.background};
-	padding: 10px;
+	padding: 8px;
 `
 export const Header = styled.View`
 	flex-direction: row;
 	width: 100%;
-	padding: 8px 12px;
+	padding: 4px 8px;
 	align-items: center;
 	justify-content: space-between;
 `
@@ -41,4 +41,11 @@ export const Title = styled(Font)`
 `
 export const Text = styled(Font)`
 	font-size: 18px;
+`
+export const AddButton = styled(Button)`
+	width: auto;
+	position: absolute;
+	bottom: 16px;
+	right: 16px;
+	z-index: 2;
 `

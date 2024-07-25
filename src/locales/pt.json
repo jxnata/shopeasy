@@ -13,18 +13,32 @@
 		"home": {
 			"title": "Suas listas",
 			"no_lists": "Você ainda não tem listas.",
-			"create_button": "Criar agora"
+			"create_button": "Criar agora",
+			"add_list_button": "Adicionar"
 		},
-		"create": {
+		"list": {
 			"title": "Criar lista",
 			"list_name": "Nome da lista",
 			"add_items": "Adicionar items",
+			"edit_option": "Renomear",
+			"delete_option": "Excluir",
 			"create_button": "Salvar",
-			"create_error": "Ocorreu um erro ao criar a lista."
+			"create_error": "Ocorreu um erro ao criar a lista.",
+			"delete_title": "Excluir lista",
+			"delete_text": "Tem certeza que deseja excluir esta lista? Todos os itens dela serão excluídos.",
+			"cancel": "Cancelar",
+			"delete_confirm": "Sim, excluir",
+			"delete_error": "Ocorreu um erro ao excluir a lista."
 		},
 		"add": {
 			"title": "Adicionar items",
 			"search_placeholder": "O que deseja comprar?"
+		},
+		"rename": {
+			"title": "Adicionar items",
+			"list_name": "Nome da lista",
+			"edit_error": "Ocorreu um erro ao renomear a lista.",
+			"edit_button": "Salvar"
 		},
 		"auth": {
 			"auth_failed": "Ocorreu um erro na autenticação.",
@@ -39,7 +53,8 @@
 			"price": "Preço",
 			"unit": "Unidade",
 			"unit_singular": "unidade",
-			"unit_plural": "unidades"
+			"unit_plural": "unidades",
+			"needed": "eu preciso de"
 		}
 	}
 }

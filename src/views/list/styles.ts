@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { Font } from '../../theme/global'
+import { Button, Font } from '../../theme/global'
 
 export const Content = styled.SafeAreaView`
 	flex: 1;
@@ -15,11 +15,10 @@ export const Header = styled.View`
 	justify-content: space-between;
 `
 export const Body = styled.View`
-	padding: 12px 0;
 	flex: 1;
 `
 export const Scroll = styled.ScrollView`
-	margin-top: 12px;
+	margin-top: 8px;
 `
 export const Suggestions = styled.View`
 	flex: 1;
@@ -28,16 +27,21 @@ export const Suggestions = styled.View`
 	gap: 4px;
 	justify-content: center;
 `
-export const Empty = styled.View`
-	flex: 1;
-	align-items: center;
-	justify-content: center;
-	gap: 12px;
-`
 export const Title = styled(Font)`
 	font-size: 24px;
 	font-weight: bold;
 `
-export const Text = styled(Font)`
-	font-size: 18px;
+export const AddButton = styled(Button)`
+	background: transparent;
+	border-bottom-width: 0;
+`
+export const GhostButton = styled(Button)`
+	background: transparent;
+	border-bottom-width: 0;
+	width: auto;
+`
+export const OptionButton = styled(Button)`
+	background: ${props => props.theme.background};
+	border-bottom-width: 0;
+	margin-bottom: 8px;
 `

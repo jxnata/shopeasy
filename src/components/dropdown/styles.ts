@@ -28,7 +28,7 @@ export const Container = styled.Pressable`
 	justify-content: flex-end;
 	width: 100%;
 	height: 100%;
-	background-color: ${props => props.theme.background}90;
+	background-color: ${props => props.theme.background}de;
 `
 export const Content = styled.SafeAreaView`
 	display: flex;

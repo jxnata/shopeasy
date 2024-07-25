@@ -9,9 +9,10 @@ import { populateCache } from '../database/cache/provider'
 import { StackParamList } from '../types/navigation/stack'
 import Add from '../views/add'
 import Auth from '../views/auth'
-import Create from '../views/create'
 import Home from '../views/home'
 import Intro from '../views/intro'
+import ListView from '../views/list'
+import ListRename from '../views/rename'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -45,8 +46,9 @@ const Routes = () => {
 		<NavigationContainer onStateChange={populateCache}>
 			<Stack.Navigator initialRouteName='home' screenOptions={{ headerShown: false }}>
 				<Stack.Screen name='home' component={Home} />
-				<Stack.Screen name='create' component={Create} />
+				<Stack.Screen name='list' component={ListView} />
 				<Stack.Screen name='add' component={Add} />
+				<Stack.Screen name='rename' component={ListRename} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

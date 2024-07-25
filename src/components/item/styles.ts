@@ -44,6 +44,7 @@ export const QuantityButton = styled(Button)`
 	height: 32px;
 	background: ${props => props.theme.background};
 	border-bottom-width: 0;
+	padding: 0;
 `
 export const CollapsedContent = styled.View`
 	flex-direction: row;
