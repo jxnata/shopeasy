@@ -1,14 +1,15 @@
 const any = {
 	primary: '#2DD4BF',
 	focus: '#14B8A6',
+	btnText: '#F9FAFB',
 	secondary: '#EC4899',
 	secondaryFocus: '#DB2777',
 }
 
 export const light = {
 	background: '#F3F4F6',
-	foreground: '#1F2937',
-	base: '#1F293750',
+	foreground: '#353e4b',
+	base: '#353e4b50',
 	boxBg: '#E5E7EB',
 	dangerText: '#932338',
 	dangerBg: '#fad7dd',

@@ -4,12 +4,11 @@ import { FlatList, RefreshControl } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
-import Icon from '../../components/icon'
 import ListItem from '../../components/list-item'
 import { useSession } from '../../contexts/session'
 import { useLists } from '../../hooks/lists'
 import { getUserQuery } from '../../lib/appwrite/queries/user-query'
-import { Container, Label } from '../../theme/global'
+import { ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 import { List } from '../../types/models/list'
 import { avatar } from '../../utils/avatar'
 
@@ -53,16 +52,16 @@ function Home({ navigation }: Props) {
 							<S.Empty>
 								<S.Text>{t('no_lists')}</S.Text>
 								<S.CreateButton onPress={onCreate}>
-									<Icon name='add-circle' />
-									<Label>{t('create_button')}</Label>
+									<ButtonIcon name='add-circle' />
+									<ButtonLabel>{t('create_button')}</ButtonLabel>
 								</S.CreateButton>
 							</S.Empty>
 						}
 					/>
 					{lists.length > 0 && (
 						<S.AddButton onPress={onCreate}>
-							<Icon name='add-circle' />
-							<Label>{t('add_list_button')}</Label>
+							<ButtonIcon name='add-circle' />
+							<ButtonLabel>{t('add_list_button')}</ButtonLabel>
 						</S.AddButton>
 					)}
 				</S.Body>

@@ -18,7 +18,7 @@ import { useViewList } from '../../hooks/lists/view'
 import { databases } from '../../lib/appwrite'
 import { getListQuery } from '../../lib/appwrite/queries/list-query'
 import { getUserQuery } from '../../lib/appwrite/queries/user-query'
-import { Button, Container, Label } from '../../theme/global'
+import { Button, ButtonIcon, ButtonLabel, Container, Label } from '../../theme/global'
 import { List } from '../../types/models/list'
 import { getPermissions } from '../../utils/getPermissions'
 
@@ -134,10 +134,17 @@ function ListView({ navigation, route }: Props) {
 						keyExtractor={item => item.$id}
 						renderItem={({ item }) => <ItemRow item={item} mutate={mutate} />}
 						showsVerticalScrollIndicator={false}
+						style={{ marginBottom: 12 }}
 					/>
 					{!list && (
 						<Button disabled={!name}>
-							<Label>{t('create_button')}</Label>
+							<ButtonLabel>{t('create_button')}</ButtonLabel>
+						</Button>
+					)}
+					{list && items.length && (
+						<Button>
+							<ButtonLabel>{t('shop_now_button')}</ButtonLabel>
+							<ButtonIcon name='cart' />
 						</Button>
 					)}
 					<Options open={optionsOpen} onClose={toggle}>

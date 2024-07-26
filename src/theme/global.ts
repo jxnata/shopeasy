@@ -1,5 +1,7 @@
 import styled from 'styled-components/native'
 
+import Icon from '../components/icon'
+
 export const Container = styled.View`
 	flex: 1;
 	padding: 12px;
@@ -26,4 +28,11 @@ export const Button = styled.TouchableOpacity`
 export const Label = styled(Font)`
 	font-size: 16px;
 	font-weight: 800;
+`
+export const ButtonLabel = styled(Label)`
+	color: ${props => props.theme.btnText};
+`
+export const ButtonIcon = styled(Icon)`
+	font-family: 'Ionicons';
+	color: ${props => props.theme.btnText};
 `

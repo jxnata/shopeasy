@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import * as S from './styles'
 import { Props } from './types'
 import { settings } from '../../database'
-import { Button, Container, Label } from '../../theme/global'
+import { Button, ButtonLabel, Container, Label } from '../../theme/global'
 
 function Intro({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'intro' })
@@ -39,7 +39,7 @@ function Intro({ navigation }: Props) {
 						<Label>✕</Label>
 					</S.CloseButton>
 					<Button>
-						<Label>{t('subscribe_button')}</Label>
+						<ButtonLabel>{t('subscribe_button')}</ButtonLabel>
 					</Button>
 				</S.Content>
 			</S.SafeAreaView>

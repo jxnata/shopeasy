@@ -23,6 +23,7 @@
 			"edit_option": "Renomear",
 			"delete_option": "Excluir",
 			"create_button": "Salvar",
+			"shop_now_button": "Ir às compras",
 			"create_error": "Ocorreu um erro ao criar a lista.",
 			"delete_title": "Excluir lista",
 			"delete_text": "Tem certeza que deseja excluir esta lista? Todos os itens dela serão excluídos.",
@@ -36,7 +37,7 @@
 			"confirm_button": "Confirmar"
 		},
 		"rename": {
-			"title": "Adicionar items",
+			"title": "Renomear",
 			"list_name": "Nome da lista",
 			"edit_error": "Ocorreu um erro ao renomear a lista.",
 			"edit_button": "Salvar"

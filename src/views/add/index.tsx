@@ -9,14 +9,13 @@ import { TextInput } from 'react-native'
 import * as S from './styles'
 import { Props } from './types'
 import suggestions from '../../assets/data/items.json'
-import Icon from '../../components/icon'
 import Input from '../../components/input'
 import SuggestionItem from '../../components/suggestion-item'
 import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
 import { useItems } from '../../hooks/items'
 import { databases } from '../../lib/appwrite'
-import { Button, Container, Label } from '../../theme/global'
+import { Button, ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 import { getPermissions } from '../../utils/getPermissions'
 import { randomItems } from '../../utils/random-items'
 
@@ -121,8 +120,8 @@ function Add({ navigation, route }: Props) {
 						</S.Suggestions>
 					</S.Scroll>
 					<Button onPress={goBack}>
-						<Icon name='checkmark-circle' />
-						<Label>{t('confirm_button')}</Label>
+						<ButtonIcon name='checkmark-circle' />
+						<ButtonLabel>{t('confirm_button')}</ButtonLabel>
 					</Button>
 				</S.Body>
 			</S.Content>

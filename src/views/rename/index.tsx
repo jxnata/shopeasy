@@ -9,7 +9,7 @@ import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
 import { useViewList } from '../../hooks/lists/view'
 import { databases } from '../../lib/appwrite'
-import { Button, Container, Label } from '../../theme/global'
+import { Button, ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 import { getPermissions } from '../../utils/getPermissions'
 
 function ListRename({ navigation, route }: Props) {
@@ -58,7 +58,8 @@ function ListRename({ navigation, route }: Props) {
 						returnKeyType='done'
 					/>
 					<Button disabled={!name} onPress={onSave}>
-						<Label>{t('edit_button')}</Label>
+						<ButtonIcon name='checkmark-circle' />
+						<ButtonLabel>{t('edit_button')}</ButtonLabel>
 					</Button>
 				</S.Body>
 			</S.Content>
