@@ -1,4 +1,4 @@
-import { ID, Query } from 'appwrite'
+import { ID } from 'appwrite'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, FlatList } from 'react-native'
@@ -16,6 +16,8 @@ import { useItems } from '../../hooks/items'
 import { useLists } from '../../hooks/lists'
 import { useViewList } from '../../hooks/lists/view'
 import { databases } from '../../lib/appwrite'
+import { getListQuery } from '../../lib/appwrite/queries/list-query'
+import { getUserQuery } from '../../lib/appwrite/queries/user-query'
 import { Button, Container, Label } from '../../theme/global'
 import { List } from '../../types/models/list'
 import { getPermissions } from '../../utils/getPermissions'
@@ -30,18 +32,11 @@ function ListView({ navigation, route }: Props) {
 	const [name, setName] = useState<string>('')
 	const [optionsOpen, setOptionsOpen] = useState(false)
 
-	const listQueries = [
-		Query.select(['$id', 'name', 'user', '$createdAt']),
-		Query.equal('user', [current ? current.$id : 'awaiting']),
-	]
+	const userQueries = getUserQuery(current ? current.$id : undefined)
 
-	const { mutate: mutateLists } = useLists(listQueries, !current)
+	const { mutate: mutateLists } = useLists(userQueries, !current)
 
-	const queries = [
-		Query.select(['$id', 'name', 'category', 'price', 'unit', 'qty']),
-		Query.equal('list', [list ? list.$id : 'awaiting']),
-	]
-
+	const queries = getListQuery(list ? list.$id : undefined)
 	const disabled = !list || !current
 
 	const { items, mutate } = useItems(queries, disabled)

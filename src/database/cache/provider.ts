@@ -1,13 +1,12 @@
 import { Cache } from 'swr'
 
 import { cache } from '..'
-import KEYS from '../types/keys'
 
-const map = new Map(JSON.parse(cache.getString(KEYS.CACHE) || '[]'))
+const map = new Map(JSON.parse(cache.getString('app-cache') || '[]'))
 
 export function populateCache() {
 	const appCache = JSON.stringify(Array.from(map.entries()))
-	cache.set(KEYS.CACHE, appCache)
+	cache.set('app-cache', appCache)
 }
 
 export function cacheProvider() {

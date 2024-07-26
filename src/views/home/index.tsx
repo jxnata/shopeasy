@@ -1,4 +1,3 @@
-import { Query } from 'appwrite'
 import React, { useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, RefreshControl } from 'react-native'
@@ -9,6 +8,7 @@ import Icon from '../../components/icon'
 import ListItem from '../../components/list-item'
 import { useSession } from '../../contexts/session'
 import { useLists } from '../../hooks/lists'
+import { getUserQuery } from '../../lib/appwrite/queries/user-query'
 import { Container, Label } from '../../theme/global'
 import { List } from '../../types/models/list'
 import { avatar } from '../../utils/avatar'
@@ -18,10 +18,7 @@ function Home({ navigation }: Props) {
 	const { current } = useSession()
 
 	const disabled = !current
-	const queries = [
-		Query.select(['$id', 'name', 'user', '$createdAt']),
-		Query.equal('user', [current ? current.$id : 'awaiting']),
-	]
+	const queries = getUserQuery(current ? current.$id : undefined)
 
 	const { lists, loading, mutate } = useLists(queries, disabled)
 
