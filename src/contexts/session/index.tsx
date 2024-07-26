@@ -6,13 +6,13 @@ import { storage } from '../../database'
 import { account, functions } from '../../lib/appwrite'
 
 type LocalSession = {
-	current: Models.Session | Models.User<Models.Preferences> | null
+	current: Models.User<Models.Preferences> | null
 	loading: boolean
 	login: (appleRequestResponse: AppleRequestResponse) => Promise<void>
 	logout: () => Promise<void>
 }
 
-type AppSession = Models.Session | Models.User<Models.Preferences> | null
+type AppSession = Models.User<Models.Preferences> | null
 
 const initialState: LocalSession = {
 	current: null,

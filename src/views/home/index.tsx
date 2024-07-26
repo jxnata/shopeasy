@@ -18,7 +18,10 @@ function Home({ navigation }: Props) {
 	const { current } = useSession()
 
 	const disabled = !current
-	const queries = [Query.select(['$id', 'name', 'count']), Query.equal('user', [current ? current.$id : 'awaiting'])]
+	const queries = [
+		Query.select(['$id', 'name', 'user', '$createdAt']),
+		Query.equal('user', [current ? current.$id : 'awaiting']),
+	]
 
 	const { lists, loading, mutate } = useLists(queries, disabled)
 
@@ -46,7 +49,7 @@ function Home({ navigation }: Props) {
 						data={lists}
 						keyExtractor={item => item.$id}
 						refreshControl={<RefreshControl onRefresh={mutate} refreshing={loading} />}
-						renderItem={({ item }) => <ListItem item={item} onPress={onOpenList} />}
+						renderItem={({ item }) => <ListItem item={item} user={current!} onPress={onOpenList} />}
 						showsVerticalScrollIndicator={false}
 						contentContainerStyle={{ flex: 1 }}
 						ListEmptyComponent={

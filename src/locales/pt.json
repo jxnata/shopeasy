@@ -32,7 +32,8 @@
 		},
 		"add": {
 			"title": "Adicionar items",
-			"search_placeholder": "O que deseja comprar?"
+			"search_placeholder": "O que deseja comprar?",
+			"confirm_button": "Confirmar"
 		},
 		"rename": {
 			"title": "Adicionar items",
@@ -52,7 +53,9 @@
 			"unit": "Unidade",
 			"unit_singular": "unidade",
 			"unit_plural": "unidades",
-			"needed": "eu preciso de"
+			"needed": "eu preciso de",
+			"price_label": "Preço da unidade",
+			"unit_label": "Unidade"
 		}
 	}
 }

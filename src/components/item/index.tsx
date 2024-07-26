@@ -122,6 +122,7 @@ const ItemRow = ({ item, onPress, mutate }: Props) => {
 						name='price'
 						render={({ field: { onChange, onBlur, value } }) => (
 							<MaskedInput
+								label={t('price_label')}
 								type='currency'
 								placeholder={t('price')}
 								keyboardType='numeric'
@@ -142,6 +143,7 @@ const ItemRow = ({ item, onPress, mutate }: Props) => {
 						name='unit'
 						render={({ field: { onChange, onBlur, value } }) => (
 							<Dropdown
+								label={t('unit_label')}
 								placeholder={t('unit')}
 								options={units}
 								onValueChange={onChange}

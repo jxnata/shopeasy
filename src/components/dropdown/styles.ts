@@ -14,6 +14,7 @@ export const Input = styled.Pressable`
 	height: 50px;
 	padding: 0 16px;
 	border-radius: 12px;
+	margin-bottom: 4px;
 	border: solid 2px ${props => (props['aria-selected'] ? props.theme.foreground : props.theme.base)};
 	background: ${props => props.theme.background};
 	color: ${props => props.theme.foreground};
@@ -47,10 +48,11 @@ export const Item = styled.Pressable`
 	margin-top: 5px;
 	gap: 10px;
 `
-export const Label = styled.Text`
-	color: ${props => props.theme.foreground};
-	font-size: 16px;
-	font-family: 'Nunito';
+export const Text = styled(Font)``
+export const Label = styled(Font)`
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 4px;
 `
 export const Space = styled.View`
 	height: 30px;

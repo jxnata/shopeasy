@@ -4,14 +4,7 @@ import { Modal } from 'react-native'
 import * as S from './styles'
 import Icon from '../icon'
 
-type Props = {
-	selectedValue: string
-	options: { label: string; value: string }[]
-	placeholder: string
-	onValueChange: (_: any) => void
-}
-
-const Dropdown = ({ selectedValue, options, placeholder, onValueChange }: Props) => {
+const Dropdown = ({ selectedValue, options, label, placeholder, onValueChange }: Props) => {
 	const [open, setOpen] = useState(false)
 
 	const toggle = () => {
@@ -37,6 +30,7 @@ const Dropdown = ({ selectedValue, options, placeholder, onValueChange }: Props)
 
 	return (
 		<S.DropdowContainer>
+			{!!label && <S.Label>{label}</S.Label>}
 			<S.Input onPress={toggle}>
 				<S.Placeholder>{selectedLabel || placeholder}</S.Placeholder>
 				<Icon name='chevron-down' />
@@ -67,3 +61,11 @@ const Dropdown = ({ selectedValue, options, placeholder, onValueChange }: Props)
 }
 
 export default Dropdown
+
+type Props = {
+	selectedValue: string
+	options: { label: string; value: string }[]
+	placeholder: string
+	label?: string
+	onValueChange: (_: any) => void
+}

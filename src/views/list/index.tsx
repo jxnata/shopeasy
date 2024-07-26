@@ -31,7 +31,7 @@ function ListView({ navigation, route }: Props) {
 	const [optionsOpen, setOptionsOpen] = useState(false)
 
 	const listQueries = [
-		Query.select(['$id', 'name', 'count']),
+		Query.select(['$id', 'name', 'user', '$createdAt']),
 		Query.equal('user', [current ? current.$id : 'awaiting']),
 	]
 
@@ -139,7 +139,6 @@ function ListView({ navigation, route }: Props) {
 						keyExtractor={item => item.$id}
 						renderItem={({ item }) => <ItemRow item={item} mutate={mutate} />}
 						showsVerticalScrollIndicator={false}
-						contentContainerStyle={{ flex: 1 }}
 					/>
 					{!list && (
 						<Button disabled={!name}>

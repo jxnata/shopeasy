@@ -49,6 +49,7 @@ export const QuantityButton = styled(Button)`
 export const CollapsedContent = styled.View`
 	flex-direction: row;
 	justify-content: flex-start;
+	align-items: flex-end;
 	gap: 4px;
 	margin-top: 8px;
 `
@@ -57,6 +58,7 @@ export const SaveButton = styled(Button)`
 	width: 50px;
 	height: 50px;
 	border-radius: 8px;
+	margin-bottom: 4px;
 	align-items: center;
 	justify-content: center;
 	border-bottom-width: 0;
