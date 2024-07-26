@@ -22,9 +22,9 @@ export const Head = styled.View`
 	gap: 8px;
 `
 export const Body = styled.View`
-	flex: 1;
 	width: 100%;
-	gap: 8px;
+	gap: 12px;
+	align-items: center;
 `
 export const Title = styled(Font)`
 	font-size: 24px;

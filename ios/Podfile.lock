@@ -1194,6 +1194,8 @@ PODS:
     - React-perflogger (= 0.74.3)
     - React-utils (= 0.74.3)
   - RevenueCat (4.43.2)
+  - RNAppleAuthentication (2.3.0):
+    - React-Core
   - RNLocalize (3.2.0):
     - React-Core
   - RNPurchases (7.28.1):
@@ -1282,6 +1284,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1407,6 +1410,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNAppleAuthentication:
+    :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
   RNPurchases:
@@ -1476,6 +1481,7 @@ SPEC CHECKSUMS:
   React-utils: a06061b3887c702235d2dac92dacbd93e1ea079e
   ReactCommon: f00e436b3925a7ae44dfa294b43ef360fbd8ccc4
   RevenueCat: 3d934653b7e8b09af88fd47e9e84cfaf5d0a89ba
+  RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNLocalize: b77875884750cb6a58cd6865863fe2ba2729b72b
   RNPurchases: 4305de02b902d3c1e56a50295dc0a6e758b73095
   RNScreens: 5aeecbb09aa7285379b6e9f3c8a3c859bb16401c

@@ -42,11 +42,9 @@
 		},
 		"auth": {
 			"auth_failed": "Ocorreu um erro na autenticação.",
+			"auth_unauthorized": "Autenticação não autorizada no dispositivo.",
 			"auth_expired": "O token de autenticação expirou. Por favor, faça login novamente.",
-			"email_label": "Seu melhor e-mail",
-			"email_placeholder": "Insira seu e-mail",
-			"auth_button": "Entrar",
-			"check_email": "Toque no link enviado para o seu e-mail para confirmar a conta.",
+			"apple_id_auth": "Entre com seu Apple ID",
 			"description": "Crie listas de compras, compare preços e economize dinheiro."
 		},
 		"item": {

@@ -1,15 +1,14 @@
-import { ID, Models } from 'appwrite'
+import { AppleRequestResponse } from '@invertase/react-native-apple-authentication'
+import { ExecutionMethod, Models } from 'appwrite'
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import { AUTH_CALLBACK_URL } from '../../constants'
 import { storage } from '../../database'
-import { account } from '../../lib/appwrite'
+import { account, functions } from '../../lib/appwrite'
 
 type LocalSession = {
 	current: Models.Session | Models.User<Models.Preferences> | null
 	loading: boolean
-	login: (email: string) => Promise<void>
-	verify: (userId: string, token: string) => Promise<void>
+	login: (appleRequestResponse: AppleRequestResponse) => Promise<void>
 	logout: () => Promise<void>
 }
 
@@ -19,7 +18,6 @@ const initialState: LocalSession = {
 	current: null,
 	loading: true,
 	login: async () => {},
-	verify: async () => {},
 	logout: async () => {},
 }
 
@@ -36,14 +34,24 @@ export function SessionProvider(props: any) {
 	const [loading, setLoading] = useState(true)
 	const [user, setUser] = useState<AppSession>(localSession)
 
-	async function login(email: string) {
-		await account.createMagicURLToken(ID.unique(), email, AUTH_CALLBACK_URL)
-	}
+	async function login(appleRequestResponse: AppleRequestResponse) {
+		setLoading(true)
 
-	async function verify(userId: string, token: string) {
-		const session = await account.createSession(userId, token)
-		setUser(session)
-		storage.set('session', JSON.stringify(session))
+		const result = await functions.createExecution(
+			'apple-auth',
+			JSON.stringify(appleRequestResponse),
+			false,
+			undefined,
+			ExecutionMethod.POST
+		)
+
+		if (result.responseStatusCode !== 200) throw new Error(result.responseBody)
+
+		const token: Models.Token = JSON.parse(result.responseBody)
+
+		await account.createSession(token.userId, token.secret)
+
+		await init()
 	}
 
 	async function logout() {
@@ -69,7 +77,7 @@ export function SessionProvider(props: any) {
 	}, [])
 
 	return (
-		<SessionContext.Provider value={{ current: user, loading, login, logout, verify }}>
+		<SessionContext.Provider value={{ current: user, loading, login, logout }}>
 			{props.children}
 		</SessionContext.Provider>
 	)
