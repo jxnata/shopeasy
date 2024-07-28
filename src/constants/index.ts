@@ -12,4 +12,5 @@ export const MODELS = {
 	LISTS: 'lists',
 	ITEMS: 'items',
 	EXPENSES: 'expenses',
+	SHOP: 'shop',
 }

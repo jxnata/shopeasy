@@ -14,7 +14,11 @@
 			"title": "Suas listas",
 			"no_lists": "Você ainda não tem listas.",
 			"create_button": "Criar agora",
-			"add_list_button": "Adicionar"
+			"add_list_button": "Adicionar",
+			"menu_item_create": "Nova lista",
+			"menu_item_shop": "Compras",
+			"menu_item_expenses": "Despesas",
+			"menu_item_profile": "Perfil"
 		},
 		"list": {
 			"title": "Criar lista",
@@ -55,6 +59,15 @@
 			"unit_singular": "unidade",
 			"unit_plural": "unidades",
 			"needed": "eu preciso de",
+			"price_label": "Preço da unidade",
+			"unit_label": "Unidade"
+		},
+		"item_shop": {
+			"price": "Preço",
+			"unit": "Unidade",
+			"unit_singular": "unidade",
+			"unit_plural": "unidades",
+			"i_need": "eu preciso de",
 			"price_label": "Preço da unidade",
 			"unit_label": "Unidade"
 		}

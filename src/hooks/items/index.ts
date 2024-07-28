@@ -13,6 +13,7 @@ export const useItems = (queries?: string[], disabled?: boolean) => {
 
 	return {
 		items: items as Item[],
+		size: data ? data.total : 0,
 		loading: !error && !data,
 		error,
 		mutate,

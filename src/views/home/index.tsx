@@ -5,12 +5,12 @@ import { FlatList, RefreshControl } from 'react-native'
 import * as S from './styles'
 import { Props } from './types'
 import ListItem from '../../components/list-item'
+import MenuItem from '../../components/menu-item'
 import { useSession } from '../../contexts/session'
 import { useLists } from '../../hooks/lists'
 import { getUserQuery } from '../../lib/appwrite/queries/user-query'
 import { ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 import { List } from '../../types/models/list'
-import { avatar } from '../../utils/avatar'
 
 function Home({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'home' })
@@ -21,7 +21,7 @@ function Home({ navigation }: Props) {
 
 	const { lists, loading, mutate } = useLists(queries, disabled)
 
-	const onCreate = async () => {
+	const onCreate = () => {
 		navigation.navigate('list')
 	}
 
@@ -36,10 +36,6 @@ function Home({ navigation }: Props) {
 	return (
 		<Container>
 			<S.Content>
-				<S.Header>
-					<S.Title>{t('title')}</S.Title>
-					<S.Avatar source={{ uri: avatar('shopeasy') }} />
-				</S.Header>
 				<S.Body>
 					<FlatList
 						data={lists}
@@ -58,13 +54,21 @@ function Home({ navigation }: Props) {
 							</S.Empty>
 						}
 					/>
-					{lists.length > 0 && (
+					{/* {lists.length > 0 && (
 						<S.AddButton onPress={onCreate}>
-							<ButtonIcon name='add-circle' />
-							<ButtonLabel>{t('add_list_button')}</ButtonLabel>
+						<ButtonIcon name='add-circle' />
+						<ButtonLabel>{t('add_list_button')}</ButtonLabel>
 						</S.AddButton>
-					)}
+						)} */}
 				</S.Body>
+				<S.MenuContainer>
+					<S.MenuList horizontal showsHorizontalScrollIndicator={false}>
+						<MenuItem title={t('menu_item_create')} icon='✏️' action={onCreate} />
+						<MenuItem title={t('menu_item_shop')} icon='🛍️' action={() => {}} />
+						<MenuItem title={t('menu_item_expenses')} icon='💸' action={() => {}} />
+						<MenuItem title={t('menu_item_profile')} icon='🙋' action={() => {}} />
+					</S.MenuList>
+				</S.MenuContainer>
 			</S.Content>
 		</Container>
 	)

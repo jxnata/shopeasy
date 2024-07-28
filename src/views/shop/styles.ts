@@ -7,6 +7,13 @@ export const Content = styled.SafeAreaView`
 	background-color: ${props => props.theme.background};
 	padding: 8px;
 `
+export const Header = styled.View`
+	flex-direction: row;
+	width: 100%;
+	padding: 4px 8px;
+	align-items: center;
+	justify-content: space-between;
+`
 export const Body = styled.View`
 	flex: 1;
 `

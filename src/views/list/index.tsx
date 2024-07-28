@@ -1,5 +1,5 @@
 import { ID } from 'appwrite'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, FlatList } from 'react-native'
 
@@ -20,6 +20,7 @@ import { getListQuery } from '../../lib/appwrite/queries/list-query'
 import { getUserQuery } from '../../lib/appwrite/queries/user-query'
 import { Button, ButtonIcon, ButtonLabel, Container, Label } from '../../theme/global'
 import { List } from '../../types/models/list'
+import { Shop } from '../../types/models/shop'
 import { getPermissions } from '../../utils/getPermissions'
 
 function ListView({ navigation, route }: Props) {
@@ -39,15 +40,33 @@ function ListView({ navigation, route }: Props) {
 	const queries = getListQuery(list ? list.$id : undefined)
 	const disabled = !list || !current
 
-	const { items, mutate } = useItems(queries, disabled)
+	const { items, size, mutate } = useItems(queries, disabled)
 
 	const itemsList = useMemo(() => items.map(i => i.name), [items])
 
-	const toggle = () => setOptionsOpen(old => !old)
+	const toggle = useCallback(() => setOptionsOpen(old => !old), [])
 
 	const onAdd = () => {
 		if (!list) return
 		navigation.navigate('add', { items: itemsList, listId: list.$id, queries })
+	}
+
+	const onShop = async () => {
+		if (!list || !current || !size) return
+
+		const data = {
+			list: list.$id,
+		}
+
+		const shop: Shop<List> = await databases.createDocument(
+			DB,
+			MODELS.SHOP,
+			ID.unique(),
+			data,
+			getPermissions(current.$id)
+		)
+
+		navigation.navigate('shop', { size, shop })
 	}
 
 	const onRename = () => {
@@ -100,17 +119,23 @@ function ListView({ navigation, route }: Props) {
 		}
 	}
 
+	const HeaserRight = useCallback(() => {
+		return (
+			<S.GhostButton onPress={toggle}>
+				<Icon name='ellipsis-vertical' />
+			</S.GhostButton>
+		)
+	}, [toggle])
+
+	useEffect(() => {
+		if (list) {
+			navigation.setOptions({ title: list.name, headerRight: HeaserRight })
+		}
+	}, [HeaserRight, list, navigation])
+
 	return (
 		<Container>
 			<S.Content>
-				<S.Header>
-					<S.Title>{list ? list.name : t('title')}</S.Title>
-					{!!list && (
-						<S.GhostButton onPress={toggle}>
-							<Icon name='ellipsis-vertical' />
-						</S.GhostButton>
-					)}
-				</S.Header>
 				<S.Body>
 					{!list && (
 						<Input
@@ -123,7 +148,7 @@ function ListView({ navigation, route }: Props) {
 							returnKeyType='done'
 						/>
 					)}
-					{list && (
+					{!!list && (
 						<S.AddButton onPress={onAdd}>
 							<Icon name='add-circle' />
 							<Label>{t('add_items')}</Label>
@@ -141,8 +166,8 @@ function ListView({ navigation, route }: Props) {
 							<ButtonLabel>{t('create_button')}</ButtonLabel>
 						</Button>
 					)}
-					{list && items.length && (
-						<Button>
+					{!!list && items.length > 0 && (
+						<Button onPress={onShop}>
 							<ButtonLabel>{t('shop_now_button')}</ButtonLabel>
 							<ButtonIcon name='cart' />
 						</Button>

@@ -18,5 +18,6 @@ export const Text = styled(Font)`
 	font-weight: bold;
 `
 export const RightIcon = styled(Icon)`
+	font-family: 'Ionicons';
 	color: ${props => (props['aria-checked'] ? props.theme.successText : props.theme.foreground)};
 `

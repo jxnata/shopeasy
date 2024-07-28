@@ -6,7 +6,7 @@ import * as S from './styles'
 
 type Props = {
 	open: boolean
-	children: JSX.Element[]
+	children: JSX.Element | JSX.Element[]
 	onClose: () => void
 }
 
