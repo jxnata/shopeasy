@@ -11,7 +11,7 @@
 			"subscribe_button": "Assinar agora"
 		},
 		"home": {
-			"title": "Suas listas",
+			"title": "Listas",
 			"no_lists": "Você ainda não tem listas.",
 			"create_button": "Criar agora",
 			"add_list_button": "Adicionar",
@@ -46,6 +46,21 @@
 			"edit_error": "Ocorreu um erro ao renomear a lista.",
 			"edit_button": "Salvar"
 		},
+		"shop": {
+			"title": "Nova compra",
+			"shop_name": "Insira um nome",
+			"shop_name_label": "Onde você vai fazer essa compra?",
+			"tip_text": "Dica: toque no nome do item para ver os últimos preços que você pagou por ele.",
+			"list_item": "Item",
+			"list_price": "Preço unitário",
+			"edit_option": "Renomear",
+			"delete_option": "Excluir compra"
+		},
+		"shoppings": {
+			"title": "Compras",
+			"no_shoppings": "Nenhuma compra. Você pode criar uma a partir de uma lista de compras.",
+			"no_name": "Sem nome"
+		},
 		"auth": {
 			"auth_failed": "Ocorreu um erro na autenticação.",
 			"auth_unauthorized": "Autenticação não autorizada no dispositivo.",
@@ -67,9 +82,16 @@
 			"unit": "Unidade",
 			"unit_singular": "unidade",
 			"unit_plural": "unidades",
-			"i_need": "eu preciso de",
+			"i_need": "preciso de",
 			"price_label": "Preço da unidade",
 			"unit_label": "Unidade"
+		},
+		"price_history": {
+			"title": "Histórico de preços",
+			"local": "Local",
+			"date": "Data",
+			"price": "Preço",
+			"no_expenses": "Nenhum histórico para esse item."
 		}
 	}
 }

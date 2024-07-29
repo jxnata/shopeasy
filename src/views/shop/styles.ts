@@ -10,9 +10,8 @@ export const Content = styled.SafeAreaView`
 export const Header = styled.View`
 	flex-direction: row;
 	width: 100%;
+	justify-content: center;
 	padding: 4px 8px;
-	align-items: center;
-	justify-content: space-between;
 `
 export const Body = styled.View`
 	flex: 1;
@@ -20,15 +19,35 @@ export const Body = styled.View`
 export const Scroll = styled.ScrollView`
 	margin-top: 8px;
 `
-export const Suggestions = styled.View`
-	flex: 1;
+export const TipContainer = styled.Pressable`
 	flex-direction: row;
-	flex-wrap: wrap;
-	gap: 4px;
-	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	background: ${props => props.theme.boxBg};
+	padding: 8px;
+	border-radius: 8px;
+	margin: 8px 0;
+	opacity: 0.6;
+`
+export const Tip = styled(Font)`
+	font-size: 14px;
+	font-weight: 400;
+	max-width: 90%;
 `
 export const Title = styled(Font)`
 	font-size: 24px;
+	font-weight: bold;
+`
+export const ListHeader = styled.View`
+	flex: 1;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 8px;
+	padding: 0 4px;
+`
+export const Text = styled(Font)`
+	font-size: 14px;
 	font-weight: bold;
 `
 export const AddButton = styled(Button)`

@@ -3,7 +3,8 @@ import styled from 'styled-components/native'
 import { Button, Font } from '../../theme/global'
 
 export const Container = styled.View`
-	flex-direction: column;
+	flex-direction: row;
+	align-items: center;
 	gap: 4px;
 	background: ${props => props.theme.boxBg};
 	border-radius: 12px;
@@ -11,6 +12,7 @@ export const Container = styled.View`
 	padding: 12px;
 `
 export const Collapsed = styled.View`
+	flex: 1;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
@@ -29,10 +31,12 @@ export const SmallContainer = styled.View`
 export const Text = styled(Font)`
 	font-size: 14px;
 	font-weight: bold;
+	text-decoration-line: ${props => (props['aria-checked'] ? 'line-through' : 'none')};
 `
 export const Small = styled(Font)`
 	font-size: 12px;
 	font-weight: bold;
+	text-decoration-line: ${props => (props['aria-checked'] ? 'line-through' : 'none')};
 `
 export const QuantityContainer = styled.View`
 	flex-direction: row;
@@ -55,8 +59,8 @@ export const CollapsedContent = styled.View`
 `
 export const CheckButton = styled(Button)`
 	background: transparent;
-	width: 48px;
-	height: 48px;
+	width: 40px;
+	height: 40px;
 	border-radius: 8px;
 	align-items: center;
 	justify-content: center;

@@ -1,10 +1,9 @@
 import { type Models } from 'appwrite'
 
-import { Item } from './item'
 import { Shop } from './shop'
 
-export interface Expense extends Models.Document {
+export interface Expense<ItemType> extends Models.Document {
 	price: number
-	item: string | Item
-	shop: Shop
+	item: ItemType
+	shop: Shop<string>
 }

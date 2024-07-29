@@ -5,4 +5,6 @@ import { List } from './list'
 export interface Shop<ListType> extends Models.Document {
 	name?: string
 	list: ListType | List
+	user: string
+	finished: boolean
 }

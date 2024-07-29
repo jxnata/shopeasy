@@ -1,5 +1,4 @@
-import { ID } from 'appwrite'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, FlatList } from 'react-native'
 
@@ -14,14 +13,13 @@ import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
 import { useExpenses } from '../../hooks/expenses'
 import { useItems } from '../../hooks/items'
+import { useShops } from '../../hooks/shops'
 import { useViewShop } from '../../hooks/shops/view'
 import { databases } from '../../lib/appwrite'
 import { getShopExpenseQuery } from '../../lib/appwrite/queries/shop-expense-query'
 import { getShopQuery } from '../../lib/appwrite/queries/shop-query'
+import { getShoppingsQuery } from '../../lib/appwrite/queries/shoppings-query'
 import { Container, Label } from '../../theme/global'
-import { List } from '../../types/models/list'
-import { Shop } from '../../types/models/shop'
-import { getPermissions } from '../../utils/getPermissions'
 
 function ShopView({ navigation, route }: Props) {
 	const shopParam = route.params ? route.params.shop : undefined
@@ -29,19 +27,31 @@ function ShopView({ navigation, route }: Props) {
 
 	const { current } = useSession()
 	const { t } = useTranslation('translation', { keyPrefix: 'shop' })
-	const [shopId, setShopId] = useState<string | undefined>(shopParam ? shopParam.$id : undefined)
-	const { shop } = useViewShop(shopId, shopParam)
-	const [name, setName] = useState<string>(shopParam ? shopParam.name || t('new_shop') : '')
+
+	const { shop, mutate: mutateShop } = useViewShop(shopParam ? shopParam.$id : undefined, shopParam)
+	const [name, setName] = useState<string>(shopParam ? shopParam.name || '' : '')
+	const [displayTip, setDisplayTip] = useState(true)
+	const [editName, setEditName] = useState(false)
 	const [optionsOpen, setOptionsOpen] = useState(false)
 
 	const expensesQueries = getShopExpenseQuery(shop ? shop.$id : undefined, size)
 	const { expenses, mutate: mutateExpenses } = useExpenses(expensesQueries, !shop)
 
+	const shoppingsQueries = getShoppingsQuery(current ? current.$id : undefined)
+
+	const { mutate: mutateShoppings } = useShops(shoppingsQueries, !current)
+
 	const queries = getShopQuery(shop ? shop.list.$id : undefined, size)
 	const disabled = !shop || !current
-	const { items, mutate } = useItems(queries, disabled)
+	const { items } = useItems(queries, disabled)
 
-	const toggle = () => setOptionsOpen(old => !old)
+	const toggle = useCallback(() => setOptionsOpen(old => !old), [])
+	const closeTip = () => setDisplayTip(false)
+
+	const onRename = () => {
+		setOptionsOpen(false)
+		setEditName(old => !old)
+	}
 
 	const onDelete = async () => {
 		if (!shop) return
@@ -68,71 +78,104 @@ function ShopView({ navigation, route }: Props) {
 		])
 	}
 
-	const onSave = async () => {
-		if (!current || !name) return
+	const onSetName = async () => {
+		if (!current || !name || !shop) return
 
 		try {
-			const created: Shop<List> = await databases.createDocument(
-				DB,
-				MODELS.SHOP,
-				ID.unique(),
-				{ name, user: current.$id },
-				getPermissions(current.$id)
-			)
-			mutateExpenses()
-			setShopId(created.$id)
+			await databases.updateDocument(DB, MODELS.SHOP, shop.$id, { name })
+			mutateShop()
+			mutateShoppings()
+			setEditName(false)
 		} catch {
-			toast.error(t('create_error'))
+			toast.error(t('update_name_error'))
 		}
 	}
-	console.tron.log(shopParam, size)
+
+	const HeaderRight = useCallback(() => {
+		return (
+			<S.GhostButton onPress={toggle}>
+				<Icon name='ellipsis-vertical' />
+			</S.GhostButton>
+		)
+	}, [toggle])
+
+	const getExpense = useCallback(
+		(id: string) => {
+			const expense = expenses.find(expense => expense.item.$id === id)
+
+			if (!expense) return null
+
+			return expense
+		},
+		[expenses]
+	)
+
 	useEffect(() => {
-		if (!shopParam && size > 0) {
-			console.tron.log('entrou ----> shopParam && size > 0')
-		}
-	}, [shopParam, size])
+		if (!shop) return
+
+		navigation.setOptions({ title: shop.name || t('title'), headerRight: HeaderRight })
+	}, [HeaderRight, navigation, shop, t])
 
 	return (
 		<Container>
 			<S.Content>
-				<S.Header>
-					<S.Title>{shop ? shop.name : t('title')}</S.Title>
-					{!!shop && (
-						<S.GhostButton onPress={toggle}>
-							<Icon name='ellipsis-vertical' />
-						</S.GhostButton>
-					)}
-				</S.Header>
-				<S.Body>
-					{!shop && (
-						<Input
-							value={name}
-							onChangeText={setName}
-							placeholder={t('shop_name')}
-							maxLength={32}
-							autoFocus={items.length === 0}
-							onSubmitEditing={onSave}
-							returnKeyType='done'
+				{(shopParam && !shopParam.name) ||
+					(editName && (
+						<S.Header>
+							<Input
+								label={t('shop_name_label')}
+								value={name}
+								onChangeText={setName}
+								placeholder={t('shop_name')}
+								maxLength={32}
+								autoFocus={items.length === 0}
+								onSubmitEditing={onSetName}
+								returnKeyType='done'
+							/>
+						</S.Header>
+					))}
+				{!!shop && (
+					<S.Body>
+						<FlatList
+							data={items}
+							keyExtractor={item => item.$id}
+							renderItem={({ item }) => (
+								<ItemShopRow
+									shopId={shop.$id}
+									expense={getExpense(item.$id)}
+									item={item}
+									mutate={mutateExpenses}
+								/>
+							)}
+							showsVerticalScrollIndicator={false}
+							style={{ marginBottom: 12 }}
+							ListHeaderComponent={
+								<>
+									{displayTip && (
+										<S.TipContainer onPress={closeTip}>
+											<Icon name='information-circle' />
+											<S.Tip>{t('tip_text')}</S.Tip>
+										</S.TipContainer>
+									)}
+									<S.ListHeader>
+										<S.Text>{t('list_item')}</S.Text>
+										<S.Text>{t('list_price')}</S.Text>
+									</S.ListHeader>
+								</>
+							}
 						/>
-					)}
-					<FlatList
-						data={items}
-						keyExtractor={item => item.$id}
-						renderItem={({ item }) => <ItemShopRow item={item} mutate={mutate} />}
-						showsVerticalScrollIndicator={false}
-						style={{ marginBottom: 12 }}
-					/>
-					<Options open={optionsOpen} onClose={toggle}>
-						{/* <S.OptionButton onPress={onRename}>
-							<Icon name='create' />
-							<Label>{t('edit_option')}</Label>
-						</S.OptionButton> */}
-						<S.OptionButton onPress={onConfirmDelete}>
-							<Icon name='trash' />
-							<Label>{t('delete_option')}</Label>
-						</S.OptionButton>
-					</Options>
-				</S.Body>
+						<Options open={optionsOpen} onClose={toggle}>
+							<S.OptionButton onPress={onRename}>
+								<Icon name='create' />
+								<Label>{t('edit_option')}</Label>
+							</S.OptionButton>
+							<S.OptionButton onPress={onConfirmDelete}>
+								<Icon name='trash' />
+								<Label>{t('delete_option')}</Label>
+							</S.OptionButton>
+						</Options>
+					</S.Body>
+				)}
 			</S.Content>
 		</Container>
 	)

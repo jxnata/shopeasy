@@ -25,6 +25,10 @@ function Home({ navigation }: Props) {
 		navigation.navigate('list')
 	}
 
+	const navigateToShoppings = () => {
+		navigation.navigate('shoppings')
+	}
+
 	const onOpenList = async (list: List) => {
 		navigation.navigate('list', { list })
 	}
@@ -64,7 +68,7 @@ function Home({ navigation }: Props) {
 				<S.MenuContainer>
 					<S.MenuList horizontal showsHorizontalScrollIndicator={false}>
 						<MenuItem title={t('menu_item_create')} icon='✏️' action={onCreate} />
-						<MenuItem title={t('menu_item_shop')} icon='🛍️' action={() => {}} />
+						<MenuItem title={t('menu_item_shop')} icon='🛍️' action={navigateToShoppings} />
 						<MenuItem title={t('menu_item_expenses')} icon='💸' action={() => {}} />
 						<MenuItem title={t('menu_item_profile')} icon='🙋' action={() => {}} />
 					</S.MenuList>

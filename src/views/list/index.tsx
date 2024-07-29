@@ -56,6 +56,7 @@ function ListView({ navigation, route }: Props) {
 
 		const data = {
 			list: list.$id,
+			user: current.$id,
 		}
 
 		const shop: Shop<List> = await databases.createDocument(
@@ -119,7 +120,7 @@ function ListView({ navigation, route }: Props) {
 		}
 	}
 
-	const HeaserRight = useCallback(() => {
+	const HeaderRight = useCallback(() => {
 		return (
 			<S.GhostButton onPress={toggle}>
 				<Icon name='ellipsis-vertical' />
@@ -129,9 +130,9 @@ function ListView({ navigation, route }: Props) {
 
 	useEffect(() => {
 		if (list) {
-			navigation.setOptions({ title: list.name, headerRight: HeaserRight })
+			navigation.setOptions({ title: list.name, headerRight: HeaderRight })
 		}
-	}, [HeaserRight, list, navigation])
+	}, [HeaderRight, list, navigation])
 
 	return (
 		<Container>

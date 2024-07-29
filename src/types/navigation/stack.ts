@@ -7,6 +7,7 @@ export type StackParamList = {
 	shop: { shop: Shop<List>; size: number } | undefined
 	rename: { list: List } | undefined
 	add: { items: string[]; listId: string; queries: string[] }
+	shoppings: undefined
 	intro: undefined
 	auth: undefined
 }

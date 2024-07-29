@@ -17,6 +17,7 @@ import Intro from '../views/intro'
 import ListView from '../views/list'
 import ListRename from '../views/rename'
 import ShopView from '../views/shop'
+import Shoppings from '../views/shoppings'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -74,6 +75,7 @@ const Routes = () => {
 				<Stack.Screen name='add' component={Add} options={{ title: t('add.title') }} />
 				<Stack.Screen name='rename' component={ListRename} options={{ title: t('rename.title') }} />
 				<Stack.Screen name='shop' component={ShopView} options={{ title: t('shop.title') }} />
+				<Stack.Screen name='shoppings' component={Shoppings} options={{ title: t('shoppings.title') }} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)
