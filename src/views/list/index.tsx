@@ -21,7 +21,7 @@ import { getUserQuery } from '../../lib/appwrite/queries/user-query'
 import { Button, ButtonIcon, ButtonLabel, Container, Label } from '../../theme/global'
 import { List } from '../../types/models/list'
 import { Shop } from '../../types/models/shop'
-import { getPermissions } from '../../utils/getPermissions'
+import { getPermissions } from '../../utils/get-permissions'
 
 function ListView({ navigation, route }: Props) {
 	const listParam = route.params ? route.params.list : undefined
@@ -67,7 +67,7 @@ function ListView({ navigation, route }: Props) {
 			getPermissions(current.$id)
 		)
 
-		navigation.navigate('shop', { size, shop })
+		navigation.replace('shop', { size, shop })
 	}
 
 	const onRename = () => {
@@ -120,6 +120,17 @@ function ListView({ navigation, route }: Props) {
 		}
 	}
 
+	const displayCategory = useCallback(
+		(index: number) => {
+			if (index === 0) return true
+
+			const item = items[index]
+			const prevItem = items[index - 1]
+			return item.category !== prevItem.category
+		},
+		[items]
+	)
+
 	const HeaderRight = useCallback(() => {
 		return (
 			<S.GhostButton onPress={toggle}>
@@ -129,9 +140,7 @@ function ListView({ navigation, route }: Props) {
 	}, [toggle])
 
 	useEffect(() => {
-		if (list) {
-			navigation.setOptions({ title: list.name, headerRight: HeaderRight })
-		}
+		if (list) navigation.setOptions({ title: list.name, headerRight: HeaderRight })
 	}, [HeaderRight, list, navigation])
 
 	return (
@@ -158,7 +167,9 @@ function ListView({ navigation, route }: Props) {
 					<FlatList
 						data={items}
 						keyExtractor={item => item.$id}
-						renderItem={({ item }) => <ItemRow item={item} mutate={mutate} />}
+						renderItem={({ item, index }) => (
+							<ItemRow item={item} displayCategory={displayCategory(index)} mutate={mutate} />
+						)}
 						showsVerticalScrollIndicator={false}
 						style={{ marginBottom: 12 }}
 					/>

@@ -54,7 +54,12 @@
 			"list_item": "Item",
 			"list_price": "Preço unitário",
 			"edit_option": "Renomear",
-			"delete_option": "Excluir compra"
+			"delete_option": "Excluir compra",
+			"delete_title": "Excluir lista",
+			"delete_text": "Tem certeza que deseja excluir esta compra? Todos os itens dela serão excluídos.",
+			"delete_confirm": "Sim, excluir",
+			"cancel": "Cancelar",
+			"delete_error": "Ocorreu um erro ao excluir a compra."
 		},
 		"shoppings": {
 			"title": "Compras",
@@ -92,6 +97,24 @@
 			"date": "Data",
 			"price": "Preço",
 			"no_expenses": "Nenhum histórico para esse item."
+		},
+		"categories": {
+			"others": "Outros",
+			"household": "Móveis e utensílios",
+			"office": "Escritório",
+			"eletronics": "Eletrônicos",
+			"clothing": "Vestuário",
+			"music": "Música",
+			"games": "Jogos",
+			"sports": "Esportes",
+			"dishware": "Eletrodomésticos",
+			"drinks": "Bebidas",
+			"food_sweet": "Doces",
+			"food_marine": "Frutos do mar",
+			"food_asian": "Comida asíatica",
+			"food_prepared": "Comida preparada",
+			"vegetables": "Verduras",
+			"fruits": "Frutas"
 		}
 	}
 }

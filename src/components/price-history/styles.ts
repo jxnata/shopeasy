@@ -20,7 +20,7 @@ export const Content = styled.View`
 	border-radius: 8px;
 `
 export const Title = styled(Label)`
-	margin-bottom: 12px;
+	margin-bottom: 16px;
 `
 export const RowText = styled(Label)`
 	font-size: 12px;

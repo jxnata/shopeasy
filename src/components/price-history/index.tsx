@@ -26,7 +26,7 @@ const PriceHistory = ({ open, item, onClose }: Props) => {
 			<S.Container onPress={onClose}>
 				<S.Content style={{ paddingBottom: bottom }}>
 					<S.Title>
-						{item.name} - {t('title')}
+						{t('title')}: {item.name}
 					</S.Title>
 					<FlatList
 						data={expenses}

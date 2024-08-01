@@ -8,7 +8,6 @@ import { TextInput } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
-import suggestions from '../../assets/data/items.json'
 import Input from '../../components/input'
 import SuggestionItem from '../../components/suggestion-item'
 import { DB, MODELS } from '../../constants'
@@ -16,7 +15,9 @@ import { useSession } from '../../contexts/session'
 import { useItems } from '../../hooks/items'
 import { databases } from '../../lib/appwrite'
 import { Button, ButtonIcon, ButtonLabel, Container } from '../../theme/global'
-import { getPermissions } from '../../utils/getPermissions'
+import { getCategory } from '../../utils/get-category'
+import { getItems } from '../../utils/get-items'
+import { getPermissions } from '../../utils/get-permissions'
 import { randomItems } from '../../utils/random-items'
 
 function Add({ navigation, route }: Props) {
@@ -28,13 +29,15 @@ function Add({ navigation, route }: Props) {
 	const inputRef = useRef<TextInput>(null)
 	const { mutate } = useItems(queries)
 
+	const suggestions = useMemo(() => getItems(), [])
+
 	const filteredSuggestions = useMemo(() => {
 		const flattened = flatten(suggestions.map(s => s.items))
 
 		if (!search) return randomItems(flattened, 10)
 
 		return flattened.filter(s => s.includes(toLower(search))).slice(0, 10)
-	}, [search])
+	}, [search, suggestions])
 
 	const createItem = useCallback(
 		async (name: string) => {
@@ -45,7 +48,7 @@ function Add({ navigation, route }: Props) {
 					DB,
 					MODELS.ITEMS,
 					ID.unique(),
-					{ name, qty: 1, list: listId },
+					{ name, qty: 1, list: listId, category: getCategory(name).number },
 					getPermissions(current.$id)
 				)
 			} catch {
@@ -95,6 +98,8 @@ function Add({ navigation, route }: Props) {
 						clearButtonMode='while-editing'
 						placeholder={t('search_placeholder')}
 						autoCapitalize='none'
+						autoComplete='off'
+						autoCorrect={false}
 						maxLength={32}
 						autoFocus
 					/>

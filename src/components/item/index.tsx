@@ -7,13 +7,15 @@ import * as S from './styles'
 import units from '../../assets/data/units.json'
 import { DB, MODELS } from '../../constants'
 import { databases } from '../../lib/appwrite'
+import { ButtonIcon } from '../../theme/global'
 import { Item } from '../../types/models/item'
 import { format } from '../../utils/format'
+import CategoryTag from '../category-tag'
 import Dropdown from '../dropdown'
 import Icon from '../icon'
 import MaskedInput from '../masked-input'
 
-const ItemRow = ({ item, onPress, mutate }: Props) => {
+const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 	const [data, setData] = useState<Item>(item)
 	const [quantity, setQuantity] = useState<number>(data.qty)
 	const [deleted, setDeleted] = useState<boolean>(false)
@@ -28,6 +30,7 @@ const ItemRow = ({ item, onPress, mutate }: Props) => {
 	const updateQuantity = useCallback(
 		async (qty: number) => {
 			if (qty === data.qty) return
+			if (qty < 1) return
 
 			try {
 				const updated: Item = await databases.updateDocument(DB, MODELS.ITEMS, item.$id, { qty })
@@ -91,72 +94,77 @@ const ItemRow = ({ item, onPress, mutate }: Props) => {
 	if (deleted) return null
 
 	return (
-		<S.Container>
-			<S.Collapsed>
-				<S.RowContainer onPress={toggle} hitSlop={{ top: 10, bottom: 10 }}>
-					<S.Text>{item.name}</S.Text>
-				</S.RowContainer>
-				<S.QuantityContainer>
-					<S.QuantityButton onPress={decrease}>
-						<Icon name={quantity <= 1 ? 'trash-outline' : 'remove'} />
-					</S.QuantityButton>
-					<S.Text>{quantity}</S.Text>
-					<S.QuantityButton onPress={increase}>
-						<Icon name='add' />
-					</S.QuantityButton>
-				</S.QuantityContainer>
-			</S.Collapsed>
-			{!!data.price && (
-				<S.SmallContainer>
-					<S.Small>
-						{format(data.price / 100)} • {t('needed')} {quantity}
-					</S.Small>
-					<S.Small>{data.unit ? data.unit : quantity > 1 ? t('unit_plural') : t('unit_singular')}</S.Small>
-				</S.SmallContainer>
-			)}
-			{open && (
-				<S.CollapsedContent>
-					<Controller
-						control={control}
-						rules={{ required: false }}
-						name='price'
-						render={({ field: { onChange, onBlur, value } }) => (
-							<MaskedInput
-								label={t('price_label')}
-								type='currency'
-								placeholder={t('price')}
-								keyboardType='numeric'
-								onChangeText={onChange}
-								onBlur={onBlur}
-								options={{
-									decimalSeparator: '.',
-									groupSeparator: ',',
-									precision: 2,
-								}}
-								defaultValue={data.price ? parseFloat(data.price.toString()).toFixed(2) : ''}
-							/>
-						)}
-					/>
-					<Controller
-						control={control}
-						rules={{ required: false }}
-						name='unit'
-						render={({ field: { onChange, onBlur, value } }) => (
-							<Dropdown
-								label={t('unit_label')}
-								placeholder={t('unit')}
-								options={units}
-								onValueChange={onChange}
-								selectedValue={value || ''}
-							/>
-						)}
-					/>
-					<S.SaveButton onPress={handleSubmit(updateItem)}>
-						<Icon name='checkmark' style={{ fontSize: 20 }} />
-					</S.SaveButton>
-				</S.CollapsedContent>
-			)}
-		</S.Container>
+		<S.ItemContainer>
+			{displayCategory && <CategoryTag category={item.category} />}
+			<S.Container>
+				<S.Collapsed>
+					<S.RowContainer onPress={toggle} hitSlop={{ top: 10, bottom: 10 }}>
+						<S.Text>{item.name}</S.Text>
+					</S.RowContainer>
+					<S.QuantityContainer>
+						<S.QuantityButton onPress={decrease}>
+							<Icon name={quantity <= 1 ? 'trash-outline' : 'remove'} />
+						</S.QuantityButton>
+						<S.Text>{quantity}</S.Text>
+						<S.QuantityButton onPress={increase}>
+							<Icon name='add' />
+						</S.QuantityButton>
+					</S.QuantityContainer>
+				</S.Collapsed>
+				{!!data.price && (
+					<S.SmallContainer>
+						<S.Small>
+							{format(data.price / 100)} • {t('needed')} {quantity}
+						</S.Small>
+						<S.Small>
+							{data.unit ? data.unit : quantity > 1 ? t('unit_plural') : t('unit_singular')}
+						</S.Small>
+					</S.SmallContainer>
+				)}
+				{open && (
+					<S.CollapsedContent>
+						<Controller
+							control={control}
+							rules={{ required: false }}
+							name='price'
+							render={({ field: { onChange, onBlur, value } }) => (
+								<MaskedInput
+									label={t('price_label')}
+									type='currency'
+									placeholder={t('price')}
+									keyboardType='numeric'
+									onChangeText={onChange}
+									onBlur={onBlur}
+									options={{
+										decimalSeparator: '.',
+										groupSeparator: ',',
+										precision: 2,
+									}}
+									defaultValue={data.price ? parseFloat(data.price.toString()).toFixed(2) : ''}
+								/>
+							)}
+						/>
+						<Controller
+							control={control}
+							rules={{ required: false }}
+							name='unit'
+							render={({ field: { onChange, onBlur, value } }) => (
+								<Dropdown
+									label={t('unit_label')}
+									placeholder={t('unit')}
+									options={units}
+									onValueChange={onChange}
+									selectedValue={value || ''}
+								/>
+							)}
+						/>
+						<S.SaveButton onPress={handleSubmit(updateItem)}>
+							<ButtonIcon name='checkmark' style={{ fontSize: 20 }} />
+						</S.SaveButton>
+					</S.CollapsedContent>
+				)}
+			</S.Container>
+		</S.ItemContainer>
 	)
 }
 
@@ -164,6 +172,6 @@ export default ItemRow
 
 type Props = {
 	item: Item
-	onPress?: (item: Item) => void
+	displayCategory?: boolean
 	mutate: () => void
 }

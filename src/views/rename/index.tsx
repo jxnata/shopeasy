@@ -10,7 +10,7 @@ import { useSession } from '../../contexts/session'
 import { useViewList } from '../../hooks/lists/view'
 import { databases } from '../../lib/appwrite'
 import { Button, ButtonIcon, ButtonLabel, Container } from '../../theme/global'
-import { getPermissions } from '../../utils/getPermissions'
+import { getPermissions } from '../../utils/get-permissions'
 
 function ListRename({ navigation, route }: Props) {
 	const listParam = route.params ? route.params.list : undefined

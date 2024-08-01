@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, FlatList } from 'react-native'
 
@@ -7,7 +7,9 @@ import { Props } from './types'
 import Icon from '../../components/icon'
 import Input from '../../components/input'
 import ItemShopRow from '../../components/item-shop'
+import Loading from '../../components/loading'
 import Options from '../../components/options'
+import { Progress } from '../../components/progress'
 import { toast } from '../../components/toast'
 import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
@@ -34,6 +36,8 @@ function ShopView({ navigation, route }: Props) {
 	const [editName, setEditName] = useState(false)
 	const [optionsOpen, setOptionsOpen] = useState(false)
 
+	const diplayInput = useMemo(() => (shop && !shop.name) || editName, [shop, editName])
+
 	const expensesQueries = getShopExpenseQuery(shop ? shop.$id : undefined, size)
 	const { expenses, mutate: mutateExpenses } = useExpenses(expensesQueries, !shop)
 
@@ -44,6 +48,10 @@ function ShopView({ navigation, route }: Props) {
 	const queries = getShopQuery(shop ? shop.list.$id : undefined, size)
 	const disabled = !shop || !current
 	const { items } = useItems(queries, disabled)
+
+	const percentage = useMemo(() => {
+		return items && expenses ? Math.round((expenses.length / items.length) * 100) : 0
+	}, [expenses, items])
 
 	const toggle = useCallback(() => setOptionsOpen(old => !old), [])
 	const closeTip = () => setDisplayTip(false)
@@ -57,6 +65,7 @@ function ShopView({ navigation, route }: Props) {
 		if (!shop) return
 		try {
 			await databases.deleteDocument(DB, MODELS.SHOP, shop.$id)
+			mutateShoppings()
 			navigation.goBack()
 		} catch {
 			toast.error(t('delete_error'))
@@ -110,40 +119,60 @@ function ShopView({ navigation, route }: Props) {
 		[expenses]
 	)
 
+	const displayCategory = useCallback(
+		(index: number) => {
+			if (index === 0) return true
+
+			const item = items[index]
+			const prevItem = items[index - 1]
+			return item.category !== prevItem.category
+		},
+		[items]
+	)
+
 	useEffect(() => {
 		if (!shop) return
 
 		navigation.setOptions({ title: shop.name || t('title'), headerRight: HeaderRight })
 	}, [HeaderRight, navigation, shop, t])
 
+	useEffect(() => {
+		setTimeout(() => {
+			setDisplayTip(false)
+		}, 5000)
+	}, [])
+
+	if (!shop) return <Loading />
+
 	return (
 		<Container>
 			<S.Content>
-				{(shopParam && !shopParam.name) ||
-					(editName && (
-						<S.Header>
-							<Input
-								label={t('shop_name_label')}
-								value={name}
-								onChangeText={setName}
-								placeholder={t('shop_name')}
-								maxLength={32}
-								autoFocus={items.length === 0}
-								onSubmitEditing={onSetName}
-								returnKeyType='done'
-							/>
-						</S.Header>
-					))}
+				{diplayInput && (
+					<S.Header>
+						<Input
+							label={t('shop_name_label')}
+							value={name}
+							onChangeText={setName}
+							placeholder={t('shop_name')}
+							maxLength={32}
+							autoFocus={items.length === 0}
+							onSubmitEditing={onSetName}
+							returnKeyType='done'
+						/>
+					</S.Header>
+				)}
 				{!!shop && (
 					<S.Body>
+						<Progress percentage={percentage} />
 						<FlatList
 							data={items}
 							keyExtractor={item => item.$id}
-							renderItem={({ item }) => (
+							renderItem={({ item, index }) => (
 								<ItemShopRow
-									shopId={shop.$id}
-									expense={getExpense(item.$id)}
 									item={item}
+									shopId={shop.$id}
+									displayCategory={displayCategory(index)}
+									expense={getExpense(item.$id)}
 									mutate={mutateExpenses}
 								/>
 							)}

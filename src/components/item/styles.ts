@@ -2,6 +2,10 @@ import styled from 'styled-components/native'
 
 import { Button, Font } from '../../theme/global'
 
+export const ItemContainer = styled.View`
+	flex-direction: column;
+	gap: 8px;
+`
 export const Container = styled.View`
 	flex-direction: column;
 	gap: 4px;
@@ -16,6 +20,21 @@ export const Collapsed = styled.View`
 	align-items: center;
 	gap: 6px;
 	width: auto;
+`
+export const CategoryContainer = styled.View`
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+`
+export const CategoryTag = styled.View`
+	background: ${props => props.theme.secondaryFocus}20;
+	padding: 4px 12px;
+	border-radius: 8px;
+	margin-top: 8px;
+`
+export const CategoryText = styled(Font)`
+	font-weight: bold;
+	color: ${props => props.theme.secondary};
 `
 export const RowContainer = styled.TouchableOpacity`
 	flex: 1;

@@ -2,6 +2,10 @@ import styled from 'styled-components/native'
 
 import { Button, Font } from '../../theme/global'
 
+export const ItemContainer = styled.View`
+	flex-direction: column;
+	gap: 8px;
+`
 export const Container = styled.View`
 	flex-direction: row;
 	align-items: center;

@@ -15,6 +15,7 @@ export const Header = styled.View`
 `
 export const Body = styled.View`
 	flex: 1;
+	gap: 8px;
 `
 export const Scroll = styled.ScrollView`
 	margin-top: 8px;

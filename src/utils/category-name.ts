@@ -32,5 +32,7 @@ export const categoryName = (category: number) => {
 			return 'vegetables'
 		case 15:
 			return 'fruits'
+		default:
+			return 'others'
 	}
 }
