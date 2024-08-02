@@ -13,6 +13,7 @@ import { Progress } from '../../components/progress'
 import { toast } from '../../components/toast'
 import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
+import { useCart } from '../../hooks/cart'
 import { useExpenses } from '../../hooks/expenses'
 import { useItems } from '../../hooks/items'
 import { useShops } from '../../hooks/shops'
@@ -21,7 +22,8 @@ import { databases } from '../../lib/appwrite'
 import { getShopExpenseQuery } from '../../lib/appwrite/queries/shop-expense-query'
 import { getShopQuery } from '../../lib/appwrite/queries/shop-query'
 import { getShoppingsQuery } from '../../lib/appwrite/queries/shoppings-query'
-import { Container, Label } from '../../theme/global'
+import { ButtonIcon, ButtonLabel, Container, Label } from '../../theme/global'
+import { format } from '../../utils/format'
 
 function ShopView({ navigation, route }: Props) {
 	const shopParam = route.params ? route.params.shop : undefined
@@ -49,9 +51,7 @@ function ShopView({ navigation, route }: Props) {
 	const disabled = !shop || !current
 	const { items } = useItems(queries, disabled)
 
-	const percentage = useMemo(() => {
-		return items && expenses ? Math.round((expenses.length / items.length) * 100) : 0
-	}, [expenses, items])
+	const { percentage, total } = useCart(items, expenses)
 
 	const toggle = useCallback(() => setOptionsOpen(old => !old), [])
 	const closeTip = () => setDisplayTip(false)
@@ -163,7 +163,6 @@ function ShopView({ navigation, route }: Props) {
 				)}
 				{!!shop && (
 					<S.Body>
-						<Progress percentage={percentage} />
 						<FlatList
 							data={items}
 							keyExtractor={item => item.$id}
@@ -193,6 +192,19 @@ function ShopView({ navigation, route }: Props) {
 								</>
 							}
 						/>
+						<S.Cart>
+							<S.CartLeft>
+								<S.CartTotal>
+									<S.Total>{t('total')}</S.Total>
+									<Label>{format(total)}</Label>
+								</S.CartTotal>
+								<Progress percentage={percentage} />
+							</S.CartLeft>
+							<S.FinishButton>
+								<ButtonIcon name='checkmark-circle' />
+								<ButtonLabel>{t('finish')}</ButtonLabel>
+							</S.FinishButton>
+						</S.Cart>
 						<Options open={optionsOpen} onClose={toggle}>
 							<S.OptionButton onPress={onRename}>
 								<Icon name='create' />

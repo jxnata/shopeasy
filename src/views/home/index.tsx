@@ -58,12 +58,6 @@ function Home({ navigation }: Props) {
 							</S.Empty>
 						}
 					/>
-					{/* {lists.length > 0 && (
-						<S.AddButton onPress={onCreate}>
-						<ButtonIcon name='add-circle' />
-						<ButtonLabel>{t('add_list_button')}</ButtonLabel>
-						</S.AddButton>
-						)} */}
 				</S.Body>
 				<S.MenuContainer>
 					<S.MenuList horizontal showsHorizontalScrollIndicator={false}>
