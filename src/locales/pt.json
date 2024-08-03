@@ -100,6 +100,12 @@
 			"price": "Preço",
 			"no_expenses": "Nenhum histórico para esse item."
 		},
+		"shop_local": {
+			"shop_in": "Compra no",
+			"create_place_error": "Erro ao selecionar o local.",
+			"local_label": "Onde vai fazer essa compra?",
+			"local_placeholder": "Pesquise um local..."
+		},
 		"categories": {
 			"others": "Outros",
 			"household": "Móveis e utensílios",

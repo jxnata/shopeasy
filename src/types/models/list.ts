@@ -1,5 +1,7 @@
 import { type Models } from 'appwrite'
 
+import { Local } from './local'
+
 export interface List extends Models.Document {
 	name: string
 	user: string
@@ -7,4 +9,5 @@ export interface List extends Models.Document {
 	finished: boolean
 	total: number | null
 	qty: number | null
+	local: Local
 }
