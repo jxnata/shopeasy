@@ -1,3 +1,5 @@
+import Geolocation from '@react-native-community/geolocation'
+import { useQueryClient } from '@tanstack/react-query'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, FlatList } from 'react-native'
@@ -14,44 +16,48 @@ import { toast } from '../../components/toast'
 import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
 import { useCart } from '../../hooks/cart'
-import { useExpenses } from '../../hooks/expenses'
-import { useItems } from '../../hooks/items'
-import { useShops } from '../../hooks/shops'
-import { useViewShop } from '../../hooks/shops/view'
-import { databases } from '../../lib/appwrite'
-import { getShopExpenseQuery } from '../../lib/appwrite/queries/shop-expense-query'
-import { getShopQuery } from '../../lib/appwrite/queries/shop-query'
-import { getShoppingsQuery } from '../../lib/appwrite/queries/shoppings-query'
+import { useDocument, useDocuments } from '../../hooks/documents'
+import { databases, queries } from '../../lib/appwrite'
 import { ButtonIcon, ButtonLabel, Container, Label } from '../../theme/global'
+import { Item } from '../../types/models/item'
+import { List } from '../../types/models/list'
+import { Local } from '../../types/models/local'
 import { format } from '../../utils/format'
 
 function ShopView({ navigation, route }: Props) {
-	const shopParam = route.params ? route.params.shop : undefined
-	const size = route.params ? route.params.size : 0
+	const listParam = route.params ? route.params.list : undefined
+	const listId = useMemo(() => (listParam ? listParam.$id : undefined), [listParam])
+	// const itemsToCopy = route.params ? route.params.items : []
 
 	const { current } = useSession()
+	const currentId = useMemo(() => (current ? current.$id : undefined), [current])
+
 	const { t } = useTranslation('translation', { keyPrefix: 'shop' })
 
-	const { shop, mutate: mutateShop } = useViewShop(shopParam ? shopParam.$id : undefined, shopParam)
-	const [name, setName] = useState<string>(shopParam ? shopParam.name || '' : '')
+	const queryClient = useQueryClient()
+
+	const { data: list, mutate } = useDocument<List>({
+		queryKey: ['list', listId],
+		initialData: listParam,
+		enabled: !!listId,
+		queryFn: async () => await databases.getDocument(DB, MODELS.LIST, listId!),
+	})
+
+	const [name, setName] = useState<string>(listParam ? listParam.name || '' : '')
 	const [displayTip, setDisplayTip] = useState(true)
 	const [editName, setEditName] = useState(false)
 	const [optionsOpen, setOptionsOpen] = useState(false)
 
-	const diplayInput = useMemo(() => (shop && !shop.name) || editName, [shop, editName])
+	const diplayInput = useMemo(() => (list && !list.name) || editName, [list, editName])
 
-	const expensesQueries = getShopExpenseQuery(shop ? shop.$id : undefined, size)
-	const { expenses, mutate: mutateExpenses } = useExpenses(expensesQueries, !shop)
+	const { data: items, mutate: mutateItems } = useDocuments<Item<List, Local>[]>({
+		queryKey: ['items-shop', listId],
+		initialData: [],
+		enabled: !!listId && !!currentId,
+		queryFn: async () => await databases.listDocuments(DB, MODELS.LIST, queries.itemsByListToShop(listId)),
+	})
 
-	const shoppingsQueries = getShoppingsQuery(current ? current.$id : undefined)
-
-	const { mutate: mutateShoppings } = useShops(shoppingsQueries, !current)
-
-	const queries = getShopQuery(shop ? shop.list.$id : undefined, size)
-	const disabled = !shop || !current
-	const { items } = useItems(queries, disabled)
-
-	const { percentage, total } = useCart(items, expenses)
+	const { percentage, total } = useCart(items)
 
 	const toggle = useCallback(() => setOptionsOpen(old => !old), [])
 	const closeTip = () => setDisplayTip(false)
@@ -62,10 +68,10 @@ function ShopView({ navigation, route }: Props) {
 	}
 
 	const onDelete = async () => {
-		if (!shop) return
+		if (!list) return
 		try {
-			await databases.deleteDocument(DB, MODELS.SHOP, shop.$id)
-			mutateShoppings()
+			await databases.deleteDocument(DB, MODELS.LIST, list.$id)
+			queryClient.invalidateQueries({ queryKey: ['lists-shop', currentId] })
 			navigation.goBack()
 		} catch {
 			toast.error(t('delete_error'))
@@ -88,12 +94,12 @@ function ShopView({ navigation, route }: Props) {
 	}
 
 	const onSetName = async () => {
-		if (!current || !name || !shop) return
+		if (!current || !name || !list) return
 
 		try {
-			await databases.updateDocument(DB, MODELS.SHOP, shop.$id, { name })
-			mutateShop()
-			mutateShoppings()
+			await databases.updateDocument(DB, MODELS.LIST, list.$id, { name })
+			mutate()
+			queryClient.invalidateQueries({ queryKey: ['lists-shop', currentId] })
 			setEditName(false)
 		} catch {
 			toast.error(t('update_name_error'))
@@ -108,17 +114,6 @@ function ShopView({ navigation, route }: Props) {
 		)
 	}, [toggle])
 
-	const getExpense = useCallback(
-		(id: string) => {
-			const expense = expenses.find(expense => expense.item.$id === id)
-
-			if (!expense) return null
-
-			return expense
-		},
-		[expenses]
-	)
-
 	const displayCategory = useCallback(
 		(index: number) => {
 			if (index === 0) return true
@@ -131,18 +126,19 @@ function ShopView({ navigation, route }: Props) {
 	)
 
 	useEffect(() => {
-		if (!shop) return
+		if (!list) return
 
-		navigation.setOptions({ title: shop.name || t('title'), headerRight: HeaderRight })
-	}, [HeaderRight, navigation, shop, t])
+		navigation.setOptions({ title: list.name || t('title'), headerRight: HeaderRight })
+	}, [HeaderRight, navigation, list, t])
 
 	useEffect(() => {
+		Geolocation.getCurrentPosition(info => console.tron.log(info))
 		setTimeout(() => {
 			setDisplayTip(false)
 		}, 5000)
 	}, [])
 
-	if (!shop) return <Loading />
+	if (!list) return <Loading />
 
 	return (
 		<Container>
@@ -161,7 +157,7 @@ function ShopView({ navigation, route }: Props) {
 						/>
 					</S.Header>
 				)}
-				{!!shop && (
+				{!!list && (
 					<S.Body>
 						<FlatList
 							data={items}
@@ -169,10 +165,8 @@ function ShopView({ navigation, route }: Props) {
 							renderItem={({ item, index }) => (
 								<ItemShopRow
 									item={item}
-									shopId={shop.$id}
 									displayCategory={displayCategory(index)}
-									expense={getExpense(item.$id)}
-									mutate={mutateExpenses}
+									mutate={mutateItems}
 								/>
 							)}
 							showsVerticalScrollIndicator={false}

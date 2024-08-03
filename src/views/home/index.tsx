@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, RefreshControl } from 'react-native'
 
@@ -6,20 +6,28 @@ import * as S from './styles'
 import { Props } from './types'
 import ListItem from '../../components/list-item'
 import MenuItem from '../../components/menu-item'
+import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
-import { useLists } from '../../hooks/lists'
-import { getUserQuery } from '../../lib/appwrite/queries/user-query'
+import { useDocuments } from '../../hooks/documents'
+import { databases, queries } from '../../lib/appwrite'
 import { ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 import { List } from '../../types/models/list'
 
 function Home({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'home' })
 	const { current } = useSession()
+	const currentId = current ? current.$id : undefined
 
-	const disabled = !current
-	const queries = getUserQuery(current ? current.$id : undefined)
-
-	const { lists, loading, mutate } = useLists(queries, disabled)
+	const {
+		data: lists,
+		loading,
+		mutate,
+	} = useDocuments<List[]>({
+		queryKey: ['lists', currentId],
+		initialData: [],
+		enabled: !!currentId,
+		queryFn: async () => await databases.listDocuments(DB, MODELS.LIST, queries.listsByUser(currentId)),
+	})
 
 	const onCreate = () => {
 		navigation.navigate('list')
@@ -32,10 +40,6 @@ function Home({ navigation }: Props) {
 	const onOpenList = async (list: List) => {
 		navigation.navigate('list', { list })
 	}
-
-	useLayoutEffect(() => {
-		mutate()
-	}, [mutate])
 
 	return (
 		<Container>

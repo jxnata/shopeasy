@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { ID } from 'appwrite'
 import debounce from 'lodash/debounce'
 import flatten from 'lodash/flatten'
@@ -12,7 +13,6 @@ import Input from '../../components/input'
 import SuggestionItem from '../../components/suggestion-item'
 import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
-import { useItems } from '../../hooks/items'
 import { databases } from '../../lib/appwrite'
 import { Button, ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 import { getCategory } from '../../utils/get-category'
@@ -21,13 +21,14 @@ import { getPermissions } from '../../utils/get-permissions'
 import { randomItems } from '../../utils/random-items'
 
 function Add({ navigation, route }: Props) {
-	const { items, listId, queries } = route.params
+	const { items, listId } = route.params
 	const { current } = useSession()
 	const [tempItems, setTempItems] = useState<string[]>(items)
 	const { t } = useTranslation('translation', { keyPrefix: 'add' })
 	const [search, setSearch] = useState<string>('')
 	const inputRef = useRef<TextInput>(null)
-	const { mutate } = useItems(queries)
+
+	const queryClient = useQueryClient()
 
 	const suggestions = useMemo(() => getItems(), [])
 
@@ -46,7 +47,7 @@ function Add({ navigation, route }: Props) {
 			try {
 				await databases.createDocument(
 					DB,
-					MODELS.ITEMS,
+					MODELS.ITEM,
 					ID.unique(),
 					{ name, qty: 1, list: listId, category: getCategory(name).number },
 					getPermissions(current.$id)
@@ -81,9 +82,9 @@ function Add({ navigation, route }: Props) {
 
 	useEffect(() => {
 		return () => {
-			mutate()
+			queryClient.invalidateQueries({ queryKey: ['items', listId] })
 		}
-	}, [mutate])
+	}, [listId, queryClient])
 
 	return (
 		<Container>

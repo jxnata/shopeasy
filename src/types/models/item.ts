@@ -1,12 +1,12 @@
 import { type Models } from 'appwrite'
 
-import { List } from './list'
-
-export interface Item extends Models.Document {
+export interface Item<ListType, LocalType> extends Models.Document {
 	name: string
 	qty: number
-	unit?: string
-	price?: number
+	unit: string | null
+	price: number | null
 	category: number
-	list: string | List
+	checked: boolean
+	list: ListType
+	local: LocalType
 }

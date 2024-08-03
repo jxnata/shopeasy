@@ -27,6 +27,7 @@ export const Title = styled(Font)`
 export const AddButton = styled(Button)`
 	background: transparent;
 	border-bottom-width: 0;
+	height: auto;
 `
 export const GhostButton = styled(Button)`
 	background: transparent;

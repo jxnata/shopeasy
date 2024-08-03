@@ -1,5 +1,4 @@
-import { ID } from 'appwrite'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NativeSyntheticEvent, TextInputEndEditingEventData } from 'react-native'
 
@@ -8,48 +7,49 @@ import { DB, MODELS } from '../../constants'
 import { databases } from '../../lib/appwrite'
 import theme from '../../theme'
 import { ButtonIcon } from '../../theme/global'
-import { Expense } from '../../types/models/expense'
 import { Item } from '../../types/models/item'
+import { List } from '../../types/models/list'
+import { Local } from '../../types/models/local'
 import { format } from '../../utils/format'
 import CategoryTag from '../category-tag'
 import PriceHistory from '../price-history'
 import PriceInput from '../price-input'
 
-const ItemShopRow = ({ item, expense, shopId, displayCategory, mutate }: Props) => {
-	const [checked, setChecked] = useState<boolean>(!!expense)
+const ItemShopRow = ({ item, displayCategory, mutate }: Props) => {
+	const [checked, setChecked] = useState<boolean>(item.checked)
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation('translation', { keyPrefix: 'item_shop' })
 
 	const toggle = () => setOpen(old => !old)
 
-	const checkItem = async () => {
+	const checkItem = useCallback(async () => {
+		if (!item) return
+		if (checked) return
 		try {
 			setChecked(true)
-
-			const body = { price: item.price, item: item.$id, shop: shopId }
-
-			await databases.createDocument(DB, MODELS.EXPENSES, ID.unique(), body)
+			await databases.updateDocument(DB, MODELS.ITEM, item.$id, { checked: true })
 		} catch {
 			setChecked(false)
 		} finally {
 			mutate()
 		}
-	}
+	}, [checked, item, mutate])
 
-	const uncheckItem = async () => {
-		if (!expense) return
+	const uncheckItem = useCallback(async () => {
+		if (!item) return
+		if (!checked) return
 		try {
 			setChecked(false)
-			await databases.deleteDocument(DB, MODELS.EXPENSES, expense.$id)
+			await databases.updateDocument(DB, MODELS.ITEM, item.$id, { checked: true })
 		} catch {
 			setChecked(true)
 		} finally {
 			mutate()
 		}
-	}
+	}, [checked, item, mutate])
 
 	const updateItem = async (e: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
-		if (!expense) return
+		if (!item) return
 		if (!e.nativeEvent.text) return
 		if (isNaN(Number(e.nativeEvent.text))) return
 		if (Number(e.nativeEvent.text) <= 0) return
@@ -59,7 +59,7 @@ const ItemShopRow = ({ item, expense, shopId, displayCategory, mutate }: Props) 
 		}
 
 		try {
-			await databases.updateDocument(DB, MODELS.EXPENSES, expense.$id, body)
+			await databases.updateDocument(DB, MODELS.ITEM, item.$id, body)
 			mutate()
 		} catch {}
 	}
@@ -95,23 +95,19 @@ const ItemShopRow = ({ item, expense, shopId, displayCategory, mutate }: Props) 
 							)}
 						</S.SmallContainer>
 					</S.RowContainer>
-					{!!expense && (
-						<PriceInput
-							type='currency'
-							placeholder={t('price')}
-							keyboardType='numeric'
-							onChangeText={() => {}}
-							onEndEditing={updateItem}
-							defaultValue={
-								expense ? parseFloat(expense.price ? expense.price.toString() : '0').toFixed(2) : ''
-							}
-							options={{
-								decimalSeparator: '.',
-								groupSeparator: ',',
-								precision: 2,
-							}}
-						/>
-					)}
+					<PriceInput
+						type='currency'
+						placeholder={t('price')}
+						keyboardType='numeric'
+						onChangeText={() => {}}
+						onEndEditing={updateItem}
+						defaultValue={item ? parseFloat(item.price ? item.price.toString() : '0').toFixed(2) : ''}
+						options={{
+							decimalSeparator: '.',
+							groupSeparator: ',',
+							precision: 2,
+						}}
+					/>
 				</S.Collapsed>
 				<PriceHistory open={open} onClose={toggle} item={item} />
 			</S.Container>
@@ -122,9 +118,7 @@ const ItemShopRow = ({ item, expense, shopId, displayCategory, mutate }: Props) 
 export default ItemShopRow
 
 type Props = {
-	item: Item
-	shopId: string
-	expense: Expense<Item> | null
+	item: Item<List, Local>
 	displayCategory?: boolean
 	mutate: () => void
 }

@@ -3,7 +3,7 @@ import React from 'react'
 
 import * as S from './styles'
 
-const SuggestionItem = ({ item, onPress, inList }: any) => {
+const SuggestionItem = ({ item, onPress, inList }: Props) => {
 	const handle = () => {
 		onPress(trim(item))
 	}
@@ -17,3 +17,9 @@ const SuggestionItem = ({ item, onPress, inList }: any) => {
 }
 
 export default SuggestionItem
+
+type Props = {
+	item: string
+	onPress: (item: string) => void
+	inList: boolean
+}

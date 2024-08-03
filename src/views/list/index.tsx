@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { ID } from 'appwrite'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,35 +13,43 @@ import Options from '../../components/options'
 import { toast } from '../../components/toast'
 import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
-import { useItems } from '../../hooks/items'
-import { useLists } from '../../hooks/lists'
-import { useViewList } from '../../hooks/lists/view'
-import { databases } from '../../lib/appwrite'
-import { getListQuery } from '../../lib/appwrite/queries/list-query'
-import { getUserQuery } from '../../lib/appwrite/queries/user-query'
+import { useDocument, useDocuments } from '../../hooks/documents'
+import { databases, queries } from '../../lib/appwrite'
 import { Button, ButtonIcon, ButtonLabel, Container, Label } from '../../theme/global'
+import { Item } from '../../types/models/item'
 import { List } from '../../types/models/list'
-import { Shop } from '../../types/models/shop'
 import { getPermissions } from '../../utils/get-permissions'
 
 function ListView({ navigation, route }: Props) {
 	const listParam = route.params ? route.params.list : undefined
+	const listId = useMemo(() => (listParam ? listParam.$id : undefined), [listParam])
 
 	const { current } = useSession()
+	const currentId = useMemo(() => (current ? current.$id : undefined), [current])
+
 	const { t } = useTranslation('translation', { keyPrefix: 'list' })
-	const [listId, setListId] = useState<string | undefined>(listParam ? listParam.$id : undefined)
-	const { list } = useViewList(listId, listParam)
 	const [name, setName] = useState<string>('')
 	const [optionsOpen, setOptionsOpen] = useState(false)
 
-	const userQueries = getUserQuery(current ? current.$id : undefined)
+	const queryClient = useQueryClient()
 
-	const { mutate: mutateLists } = useLists(userQueries, !current)
+	const { data: list } = useDocument<List>({
+		queryKey: ['list', listId],
+		initialData: listParam,
+		enabled: !!listId,
+		queryFn: async () => await databases.getDocument(DB, MODELS.LIST, listId!),
+	})
 
-	const queries = getListQuery(list ? list.$id : undefined)
-	const disabled = !list || !current
-
-	const { items, size, mutate } = useItems(queries, disabled)
+	const {
+		data: items,
+		total: size,
+		mutate,
+	} = useDocuments<Item<List, undefined>[]>({
+		queryKey: ['items', listId],
+		initialData: [],
+		enabled: !!listId && !!currentId,
+		queryFn: async () => await databases.listDocuments(DB, MODELS.ITEM, queries.itemsBylist(listId)),
+	})
 
 	const itemsList = useMemo(() => items.map(i => i.name), [items])
 
@@ -48,26 +57,21 @@ function ListView({ navigation, route }: Props) {
 
 	const onAdd = () => {
 		if (!list) return
-		navigation.navigate('add', { items: itemsList, listId: list.$id, queries })
+		navigation.navigate('add', { items: itemsList, listId: list.$id })
 	}
 
 	const onShop = async () => {
-		if (!list || !current || !size) return
+		if (!list || !currentId || !size) return
 
 		const data = {
-			list: list.$id,
-			user: current.$id,
+			name,
+			model: false,
+			user: currentId,
 		}
 
-		const shop: Shop<List> = await databases.createDocument(
-			DB,
-			MODELS.SHOP,
-			ID.unique(),
-			data,
-			getPermissions(current.$id)
-		)
+		const copy: List = await databases.createDocument(DB, MODELS.LIST, ID.unique(), data, getPermissions(currentId))
 
-		navigation.replace('shop', { size, shop })
+		navigation.replace('shop', { list: copy, items })
 	}
 
 	const onRename = () => {
@@ -79,8 +83,8 @@ function ListView({ navigation, route }: Props) {
 	const onDelete = async () => {
 		if (!list) return
 		try {
-			await databases.deleteDocument(DB, MODELS.LISTS, list.$id)
-			mutateLists()
+			await databases.deleteDocument(DB, MODELS.LIST, list.$id)
+			queryClient.invalidateQueries({ queryKey: ['lists', currentId] })
 			navigation.goBack()
 		} catch {
 			toast.error(t('delete_error'))
@@ -103,18 +107,24 @@ function ListView({ navigation, route }: Props) {
 	}
 
 	const onSave = async () => {
-		if (!current || !name) return
+		if (!currentId || !name) return
 
 		try {
+			const data = {
+				name,
+				model: true,
+				user: currentId,
+			}
+
 			const created: List = await databases.createDocument(
 				DB,
-				MODELS.LISTS,
+				MODELS.LIST,
 				ID.unique(),
-				{ name, user: current.$id },
-				getPermissions(current.$id)
+				data,
+				getPermissions(currentId)
 			)
-			mutateLists()
-			setListId(created.$id)
+			queryClient.invalidateQueries({ queryKey: ['lists', currentId] })
+			navigation.setParams({ list: created })
 		} catch {
 			toast.error(t('create_error'))
 		}

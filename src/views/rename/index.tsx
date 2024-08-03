@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -7,7 +8,6 @@ import Input from '../../components/input'
 import { toast } from '../../components/toast'
 import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
-import { useViewList } from '../../hooks/lists/view'
 import { databases } from '../../lib/appwrite'
 import { Button, ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 import { getPermissions } from '../../utils/get-permissions'
@@ -17,8 +17,9 @@ function ListRename({ navigation, route }: Props) {
 
 	const { current } = useSession()
 	const { t } = useTranslation('translation', { keyPrefix: 'rename' })
-	const { mutate } = useViewList(listParam ? listParam.$id : undefined)
 	const [name, setName] = useState<string>(listParam ? listParam.name : '')
+
+	const queryClient = useQueryClient()
 
 	const onSave = async () => {
 		if (!current || !name || !listParam) return
@@ -26,7 +27,7 @@ function ListRename({ navigation, route }: Props) {
 		try {
 			await databases.updateDocument(
 				DB,
-				MODELS.LISTS,
+				MODELS.LIST,
 				listParam.$id,
 				{
 					name,
@@ -34,7 +35,9 @@ function ListRename({ navigation, route }: Props) {
 				},
 				getPermissions(current.$id)
 			)
-			mutate()
+
+			queryClient.invalidateQueries({ queryKey: ['list', listParam.$id] })
+
 			navigation.goBack()
 		} catch {
 			toast.error(t('edit_error'))

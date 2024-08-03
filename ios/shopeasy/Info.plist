@@ -32,7 +32,9 @@
 			<true/>
 		</dict>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string/>
+		<string>$(NSLocationWhenInUseUsageDescription)</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>$(NSLocationAlwaysAndWhenInUseUsageDescription)</string>
 		<key>UIAppFonts</key>
 		<array>
 			<string>Nunito.ttf</string>

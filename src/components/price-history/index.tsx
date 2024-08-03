@@ -4,22 +4,30 @@ import { FlatList, Modal } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import * as S from './styles'
-import { useExpenses } from '../../hooks/expenses'
-import { getExpenseByItemQuery } from '../../lib/appwrite/queries/expense-item'
+import { DB, MODELS } from '../../constants'
+import { useDocuments } from '../../hooks/documents'
+import { databases, queries } from '../../lib/appwrite'
 import { Item } from '../../types/models/item'
+import { List } from '../../types/models/list'
+import { Local } from '../../types/models/local'
 import { format } from '../../utils/format'
 
 type Props = {
 	open: boolean
-	item: Item
+	item: Item<List, Local>
 	onClose: () => void
 }
 
 const PriceHistory = ({ open, item, onClose }: Props) => {
 	const { bottom } = useSafeAreaInsets()
 	const { t } = useTranslation('translation', { keyPrefix: 'price_history' })
-	const queries = getExpenseByItemQuery(item.$id)
-	const { expenses } = useExpenses(queries, !open)
+
+	const { data: items } = useDocuments<Item<undefined, Local>[]>({
+		queryKey: ['items-history', item.local.$id],
+		initialData: [],
+		enabled: !!item.local.$id,
+		queryFn: async () => await databases.listDocuments(DB, MODELS.LIST, queries.itemsByLocal(item.local.$id)),
+	})
 
 	return (
 		<Modal animationType='fade' transparent visible={open} onRequestClose={onClose}>
@@ -29,13 +37,13 @@ const PriceHistory = ({ open, item, onClose }: Props) => {
 						{t('title')}: {item.name}
 					</S.Title>
 					<FlatList
-						data={expenses}
+						data={items}
 						keyExtractor={item => item.$id}
 						renderItem={({ item }) => (
 							<S.Row>
-								<S.RowText>{item.shop.name}</S.RowText>
+								<S.RowText>{item.local.name}</S.RowText>
 								<S.RowText>{new Date(item.$createdAt).toLocaleDateString()}</S.RowText>
-								<S.RowText>{format(item.price / 100)}</S.RowText>
+								<S.RowText>{format(item.price ? item.price / 100 : 0)}</S.RowText>
 							</S.Row>
 						)}
 						ListHeaderComponent={

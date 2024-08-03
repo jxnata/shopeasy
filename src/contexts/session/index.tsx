@@ -27,7 +27,7 @@ export function useSession() {
 	return useContext(SessionContext)
 }
 
-export function SessionProvider(props: any) {
+export function SessionProvider(props: { children: React.ReactNode }) {
 	const storedSession = storage.getString('session')
 	const localSession: AppSession = storedSession ? JSON.parse(storedSession) : null
 

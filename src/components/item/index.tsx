@@ -9,6 +9,8 @@ import { DB, MODELS } from '../../constants'
 import { databases } from '../../lib/appwrite'
 import { ButtonIcon } from '../../theme/global'
 import { Item } from '../../types/models/item'
+import { List } from '../../types/models/list'
+import { Local } from '../../types/models/local'
 import { format } from '../../utils/format'
 import CategoryTag from '../category-tag'
 import Dropdown from '../dropdown'
@@ -16,12 +18,12 @@ import Icon from '../icon'
 import MaskedInput from '../masked-input'
 
 const ItemRow = ({ item, displayCategory, mutate }: Props) => {
-	const [data, setData] = useState<Item>(item)
+	const [data, setData] = useState<Item<List, undefined>>(item)
 	const [quantity, setQuantity] = useState<number>(data.qty)
 	const [deleted, setDeleted] = useState<boolean>(false)
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation('translation', { keyPrefix: 'item' })
-	const { control, handleSubmit } = useForm<Partial<Item>>({
+	const { control, handleSubmit } = useForm<Partial<Item<List, undefined>>>({
 		defaultValues: { price: data.price, unit: data.unit },
 	})
 
@@ -33,7 +35,9 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 			if (qty < 1) return
 
 			try {
-				const updated: Item = await databases.updateDocument(DB, MODELS.ITEMS, item.$id, { qty })
+				const updated: Item<List, undefined> = await databases.updateDocument(DB, MODELS.ITEM, item.$id, {
+					qty,
+				})
 				mutate()
 				setData(updated)
 			} catch {
@@ -46,7 +50,7 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 	const deleteItem = useCallback(async () => {
 		try {
 			setDeleted(true)
-			await databases.deleteDocument(DB, MODELS.ITEMS, item.$id)
+			await databases.deleteDocument(DB, MODELS.ITEM, item.$id)
 			mutate()
 		} catch {
 			setDeleted(false)
@@ -63,18 +67,18 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 		setQuantity(old => old - 1)
 	}
 
-	const updateItem = async (form: Partial<Item>) => {
+	const updateItem = async (form: Partial<Item<List, Local>>) => {
 		if (!form.price && !form.unit) return
 
 		const newPrice = typeof form.price === 'number' ? form.price : Number(form.price) * 100
 
 		const body = {
 			price: newPrice,
-			unit: form.unit,
+			unit: form.unit || null,
 		}
 
 		try {
-			await databases.updateDocument(DB, MODELS.ITEMS, item.$id, body)
+			await databases.updateDocument(DB, MODELS.ITEM, item.$id, body)
 			setData({ ...data, price: body.price, unit: body.unit })
 			mutate()
 		} catch {
@@ -171,7 +175,7 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 export default ItemRow
 
 type Props = {
-	item: Item
+	item: Item<List, undefined>
 	displayCategory?: boolean
 	mutate: () => void
 }

@@ -9,8 +9,7 @@ export const SUBSCRIPTIONS = ['dev.jxnata.shopeasy.premium', 'dev.jxnata.shopeas
 export const DB = 'production'
 
 export const MODELS = {
-	LISTS: 'lists',
-	ITEMS: 'items',
-	EXPENSES: 'expenses',
-	SHOP: 'shop',
+	LIST: 'list',
+	ITEM: 'item',
+	LOCAL: 'local',
 }
