@@ -8,6 +8,7 @@ export type StackParamList = {
 	rename: { list: List } | undefined
 	add: { items: string[]; listId: string }
 	shoppings: undefined
+	subscribe: undefined
 	intro: undefined
 	auth: undefined
 }

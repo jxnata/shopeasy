@@ -2687,10 +2687,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@revenuecat/purchases-typescript-internal@npm:11.1.1":
-  version: 11.1.1
-  resolution: "@revenuecat/purchases-typescript-internal@npm:11.1.1"
-  checksum: bff464c45656c444cd9c54bfeb4d24f45739f81c980b35a7f4f2a70ad473fb5a22b3b7409a07c1c2ffe12ae981c1c4c97a018d868779d598c24e52b29ac206b2
+"@revenuecat/purchases-typescript-internal@npm:13.0.0":
+  version: 13.0.0
+  resolution: "@revenuecat/purchases-typescript-internal@npm:13.0.0"
+  checksum: 31c24bd829ffcd8858046da5aeeb6d43a8ab321e0839b82f939bdc3102c7387a29a6fa5a64717edc1f5ba53736b75c695748f53181083ea945c674e9301d0c40
   languageName: node
   linkType: hard
 
@@ -8722,15 +8722,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-purchases@npm:^7.28.1":
-  version: 7.28.1
-  resolution: "react-native-purchases@npm:7.28.1"
+"react-native-purchases@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "react-native-purchases@npm:8.0.0"
   dependencies:
-    "@revenuecat/purchases-typescript-internal": 11.1.1
+    "@revenuecat/purchases-typescript-internal": 13.0.0
   peerDependencies:
     react: ">= 16.6.3"
     react-native: "*"
-  checksum: 7e321254f74ab03f6a888304d7be78862b73a9e4d05a9d73237b8f3cfa2fcebf4b5577e6f3225264effa7cd038855d64827f44effee983a5117645d63b6abb52
+  checksum: 4b1ac584d6dc70fd914ba1384988508fdb94d7e1a7dd5176846025f1580047c6c7dd2a48eb035e219d04778158fdce92ee4e98fa99bef8645d0c9ee9d96306e6
   languageName: node
   linkType: hard
 
@@ -9451,7 +9451,7 @@ __metadata:
     react-native-localize: ^3.2.0
     react-native-mask-text: ^0.14.2
     react-native-mmkv: ^2.12.2
-    react-native-purchases: ^7.28.1
+    react-native-purchases: ^8.0.0
     react-native-safe-area-context: ^4.9.0
     react-native-screens: ^3.30.1
     react-native-toast-message: ^2.2.0

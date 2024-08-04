@@ -6,6 +6,9 @@ export const AUTH_CALLBACK_URL = 'https://jxnata.github.io/shopeasy/auth/callbac
 
 export const SUBSCRIPTIONS = ['dev.jxnata.shopeasy.premium', 'dev.jxnata.shopeasy.premium.yearly']
 
+export const REVENUECAT_API_KEY_IOS = 'appl_aZzcTkJbajSkMyDSsvOEilOaBym'
+export const REVENUECAT_API_KEY_ANDROID = ''
+
 export const DB = 'production'
 
 export const MODELS = {

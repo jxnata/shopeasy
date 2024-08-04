@@ -41,6 +41,10 @@ function Home({ navigation }: Props) {
 		navigation.navigate('list', { list })
 	}
 
+	const navigateToSubscribe = () => {
+		navigation.replace('subscribe')
+	}
+
 	return (
 		<Container>
 			<S.Content>
@@ -69,6 +73,7 @@ function Home({ navigation }: Props) {
 						<MenuItem title={t('menu_item_shop')} icon='🛍️' action={navigateToShoppings} />
 						<MenuItem title={t('menu_item_expenses')} icon='💸' action={() => {}} />
 						<MenuItem title={t('menu_item_profile')} icon='🙋' action={() => {}} />
+						<MenuItem title={t('menu_item_premium')} icon='👑' action={navigateToSubscribe} />
 					</S.MenuList>
 				</S.MenuContainer>
 			</S.Content>

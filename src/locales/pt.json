@@ -8,7 +8,17 @@
 			"feature3": "📝 Compartilhe suas listas",
 			"feature4": "💸 Relatórios de gastos e economia",
 			"feature5": "👑 Acesso prioritário a novidades",
-			"subscribe_button": "Assinar agora"
+			"subscribe_button": "Continuar",
+			"restore_button": "Restaurar",
+			"subscribe_description": "Acesso total por apenas",
+			"$rc_monthly": "Mensal",
+			"$rc_annual": "Anual",
+			"MONTHLY": "mês",
+			"ANNUAL": "ano",
+			"purchase_error": "Ocorreu um erro ao assinar o produto.",
+			"restore_error": "Ocorreu um erro ao recuperar sua assintura.",
+			"purchase_success": "Assinatura concluída!",
+			"restore_success": "Assinatura recuperada!"
 		},
 		"home": {
 			"title": "Listas",
@@ -18,7 +28,8 @@
 			"menu_item_create": "Nova lista",
 			"menu_item_shop": "Compras",
 			"menu_item_expenses": "Despesas",
-			"menu_item_profile": "Perfil"
+			"menu_item_profile": "Perfil",
+			"menu_item_premium": "Premium"
 		},
 		"list": {
 			"title": "Criar lista",

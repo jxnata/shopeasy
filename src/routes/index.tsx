@@ -76,6 +76,7 @@ const Routes = () => {
 				<Stack.Screen name='rename' component={ListRename} options={{ title: t('rename.title') }} />
 				<Stack.Screen name='shop' component={ShopView} options={{ title: t('shop.title') }} />
 				<Stack.Screen name='shoppings' component={Shoppings} options={{ title: t('shoppings.title') }} />
+				<Stack.Screen name='subscribe' component={Intro} options={{ headerShown: false }} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

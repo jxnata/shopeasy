@@ -7,11 +7,11 @@ PODS:
   - hermes-engine (0.74.3):
     - hermes-engine/Pre-built (= 0.74.3)
   - hermes-engine/Pre-built (0.74.3)
-  - MMKV (1.3.4):
-    - MMKVCore (~> 1.3.4)
-  - MMKVCore (1.3.4)
-  - PurchasesHybridCommon (11.1.1):
-    - RevenueCat (= 4.43.2)
+  - MMKV (1.3.9):
+    - MMKVCore (~> 1.3.9)
+  - MMKVCore (1.3.9)
+  - PurchasesHybridCommon (13.0.0):
+    - RevenueCat (= 5.2.2)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -1214,13 +1214,13 @@ PODS:
     - React-logger (= 0.74.3)
     - React-perflogger (= 0.74.3)
     - React-utils (= 0.74.3)
-  - RevenueCat (4.43.2)
+  - RevenueCat (5.2.2)
   - RNAppleAuthentication (2.3.0):
     - React-Core
   - RNLocalize (3.2.0):
     - React-Core
-  - RNPurchases (7.28.1):
-    - PurchasesHybridCommon (= 11.1.1)
+  - RNPurchases (8.0.0):
+    - PurchasesHybridCommon (= 13.0.0)
     - React-Core
   - RNScreens (3.32.0):
     - DoubleConversion
@@ -1452,9 +1452,9 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
   hermes-engine: 1f547997900dd0752dc0cc0ae6dd16173c49e09b
-  MMKV: ed58ad794b3f88c24d604a5b74f3fba17fcbaf74
-  MMKVCore: a67a1cede26175c413176f404a7cedec43f96a0b
-  PurchasesHybridCommon: 73f4f2c6e4ec3487b4219bf60e1661100fb85da3
+  MMKV: 817ba1eea17421547e01e087285606eb270a8dcb
+  MMKVCore: af055b00e27d88cd92fad301c5fecd1ff9b26dd9
+  PurchasesHybridCommon: ebf821766759155e09b710baa73264a37a4e62f0
   RCT-Folly: 02617c592a293bd6d418e0a88ff4ee1f88329b47
   RCTDeprecation: 4c7eeb42be0b2e95195563c49be08d0b839d22b4
   RCTRequired: d530a0f489699c8500e944fde963102c42dcd0c2
@@ -1505,10 +1505,10 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 0c80752bceb80924cb8a4babc2a8e3ed70d41e87
   React-utils: a06061b3887c702235d2dac92dacbd93e1ea079e
   ReactCommon: f00e436b3925a7ae44dfa294b43ef360fbd8ccc4
-  RevenueCat: 3d934653b7e8b09af88fd47e9e84cfaf5d0a89ba
+  RevenueCat: ba985d80069c1c4b9c9e0763f1852f2a0bdcc2d6
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNLocalize: b77875884750cb6a58cd6865863fe2ba2729b72b
-  RNPurchases: 4305de02b902d3c1e56a50295dc0a6e758b73095
+  RNPurchases: 3fa0a17f13bf3eee78d9242d49456268580fb687
   RNScreens: 5aeecbb09aa7285379b6e9f3c8a3c859bb16401c
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c

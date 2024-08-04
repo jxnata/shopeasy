@@ -4,10 +4,12 @@ import { createContext, useContext, useEffect, useState } from 'react'
 
 import { storage } from '../../database'
 import { account, functions } from '../../lib/appwrite'
+import { checkSubscription } from '../../utils/check-subscription'
 
 type LocalSession = {
 	current: Models.User<Models.Preferences> | null
 	loading: boolean
+	premium: boolean
 	login: (appleRequestResponse: AppleRequestResponse) => Promise<void>
 	logout: () => Promise<void>
 }
@@ -17,6 +19,7 @@ type AppSession = Models.User<Models.Preferences> | null
 const initialState: LocalSession = {
 	current: null,
 	loading: true,
+	premium: false,
 	login: async () => {},
 	logout: async () => {},
 }
@@ -33,6 +36,7 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 
 	const [loading, setLoading] = useState(true)
 	const [user, setUser] = useState<AppSession>(localSession)
+	const [premium, setPremium] = useState(false)
 
 	async function login(appleRequestResponse: AppleRequestResponse) {
 		setLoading(true)
@@ -61,6 +65,9 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 
 	async function init() {
 		try {
+			const isPremium = await checkSubscription()
+			setPremium(isPremium)
+
 			const loggedIn = await account.get()
 			setUser(loggedIn)
 			storage.set('session', JSON.stringify(loggedIn))
@@ -77,7 +84,7 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 	}, [])
 
 	return (
-		<SessionContext.Provider value={{ current: user, loading, login, logout }}>
+		<SessionContext.Provider value={{ current: user, loading, premium, login, logout }}>
 			{props.children}
 		</SessionContext.Provider>
 	)
