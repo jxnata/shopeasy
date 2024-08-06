@@ -7,7 +7,6 @@ import { useColorScheme } from 'react-native'
 import Loading from '../components/loading'
 import { useSession } from '../contexts/session'
 import { useSettings } from '../contexts/settings'
-import { populateCache } from '../database/cache/provider'
 import theme from '../theme'
 import { StackParamList } from '../types/navigation/stack'
 import Add from '../views/add'
@@ -68,7 +67,7 @@ const Routes = () => {
 	}
 
 	return (
-		<NavigationContainer onStateChange={populateCache}>
+		<NavigationContainer>
 			<Stack.Navigator initialRouteName='home' screenOptions={options}>
 				<Stack.Screen name='home' component={Home} options={{ title: t('home.title') }} />
 				<Stack.Screen name='list' component={ListView} options={{ title: t('list.title') }} />

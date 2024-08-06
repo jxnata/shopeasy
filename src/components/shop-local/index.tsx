@@ -61,7 +61,7 @@ const ShopLocal = ({ list }: Props) => {
 			if (exists.documents.length) {
 				await databases.updateDocument(DB, MODELS.LIST, list.$id, {
 					local: exists.documents[0].$id,
-					name: `${t('shop_in')} ${place.name}`,
+					name: `${t('shop_in')} ${new Date().toLocaleDateString()}`,
 				})
 
 				return
@@ -70,7 +70,7 @@ const ShopLocal = ({ list }: Props) => {
 
 			await databases.updateDocument(DB, MODELS.LIST, list.$id, {
 				local: created.$id,
-				name: `${t('shop_in')} ${place.name}`,
+				name: `${t('shop_in')} ${new Date().toLocaleDateString()}`,
 			})
 		} catch {
 			toast.error(t('create_place_error'))

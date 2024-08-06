@@ -18,7 +18,7 @@ import Icon from '../icon'
 import MaskedInput from '../masked-input'
 
 const ItemRow = ({ item, displayCategory, mutate }: Props) => {
-	const [data, setData] = useState<Item<List, undefined>>(item)
+	const [data, setData] = useState<Item<string, undefined>>(item)
 	const [quantity, setQuantity] = useState<number>(data.qty)
 	const [deleted, setDeleted] = useState<boolean>(false)
 	const [open, setOpen] = useState(false)
@@ -35,7 +35,7 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 			if (qty < 1) return
 
 			try {
-				const updated: Item<List, undefined> = await databases.updateDocument(DB, MODELS.ITEM, item.$id, {
+				const updated: Item<string, undefined> = await databases.updateDocument(DB, MODELS.ITEM, item.$id, {
 					qty,
 				})
 				mutate()
@@ -175,7 +175,7 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 export default ItemRow
 
 type Props = {
-	item: Item<List, undefined>
+	item: Item<string, undefined>
 	displayCategory?: boolean
 	mutate: () => void
 }

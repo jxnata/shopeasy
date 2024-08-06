@@ -44,7 +44,7 @@ function ListView({ navigation, route }: Props) {
 		data: items,
 		total: size,
 		mutate,
-	} = useDocuments<Item<List, undefined>[]>({
+	} = useDocuments<Item<string, undefined>[]>({
 		queryKey: ['items', listId],
 		initialData: [],
 		enabled: !!listId && !!currentId,

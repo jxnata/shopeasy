@@ -26,10 +26,5 @@ export const queries = {
 		Query.limit(1000),
 		Query.orderDesc('category'),
 	],
-	itemsByLocal: (localId: string) => [
-		Query.select(['$id', 'name', 'price', 'local']),
-		Query.equal('local', [localId]),
-		Query.limit(10),
-		Query.orderAsc('price'),
-	],
+	itemsByLocal: (localId: string) => [Query.equal('local', [localId]), Query.limit(10), Query.orderAsc('price')],
 }

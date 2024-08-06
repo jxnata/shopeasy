@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { Font } from '../../theme/global'
+import { ButtonLabel, Font } from '../../theme/global'
 
 export const Container = styled.TouchableOpacity`
 	flex-direction: row;
@@ -22,4 +22,18 @@ export const Description = styled(Font)`
 `
 export const Column = styled.View`
 	flex-direction: column;
+`
+export const BadgePrice = styled.View`
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	padding: 2px 6px;
+	background-color: ${props => props.theme.secondary};
+	position: absolute;
+	top: 5px;
+	right: 5px;
+`
+export const BadgePriceText = styled(ButtonLabel)`
+	font-size: 12px;
+	font-weight: 600;
 `

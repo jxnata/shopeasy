@@ -54,12 +54,10 @@ const ItemShopRow = ({ item, displayCategory, mutate }: Props) => {
 		if (isNaN(Number(e.nativeEvent.text))) return
 		if (Number(e.nativeEvent.text) <= 0) return
 
-		const body = {
-			price: Number(e.nativeEvent.text) * 100,
-		}
+		const price = parseInt(Math.round(Number(e.nativeEvent.text) * 100).toString(), 10)
 
 		try {
-			await databases.updateDocument(DB, MODELS.ITEM, item.$id, body)
+			await databases.updateDocument(DB, MODELS.ITEM, item.$id, { price })
 			mutate()
 		} catch {}
 	}

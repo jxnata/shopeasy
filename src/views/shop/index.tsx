@@ -5,6 +5,7 @@ import { Alert, FlatList } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
+import CopyItems from '../../components/copy-items'
 import Icon from '../../components/icon'
 import ItemShopRow from '../../components/item-shop'
 import Loading from '../../components/loading'
@@ -59,6 +60,17 @@ function ShopView({ navigation, route }: Props) {
 
 	const onRename = () => {
 		setOptionsOpen(false)
+	}
+
+	const onFinish = async () => {
+		if (!list) return
+		try {
+			await databases.updateDocument(DB, MODELS.LIST, list.$id, { total: total * 100 })
+			queryClient.invalidateQueries({ queryKey: ['lists-shop', currentId] })
+			navigation.goBack()
+		} catch {
+			toast.error(t('finish_error'))
+		}
 	}
 
 	const onDelete = async () => {
@@ -118,16 +130,12 @@ function ShopView({ navigation, route }: Props) {
 		}, 5000)
 	}, [])
 
-	useEffect(() => {
-		if (!itemsToCopy) return
-		if (!itemsToCopy.length) return
-
-		console.tron.log({ itemsToCopy })
-	}, [itemsToCopy])
-
 	if (!list || loading) return <Loading />
 
 	if (!list.local) return <ShopLocal list={list} />
+
+	if (!list.qty && itemsToCopy.length)
+		return <CopyItems items={itemsToCopy} listId={list.$id} localId={list.local.$id} />
 
 	return (
 		<Container>
@@ -164,7 +172,7 @@ function ShopView({ navigation, route }: Props) {
 							</S.CartTotal>
 							<Progress percentage={percentage} />
 						</S.CartLeft>
-						<S.FinishButton>
+						<S.FinishButton onPress={onFinish}>
 							<ButtonIcon name='checkmark-circle' />
 							<ButtonLabel>{t('finish')}</ButtonLabel>
 						</S.FinishButton>

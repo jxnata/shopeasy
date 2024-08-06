@@ -26,7 +26,7 @@ const PriceHistory = ({ open, item, onClose }: Props) => {
 		queryKey: ['items-history', item.local.$id],
 		initialData: [],
 		enabled: !!item.local.$id,
-		queryFn: async () => await databases.listDocuments(DB, MODELS.LIST, queries.itemsByLocal(item.local.$id)),
+		queryFn: async () => await databases.listDocuments(DB, MODELS.ITEM, queries.itemsByLocal(item.local.$id)),
 	})
 
 	return (

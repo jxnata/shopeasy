@@ -71,13 +71,15 @@
 			"delete_confirm": "Sim, excluir",
 			"cancel": "Cancelar",
 			"delete_error": "Ocorreu um erro ao excluir a compra.",
+			"finish_error": "Ocorreu um erro ao finalizar a compra.",
 			"total": "Total:",
 			"finish": "Finalizar"
 		},
 		"shoppings": {
 			"title": "Compras",
 			"no_shoppings": "Nenhuma compra. Você pode criar uma a partir de uma lista de compras.",
-			"no_name": "Sem nome"
+			"no_name": "Sem nome",
+			"items": "itens"
 		},
 		"auth": {
 			"auth_failed": "Ocorreu um erro na autenticação.",
@@ -112,10 +114,14 @@
 			"no_expenses": "Nenhum histórico para esse item."
 		},
 		"shop_local": {
-			"shop_in": "Compra no",
+			"shop_in": "Compra dia",
 			"create_place_error": "Erro ao selecionar o local.",
 			"local_label": "Onde vai fazer essa compra?",
 			"local_placeholder": "Pesquise um local..."
+		},
+		"copy_items": {
+			"copy_items_error": "Ocorreu um erro ao adicionar os itens a lista.",
+			"description": "Adicionando itens... por favor, aguarde. Não saia dessa tela enquanto não estiver concluído."
 		},
 		"categories": {
 			"others": "Outros",

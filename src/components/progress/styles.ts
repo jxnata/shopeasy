@@ -5,6 +5,7 @@ type ProgressProps = {
 }
 
 export const ProgressBar = styled.View`
+	width: 100%;
 	height: 12px;
 	border-radius: 8px;
 	background-color: ${props => props.theme.boxBg};
