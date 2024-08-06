@@ -22,7 +22,6 @@ export const queries = {
 		Query.orderDesc('category'),
 	],
 	itemsByListToShop: (listId?: string) => [
-		Query.select(['$id', 'name', 'qty', 'price', 'unit', 'category', 'checked', 'local']),
 		Query.equal('list', [listId ? listId : '_']),
 		Query.limit(1000),
 		Query.orderDesc('category'),

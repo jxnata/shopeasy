@@ -26,9 +26,9 @@ import { format } from '../../utils/format'
 function ShopView({ navigation, route }: Props) {
 	const listParam = route.params ? route.params.list : undefined
 	const listId = useMemo(() => (listParam ? listParam.$id : undefined), [listParam])
-	// const itemsToCopy = route.params ? route.params.items : []
+	const itemsToCopy = useMemo(() => (route.params && route.params.items ? route.params.items : []), [route.params])
 
-	const { current } = useSession()
+	const { current, loading } = useSession()
 	const currentId = useMemo(() => (current ? current.$id : undefined), [current])
 
 	const { t } = useTranslation('translation', { keyPrefix: 'shop' })
@@ -118,9 +118,16 @@ function ShopView({ navigation, route }: Props) {
 		}, 5000)
 	}, [])
 
-	if (!list) return <Loading />
+	useEffect(() => {
+		if (!itemsToCopy) return
+		if (!itemsToCopy.length) return
 
-	if (list.local === null) return <ShopLocal list={list} />
+		console.tron.log({ itemsToCopy })
+	}, [itemsToCopy])
+
+	if (!list || loading) return <Loading />
+
+	if (!list.local) return <ShopLocal list={list} />
 
 	return (
 		<Container>

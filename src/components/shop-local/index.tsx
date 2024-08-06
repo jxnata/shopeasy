@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native'
 
+import Skeleton from './skeleton'
 import * as S from './styles'
 import { DB, MODELS } from '../../constants'
 import { databases, functions } from '../../lib/appwrite'
@@ -28,7 +29,7 @@ const ShopLocal = ({ list }: Props) => {
 
 	const queryClient = useQueryClient()
 
-	const { data: places } = useQuery<Place[]>({
+	const { data: places, isFetching } = useQuery<Place[]>({
 		queryKey: ['places', search, location],
 		enabled: !!search,
 		queryFn: async () => {
@@ -93,9 +94,12 @@ const ShopLocal = ({ list }: Props) => {
 					onChangeText={debouncedSearch}
 					placeholder={t('local_placeholder')}
 					maxLength={32}
+					autoCorrect={false}
+					autoComplete='off'
 					autoFocus
 					returnKeyType='search'
 				/>
+				{isFetching && <Skeleton />}
 				<FlatList
 					data={places || []}
 					keyExtractor={item => item.place}
@@ -105,6 +109,7 @@ const ShopLocal = ({ list }: Props) => {
 							<S.Description>{item.address}</S.Description>
 						</S.Item>
 					)}
+					refreshing={isFetching}
 					showsVerticalScrollIndicator={false}
 					style={{ marginBottom: 12 }}
 				/>
