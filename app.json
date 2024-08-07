@@ -1,4 +1,9 @@
 {
-  "name": "shopeasy",
-  "displayName": "shopeasy"
+	"name": "shopeasy",
+	"displayName": "ShopEasy",
+	"react-native-google-mobile-ads": {
+		"android_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx",
+		"ios_app_id": "ca-app-pub-5108902914270184~2153467849",
+		"user_tracking_usage_description": "This identifier will be used to deliver personalized ads to you."
+	}
 }

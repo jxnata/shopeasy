@@ -5,7 +5,6 @@ import { Button, Font } from '../../theme/global'
 export const Content = styled.SafeAreaView`
 	flex: 1;
 	background-color: ${props => props.theme.background};
-	padding: 8px;
 `
 export const Header = styled.View`
 	flex-direction: row;
@@ -16,6 +15,7 @@ export const Header = styled.View`
 export const Body = styled.View`
 	flex: 1;
 	gap: 8px;
+	padding: 12px;
 `
 export const Scroll = styled.ScrollView`
 	margin-top: 8px;

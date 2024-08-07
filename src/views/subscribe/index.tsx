@@ -10,13 +10,17 @@ import { settings } from '../../database'
 import { Button, ButtonLabel, Container, Label } from '../../theme/global'
 import { getOfferings } from '../../utils/get-offerings'
 
-function Intro({ navigation }: Props) {
-	const { t } = useTranslation('translation', { keyPrefix: 'intro' })
+function Subscribe({ navigation, route }: Props) {
+	const back = route.params ? route.params.back : false
+
+	const { t } = useTranslation('translation', { keyPrefix: 'subscribe' })
 	const [selectedOffering, setSelectedOffering] = useState<PurchasesPackage>()
 
 	const onClose = () => {
 		settings.set('initialized', true)
 		try {
+			if (back) return navigation.goBack()
+
 			navigation.replace('home')
 		} catch {}
 	}
@@ -35,6 +39,9 @@ function Intro({ navigation }: Props) {
 			await Purchases.purchaseStoreProduct(selectedOffering.product)
 
 			toast.success(t('purchase_success'))
+
+			if (back) return navigation.goBack()
+
 			navigation.replace('home')
 		} catch (e: unknown) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,6 +55,9 @@ function Intro({ navigation }: Props) {
 			await Purchases.restorePurchases()
 
 			toast.success(t('restore_success'))
+
+			if (back) return navigation.goBack()
+
 			navigation.replace('home')
 		} catch {
 			toast.error(t('restore_error'))
@@ -116,4 +126,4 @@ function Intro({ navigation }: Props) {
 	)
 }
 
-export default Intro
+export default Subscribe

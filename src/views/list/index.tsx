@@ -6,6 +6,7 @@ import { Alert, FlatList } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
+import Banner from '../../components/banner'
 import Icon from '../../components/icon'
 import Input from '../../components/input'
 import ItemRow from '../../components/item'
@@ -180,6 +181,7 @@ function ListView({ navigation, route }: Props) {
 						renderItem={({ item, index }) => (
 							<ItemRow item={item} displayCategory={displayCategory(index)} mutate={mutate} />
 						)}
+						ListHeaderComponent={<Banner />}
 						showsVerticalScrollIndicator={false}
 						style={{ marginBottom: 12 }}
 					/>

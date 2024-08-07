@@ -5,7 +5,6 @@ import { Font } from '../../theme/global'
 export const Content = styled.SafeAreaView`
 	flex: 1;
 	background-color: ${props => props.theme.background};
-	padding: 8px;
 `
 export const Header = styled.View`
 	flex-direction: row;
@@ -15,7 +14,7 @@ export const Header = styled.View`
 	justify-content: space-between;
 `
 export const Body = styled.View`
-	padding: 12px 0;
+	padding: 12px;
 	flex: 1;
 `
 export const Scroll = styled.ScrollView`

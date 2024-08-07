@@ -4,6 +4,7 @@ import { FlatList, RefreshControl } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
+import Banner from '../../components/banner'
 import ListItem from '../../components/list-item'
 import MenuItem from '../../components/menu-item'
 import { DB, MODELS } from '../../constants'
@@ -68,7 +69,12 @@ function Home({ navigation }: Props) {
 					/>
 				</S.Body>
 				<S.MenuContainer>
-					<S.MenuList horizontal showsHorizontalScrollIndicator={false}>
+					<Banner />
+					<S.MenuList
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						contentContainerStyle={{ paddingHorizontal: 12 }}
+					>
 						<MenuItem title={t('menu_item_create')} icon='✏️' action={onCreate} />
 						<MenuItem title={t('menu_item_shop')} icon='🛍️' action={navigateToShoppings} />
 						<MenuItem title={t('menu_item_expenses')} icon='💸' action={() => {}} />

@@ -5,6 +5,7 @@ import { Alert, FlatList } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
+import Banner from '../../components/banner'
 import CopyItems from '../../components/copy-items'
 import Icon from '../../components/icon'
 import ItemShopRow from '../../components/item-shop'
@@ -43,7 +44,6 @@ function ShopView({ navigation, route }: Props) {
 		queryFn: async () => await databases.getDocument(DB, MODELS.LIST, listId!),
 	})
 
-	const [displayTip, setDisplayTip] = useState(true)
 	const [optionsOpen, setOptionsOpen] = useState(false)
 
 	const { data: items, mutate: mutateItems } = useDocuments<Item<List, Local>[]>({
@@ -56,7 +56,6 @@ function ShopView({ navigation, route }: Props) {
 	const { percentage, total } = useCart(items)
 
 	const toggle = useCallback(() => setOptionsOpen(old => !old), [])
-	const closeTip = () => setDisplayTip(false)
 
 	const onRename = () => {
 		setOptionsOpen(false)
@@ -124,18 +123,11 @@ function ShopView({ navigation, route }: Props) {
 		navigation.setOptions({ title: list.name || t('title'), headerRight: HeaderRight })
 	}, [HeaderRight, navigation, list, t])
 
-	useEffect(() => {
-		setTimeout(() => {
-			setDisplayTip(false)
-		}, 5000)
-	}, [])
-
 	if (!list || loading) return <Loading />
 
 	if (!list.local) return <ShopLocal list={list} />
 
-	if (!list.qty && itemsToCopy.length)
-		return <CopyItems items={itemsToCopy} listId={list.$id} localId={list.local.$id} />
+	if (!list.qty && itemsToCopy.length) return <CopyItems items={itemsToCopy} listId={list.$id} local={list.local} />
 
 	return (
 		<Container>
@@ -149,20 +141,7 @@ function ShopView({ navigation, route }: Props) {
 						)}
 						showsVerticalScrollIndicator={false}
 						style={{ marginBottom: 12 }}
-						ListHeaderComponent={
-							<>
-								{displayTip && (
-									<S.TipContainer onPress={closeTip}>
-										<Icon name='information-circle' />
-										<S.Tip>{t('tip_text')}</S.Tip>
-									</S.TipContainer>
-								)}
-								<S.ListHeader>
-									<S.Text>{t('list_item')}</S.Text>
-									<S.Text>{t('list_price')}</S.Text>
-								</S.ListHeader>
-							</>
-						}
+						ListHeaderComponent={<Banner />}
 					/>
 					<S.Cart>
 						<S.CartLeft>

@@ -7,11 +7,13 @@ import * as S from './styles'
 import { DB, MODELS } from '../../constants'
 import { databases } from '../../lib/appwrite'
 import { Item } from '../../types/models/item'
+import { Local } from '../../types/models/local'
+import { getCurrency } from '../../utils/get-currency'
 import Loading from '../loading'
 import { Progress } from '../progress'
 import { toast } from '../toast'
 
-const CopyItems = ({ items, listId, localId }: Props) => {
+const CopyItems = ({ items, listId, local }: Props) => {
 	const { t } = useTranslation('translation', { keyPrefix: 'copy_items' })
 	const [progress, setProgress] = useState<number>(0)
 
@@ -27,10 +29,13 @@ const CopyItems = ({ items, listId, localId }: Props) => {
 				category: item.category,
 				checked: false,
 				list: listId,
-				local: localId,
+				local: local.$id,
+				currency: getCurrency(),
+				lat: local.lat,
+				lon: local.lon,
 			})
 		},
-		[listId, localId]
+		[listId, local]
 	)
 
 	const batchCreateItems = useCallback(async () => {
@@ -74,5 +79,5 @@ export default CopyItems
 type Props = {
 	items: Item<string, undefined>[]
 	listId: string
-	localId: string
+	local: Local
 }

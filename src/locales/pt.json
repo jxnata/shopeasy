@@ -1,11 +1,11 @@
 {
 	"translation": {
-		"intro": {
+		"subscribe": {
 			"description": "Desfrute de todos os recursos do ShopEasy e eleve sua experiência de compras ao próximo nível!",
 			"premium_features_title": "Recursos Premium:",
-			"feature1": "🔔 Alertas para suas compras",
+			"feature1": "❌ Sem anúncios",
 			"feature2": "🤑 Compare preços e economize",
-			"feature3": "📝 Compartilhe suas listas",
+			"feature3": "🔔 Alertas de preços",
 			"feature4": "💸 Relatórios de gastos e economia",
 			"feature5": "👑 Acesso prioritário a novidades",
 			"subscribe_button": "Continuar",
@@ -111,7 +111,8 @@
 			"local": "Local",
 			"date": "Data",
 			"price": "Preço",
-			"no_expenses": "Nenhum histórico para esse item."
+			"no_expenses": "Nenhum histórico para esse item.",
+			"premium": "👑 Adquira a versão Premium para ver o historico de preços e muito mais!"
 		},
 		"shop_local": {
 			"shop_in": "Compra dia",

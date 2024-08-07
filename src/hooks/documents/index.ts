@@ -2,12 +2,12 @@ import { DefinedInitialDataOptions, QueryKey, useQuery } from '@tanstack/react-q
 import { Models } from 'appwrite'
 
 export const useDocuments = <T>(options: DefinedInitialDataOptions<unknown, Error, Models.Document, QueryKey>) => {
-	const { data, error, isLoading, refetch } = useQuery(options)
+	const { data, error, isFetching, refetch } = useQuery(options)
 
 	return {
 		data: (data ? data.documents || [] : []) as T,
 		total: data.total ? data.total : 0,
-		loading: isLoading,
+		loading: isFetching,
 		error,
 		mutate: refetch,
 	}

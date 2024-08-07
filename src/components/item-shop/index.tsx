@@ -11,6 +11,7 @@ import { Item } from '../../types/models/item'
 import { List } from '../../types/models/list'
 import { Local } from '../../types/models/local'
 import { format } from '../../utils/format'
+import { getCurrency } from '../../utils/get-currency'
 import CategoryTag from '../category-tag'
 import PriceHistory from '../price-history'
 import PriceInput from '../price-input'
@@ -55,9 +56,10 @@ const ItemShopRow = ({ item, displayCategory, mutate }: Props) => {
 		if (Number(e.nativeEvent.text) <= 0) return
 
 		const price = parseInt(Math.round(Number(e.nativeEvent.text) * 100).toString(), 10)
+		const currency = getCurrency()
 
 		try {
-			await databases.updateDocument(DB, MODELS.ITEM, item.$id, { price })
+			await databases.updateDocument(DB, MODELS.ITEM, item.$id, { price, currency })
 			mutate()
 		} catch {}
 	}

@@ -26,5 +26,14 @@ export const queries = {
 		Query.limit(1000),
 		Query.orderDesc('category'),
 	],
-	itemsByLocal: (localId: string) => [Query.equal('local', [localId]), Query.limit(10), Query.orderAsc('price')],
+	itemsByNameAndLocal: (id: string, name: string, currency: string, lat: number, lon: number) => [
+		Query.between('lat', lat - 1, -lat + 1),
+		Query.between('lon', lon - 1, lon + 1),
+		Query.notEqual('$id', [id]),
+		Query.equal('currency', [currency]),
+		Query.search('name', name),
+		Query.isNotNull('price'),
+		Query.limit(10),
+		Query.orderAsc('$createdAt'),
+	],
 }

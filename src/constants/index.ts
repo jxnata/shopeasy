@@ -9,6 +9,9 @@ export const SUBSCRIPTIONS = ['dev.jxnata.shopeasy.premium', 'dev.jxnata.shopeas
 export const REVENUECAT_API_KEY_IOS = 'appl_aZzcTkJbajSkMyDSsvOEilOaBym'
 export const REVENUECAT_API_KEY_ANDROID = ''
 
+export const ADMOB_BANNER_ID_IOS = 'ca-app-pub-5108902914270184/9879914621'
+export const ADMOB_BANNER_ID_ANDROID = ''
+
 export const DB = 'production'
 
 export const MODELS = {

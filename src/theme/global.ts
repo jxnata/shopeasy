@@ -4,7 +4,6 @@ import Icon from '../components/icon'
 
 export const Container = styled.View`
 	flex: 1;
-	padding: 12px;
 	background-color: ${props => props.theme.background};
 `
 export const Font = styled.Text`

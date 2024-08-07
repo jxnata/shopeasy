@@ -12,11 +12,11 @@ import { StackParamList } from '../types/navigation/stack'
 import Add from '../views/add'
 import Auth from '../views/auth'
 import Home from '../views/home'
-import Intro from '../views/intro'
 import ListView from '../views/list'
 import ListRename from '../views/rename'
 import ShopView from '../views/shop'
 import Shoppings from '../views/shoppings'
+import Subscribe from '../views/subscribe'
 
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -59,8 +59,8 @@ const Routes = () => {
 	if (!initialized) {
 		return (
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName='intro' screenOptions={{ headerShown: false }}>
-					<Stack.Screen name='intro' component={Intro} />
+				<Stack.Navigator initialRouteName='subscribe' screenOptions={{ headerShown: false }}>
+					<Stack.Screen name='subscribe' component={Subscribe} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		)
@@ -75,7 +75,12 @@ const Routes = () => {
 				<Stack.Screen name='rename' component={ListRename} options={{ title: t('rename.title') }} />
 				<Stack.Screen name='shop' component={ShopView} options={{ title: t('shop.title') }} />
 				<Stack.Screen name='shoppings' component={Shoppings} options={{ title: t('shoppings.title') }} />
-				<Stack.Screen name='subscribe' component={Intro} options={{ headerShown: false }} />
+				<Stack.Screen
+					name='subscribe'
+					component={Subscribe}
+					options={{ headerShown: false }}
+					initialParams={{ back: true }}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	)
