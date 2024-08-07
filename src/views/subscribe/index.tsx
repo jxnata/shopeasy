@@ -6,6 +6,7 @@ import Purchases, { PurchasesPackage } from 'react-native-purchases'
 import * as S from './styles'
 import { Props } from './types'
 import { toast } from '../../components/toast'
+import { useSession } from '../../contexts/session'
 import { settings } from '../../database'
 import { Button, ButtonLabel, Container, Label } from '../../theme/global'
 import { getOfferings } from '../../utils/get-offerings'
@@ -15,6 +16,7 @@ function Subscribe({ navigation, route }: Props) {
 
 	const { t } = useTranslation('translation', { keyPrefix: 'subscribe' })
 	const [selectedOffering, setSelectedOffering] = useState<PurchasesPackage>()
+	const { checkPremium } = useSession()
 
 	const onClose = () => {
 		settings.set('initialized', true)
@@ -40,6 +42,8 @@ function Subscribe({ navigation, route }: Props) {
 
 			toast.success(t('purchase_success'))
 
+			checkPremium()
+
 			if (back) return navigation.goBack()
 
 			navigation.replace('home')
@@ -55,6 +59,8 @@ function Subscribe({ navigation, route }: Props) {
 			await Purchases.restorePurchases()
 
 			toast.success(t('restore_success'))
+
+			checkPremium()
 
 			if (back) return navigation.goBack()
 

@@ -6,7 +6,7 @@ const { width } = Dimensions.get('screen')
 
 export const Container = styled.TouchableOpacity`
 	border-radius: 12px;
-	background: ${props => props.theme.boxBg};
+	background: ${props => props.theme.modalBg};
 	width: ${width / 4}px;
 	height: ${width / 4}px;
 	margin-right: 8px;

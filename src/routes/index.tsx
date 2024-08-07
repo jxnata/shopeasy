@@ -13,6 +13,7 @@ import Add from '../views/add'
 import Auth from '../views/auth'
 import Home from '../views/home'
 import ListView from '../views/list'
+import Profile from '../views/profile'
 import ListRename from '../views/rename'
 import ShopView from '../views/shop'
 import Shoppings from '../views/shoppings'
@@ -70,6 +71,7 @@ const Routes = () => {
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName='home' screenOptions={options}>
 				<Stack.Screen name='home' component={Home} options={{ title: t('home.title') }} />
+				<Stack.Screen name='profile' component={Profile} options={{ title: t('profile.title') }} />
 				<Stack.Screen name='list' component={ListView} options={{ title: t('list.title') }} />
 				<Stack.Screen name='add' component={Add} options={{ title: t('add.title') }} />
 				<Stack.Screen name='rename' component={ListRename} options={{ title: t('rename.title') }} />

@@ -30,21 +30,15 @@ function Home({ navigation }: Props) {
 		queryFn: async () => await databases.listDocuments(DB, MODELS.LIST, queries.listsByUser(currentId)),
 	})
 
-	const onCreate = () => {
-		navigation.navigate('list')
-	}
+	const onCreate = () => navigation.navigate('list')
 
-	const navigateToShoppings = () => {
-		navigation.navigate('shoppings')
-	}
+	const navigateToShoppings = () => navigation.navigate('shoppings')
 
-	const onOpenList = async (list: List) => {
-		navigation.navigate('list', { list })
-	}
+	const onOpenList = async (list: List) => navigation.navigate('list', { list })
 
-	const navigateToSubscribe = () => {
-		navigation.replace('subscribe')
-	}
+	const navigateToSubscribe = () => navigation.navigate('subscribe')
+
+	const navigateToProfile = () => navigation.navigate('profile')
 
 	return (
 		<Container>
@@ -78,7 +72,7 @@ function Home({ navigation }: Props) {
 						<MenuItem title={t('menu_item_create')} icon='✏️' action={onCreate} />
 						<MenuItem title={t('menu_item_shop')} icon='🛍️' action={navigateToShoppings} />
 						<MenuItem title={t('menu_item_expenses')} icon='💸' action={() => {}} />
-						<MenuItem title={t('menu_item_profile')} icon='🙋' action={() => {}} />
+						<MenuItem title={t('menu_item_profile')} icon='🙋' action={navigateToProfile} />
 						<MenuItem title={t('menu_item_premium')} icon='👑' action={navigateToSubscribe} />
 					</S.MenuList>
 				</S.MenuContainer>

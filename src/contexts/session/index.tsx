@@ -12,6 +12,7 @@ type LocalSession = {
 	premium: boolean
 	login: (appleRequestResponse: AppleRequestResponse) => Promise<void>
 	logout: () => Promise<void>
+	checkPremium: () => void
 }
 
 type AppSession = Models.User<Models.Preferences> | null
@@ -22,6 +23,7 @@ const initialState: LocalSession = {
 	premium: false,
 	login: async () => {},
 	logout: async () => {},
+	checkPremium: async () => {},
 }
 
 const SessionContext = createContext<LocalSession>(initialState)
@@ -63,11 +65,15 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 		setUser(null)
 	}
 
-	async function init() {
+	async function checkPremium() {
 		try {
 			const isPremium = await checkSubscription()
 			setPremium(isPremium)
+		} catch {}
+	}
 
+	async function init() {
+		try {
 			const loggedIn = await account.get()
 			setUser(loggedIn)
 			storage.set('session', JSON.stringify(loggedIn))
@@ -84,7 +90,7 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 	}, [])
 
 	return (
-		<SessionContext.Provider value={{ current: user, loading, premium, login, logout }}>
+		<SessionContext.Provider value={{ current: user, loading, premium, login, logout, checkPremium }}>
 			{props.children}
 		</SessionContext.Provider>
 	)

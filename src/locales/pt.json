@@ -46,6 +46,15 @@
 			"delete_confirm": "Sim, excluir",
 			"delete_error": "Ocorreu um erro ao excluir a lista."
 		},
+		"profile": {
+			"title": "Perfil",
+			"name": "Nome",
+			"email": "E-mail",
+			"created_at": "Desde",
+			"premium": "Premium",
+			"premium_button": "Assinar Premium",
+			"logout_button": "Sair"
+		},
 		"add": {
 			"title": "Adicionar items",
 			"search_placeholder": "O que deseja comprar?",
