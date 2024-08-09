@@ -9,6 +9,7 @@ import Banner from '../../components/banner'
 import CopyItems from '../../components/copy-items'
 import Icon from '../../components/icon'
 import ItemShopRow from '../../components/item-shop'
+import ListFooter from '../../components/list-footer'
 import Loading from '../../components/loading'
 import Options from '../../components/options'
 import { Progress } from '../../components/progress'
@@ -64,7 +65,7 @@ function ShopView({ navigation, route }: Props) {
 	const onFinish = async () => {
 		if (!list) return
 		try {
-			await databases.updateDocument(DB, MODELS.LIST, list.$id, { total: total * 100 })
+			await databases.updateDocument(DB, MODELS.LIST, list.$id, { total: total * 100, finished: true })
 			queryClient.invalidateQueries({ queryKey: ['lists-shop', currentId] })
 			navigation.goBack()
 		} catch {
@@ -123,6 +124,13 @@ function ShopView({ navigation, route }: Props) {
 		navigation.setOptions({ title: list.name || t('title'), headerRight: HeaderRight })
 	}, [HeaderRight, navigation, list, t])
 
+	useEffect(() => {
+		if (!list) return
+		if (!list.local) return
+
+		navigation.setOptions({ title: list.local.name || t('title'), headerRight: HeaderRight })
+	}, [HeaderRight, navigation, list, t])
+
 	if (!list || loading) return <Loading />
 
 	if (!list.local) return <ShopLocal list={list} />
@@ -137,11 +145,17 @@ function ShopView({ navigation, route }: Props) {
 						data={items}
 						keyExtractor={item => item.$id}
 						renderItem={({ item, index }) => (
-							<ItemShopRow item={item} displayCategory={displayCategory(index)} mutate={mutateItems} />
+							<ItemShopRow
+								item={item}
+								displayCategory={displayCategory(index)}
+								finished={list.finished}
+								mutate={mutateItems}
+							/>
 						)}
 						showsVerticalScrollIndicator={false}
-						style={{ marginBottom: 12 }}
+						style={{ marginBottom: 8 }}
 						ListHeaderComponent={<Banner />}
+						ListFooterComponent={<ListFooter />}
 					/>
 					<S.Cart>
 						<S.CartLeft>
@@ -149,12 +163,18 @@ function ShopView({ navigation, route }: Props) {
 								<S.Total>{t('total')}</S.Total>
 								<Label>{format(total)}</Label>
 							</S.CartTotal>
-							<Progress percentage={percentage} />
+							{!list.finished && <Progress percentage={percentage} />}
 						</S.CartLeft>
-						<S.FinishButton onPress={onFinish}>
-							<ButtonIcon name='checkmark-circle' />
-							<ButtonLabel>{t('finish')}</ButtonLabel>
-						</S.FinishButton>
+						{!list.finished ? (
+							<S.FinishButton onPress={onFinish}>
+								<ButtonIcon name='checkmark-circle' />
+								<ButtonLabel>{t('finish')}</ButtonLabel>
+							</S.FinishButton>
+						) : (
+							<S.FinishedBadge>
+								<S.FinishedText>{t('finish_done')}</S.FinishedText>
+							</S.FinishedBadge>
+						)}
 					</S.Cart>
 					<Options open={optionsOpen} onClose={toggle}>
 						<S.OptionButton onPress={onRename}>

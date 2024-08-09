@@ -67,5 +67,5 @@ type Props = {
 	options: { label: string; value: string }[]
 	placeholder: string
 	label?: string
-	onValueChange: (_: unknown) => void
+	onValueChange: (value: string) => void
 }

@@ -22,7 +22,7 @@ export const Input = styled.Pressable`
 	font-family: 'Nunito';
 `
 export const Placeholder = styled(Font)`
-	color: ${props => props.theme.foreground}60;
+	color: ${props => props.theme.foreground};
 `
 export const Container = styled.Pressable`
 	display: flex;
@@ -50,9 +50,7 @@ export const Item = styled.Pressable`
 `
 export const Text = styled(Font)``
 export const Label = styled(Font)`
-	font-size: 12px;
 	font-weight: bold;
-	margin-bottom: 4px;
 `
 export const Space = styled.View`
 	height: 30px;

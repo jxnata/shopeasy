@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { Button, Font } from '../../theme/global'
+import { Button, ButtonLabel, Font } from '../../theme/global'
 
 export const Content = styled.SafeAreaView`
 	flex: 1;
@@ -89,4 +89,14 @@ export const CartTotal = styled.View`
 export const FinishButton = styled(Button)`
 	width: auto;
 	padding: 4px 16px;
+`
+
+export const FinishedBadge = styled.View`
+	padding: 4px 8px;
+	border-radius: 8px;
+	background: ${props => props.theme.secondary};
+`
+export const FinishedText = styled(ButtonLabel)`
+	font-size: 14px;
+	font-weight: bold;
 `

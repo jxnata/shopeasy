@@ -15,6 +15,12 @@ export const queries = {
 		Query.equal('user', [userId ? userId : '_']),
 		Query.equal('model', true),
 	],
+	listsToExpenses: (userId?: string, extend?: string) => [
+		Query.equal('user', [userId ? userId : '_']),
+		Query.equal('model', false),
+		Query.equal('finished', true),
+		Query.equal('extends', [extend ? extend : '_']),
+	],
 	listsToShop: (userId?: string) => [Query.equal('user', [userId ? userId : '_']), Query.equal('model', false)],
 	itemsBylist: (listId?: string) => [
 		Query.select(['$id', 'name', 'category', 'price', 'unit', 'qty']),

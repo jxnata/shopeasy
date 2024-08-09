@@ -16,7 +16,7 @@ import CategoryTag from '../category-tag'
 import PriceHistory from '../price-history'
 import PriceInput from '../price-input'
 
-const ItemShopRow = ({ item, displayCategory, mutate }: Props) => {
+const ItemShopRow = ({ item, displayCategory, finished, mutate }: Props) => {
 	const [checked, setChecked] = useState<boolean>(item.checked)
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation('translation', { keyPrefix: 'item_shop' })
@@ -69,11 +69,11 @@ const ItemShopRow = ({ item, displayCategory, mutate }: Props) => {
 			{displayCategory && <CategoryTag category={item.category} />}
 			<S.Container>
 				{checked ? (
-					<S.CheckButton onPress={uncheckItem}>
+					<S.CheckButton onPress={uncheckItem} disabled={finished}>
 						<ButtonIcon name='checkmark-circle' style={{ fontSize: 28, color: theme.dark.primary }} />
 					</S.CheckButton>
 				) : (
-					<S.CheckButton onPress={checkItem}>
+					<S.CheckButton onPress={checkItem} disabled={finished}>
 						<ButtonIcon name='ellipse-outline' style={{ fontSize: 28 }} />
 					</S.CheckButton>
 				)}
@@ -107,6 +107,7 @@ const ItemShopRow = ({ item, displayCategory, mutate }: Props) => {
 							groupSeparator: ',',
 							precision: 2,
 						}}
+						readOnly={finished}
 					/>
 				</S.Collapsed>
 				<PriceHistory open={open} onClose={toggle} item={item} />
@@ -119,6 +120,7 @@ export default ItemShopRow
 
 type Props = {
 	item: Item<List, Local>
+	finished: boolean
 	displayCategory?: boolean
 	mutate: () => void
 }

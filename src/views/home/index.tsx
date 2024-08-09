@@ -16,7 +16,7 @@ import { List } from '../../types/models/list'
 
 function Home({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'home' })
-	const { current } = useSession()
+	const { current, premium } = useSession()
 	const currentId = current ? current.$id : undefined
 
 	const {
@@ -30,7 +30,17 @@ function Home({ navigation }: Props) {
 		queryFn: async () => await databases.listDocuments(DB, MODELS.LIST, queries.listsByUser(currentId)),
 	})
 
-	const onCreate = () => navigation.navigate('list')
+	const onCreate = () => {
+		if (!premium && lists.length >= 1) {
+			return navigateToSubscribe()
+		}
+		navigation.navigate('list')
+	}
+
+	const navigateToExpenses = () => {
+		// if (!premium) return navigateToSubscribe()
+		navigation.navigate('expenses')
+	}
 
 	const navigateToShoppings = () => navigation.navigate('shoppings')
 
@@ -71,7 +81,7 @@ function Home({ navigation }: Props) {
 					>
 						<MenuItem title={t('menu_item_create')} icon='✏️' action={onCreate} />
 						<MenuItem title={t('menu_item_shop')} icon='🛍️' action={navigateToShoppings} />
-						<MenuItem title={t('menu_item_expenses')} icon='💸' action={() => {}} />
+						<MenuItem title={t('menu_item_expenses')} icon='💸' action={navigateToExpenses} />
 						<MenuItem title={t('menu_item_profile')} icon='🙋' action={navigateToProfile} />
 						<MenuItem title={t('menu_item_premium')} icon='👑' action={navigateToSubscribe} />
 					</S.MenuList>

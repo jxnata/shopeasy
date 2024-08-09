@@ -11,6 +11,7 @@ import theme from '../theme'
 import { StackParamList } from '../types/navigation/stack'
 import Add from '../views/add'
 import Auth from '../views/auth'
+import Expenses from '../views/expenses'
 import Home from '../views/home'
 import ListView from '../views/list'
 import Profile from '../views/profile'
@@ -72,6 +73,7 @@ const Routes = () => {
 			<Stack.Navigator initialRouteName='home' screenOptions={options}>
 				<Stack.Screen name='home' component={Home} options={{ title: t('home.title') }} />
 				<Stack.Screen name='profile' component={Profile} options={{ title: t('profile.title') }} />
+				<Stack.Screen name='expenses' component={Expenses} options={{ title: t('expenses.title') }} />
 				<Stack.Screen name='list' component={ListView} options={{ title: t('list.title') }} />
 				<Stack.Screen name='add' component={Add} options={{ title: t('add.title') }} />
 				<Stack.Screen name='rename' component={ListRename} options={{ title: t('rename.title') }} />

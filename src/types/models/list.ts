@@ -9,5 +9,6 @@ export interface List extends Models.Document {
 	finished: boolean
 	total: number | null
 	qty: number | null
+	extends: string | null
 	local: Local
 }

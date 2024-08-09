@@ -68,6 +68,7 @@ function ListView({ navigation, route }: Props) {
 			name,
 			model: false,
 			user: currentId,
+			extends: list.$id,
 		}
 
 		const copy: List = await databases.createDocument(DB, MODELS.LIST, ID.unique(), data, getPermissions(currentId))
@@ -186,7 +187,7 @@ function ListView({ navigation, route }: Props) {
 						style={{ marginBottom: 12 }}
 					/>
 					{!list && (
-						<Button disabled={!name}>
+						<Button disabled={!name} onPress={onSave}>
 							<ButtonLabel>{t('create_button')}</ButtonLabel>
 						</Button>
 					)}
