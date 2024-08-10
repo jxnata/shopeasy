@@ -4,13 +4,14 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import React, { useEffect } from 'react'
 import { AppState, AppStateStatus, Platform, StatusBar, useColorScheme } from 'react-native'
 import mobileAds from 'react-native-google-mobile-ads'
+import { OneSignal } from 'react-native-onesignal'
 import Purchases from 'react-native-purchases'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import { ThemeProvider } from 'styled-components'
 
 import { toastConfig } from './src/components/toast'
-import { REVENUECAT_API_KEY_ANDROID, REVENUECAT_API_KEY_IOS } from './src/constants'
+import { ONE_SIGNAL_APP_ID, REVENUECAT_API_KEY_ANDROID, REVENUECAT_API_KEY_IOS } from './src/constants'
 import { SessionProvider } from './src/contexts/session'
 import { SettingsProvider } from './src/contexts/settings'
 import { clientPersister } from './src/database/cache'
@@ -42,6 +43,12 @@ function App(): React.JSX.Element {
 		}
 
 		mobileAds().initialize()
+	}, [])
+
+	useEffect(() => {
+		OneSignal.initialize(ONE_SIGNAL_APP_ID)
+
+		OneSignal.Notifications.requestPermission(true)
 	}, [])
 
 	if (!scheme) return <></>

@@ -1,6 +1,7 @@
 import { AppleRequestResponse } from '@invertase/react-native-apple-authentication'
 import { ExecutionMethod, Models } from 'appwrite'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { OneSignal } from 'react-native-onesignal'
 
 import { storage } from '../../database'
 import { account, functions } from '../../lib/appwrite'
@@ -77,6 +78,9 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 			const loggedIn = await account.get()
 			setUser(loggedIn)
 			storage.set('session', JSON.stringify(loggedIn))
+
+			OneSignal.login(loggedIn.$id)
+			OneSignal.User.addEmail(loggedIn.email)
 		} catch {
 			setUser(null)
 			storage.delete('session')

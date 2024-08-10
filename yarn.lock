@@ -6180,7 +6180,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:^2.2.4":
+"invariant@npm:^2.2.2, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -8805,6 +8805,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-onesignal@npm:^5.2.2":
+  version: 5.2.2
+  resolution: "react-native-onesignal@npm:5.2.2"
+  dependencies:
+    invariant: ^2.2.2
+  checksum: b730e5c4f713bf72e9319cce4b690eedc133ce350aad5eaad76d7b9c7513c2884e156870fd29c738808a6bd86fb846204858faf283daeb968a335d713b0565e0
+  languageName: node
+  linkType: hard
+
 "react-native-purchases@npm:^8.0.0":
   version: 8.0.0
   resolution: "react-native-purchases@npm:8.0.0"
@@ -9538,6 +9547,7 @@ __metadata:
     react-native-localize: ^3.2.0
     react-native-mask-text: ^0.14.2
     react-native-mmkv: ^2.12.2
+    react-native-onesignal: ^5.2.2
     react-native-purchases: ^8.0.0
     react-native-safe-area-context: ^4.9.0
     react-native-screens: ^3.30.1

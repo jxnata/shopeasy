@@ -20,6 +20,7 @@ export const queries = {
 		Query.equal('model', false),
 		Query.equal('finished', true),
 		Query.equal('extends', [extend ? extend : '_']),
+		Query.orderAsc('$createdAt'),
 	],
 	listsToShop: (userId?: string) => [Query.equal('user', [userId ? userId : '_']), Query.equal('model', false)],
 	itemsBylist: (listId?: string) => [
