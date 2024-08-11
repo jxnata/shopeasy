@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "465345576796",
+    "project_id": "shopeasy-76d62",
+    "storage_bucket": "shopeasy-76d62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465345576796:android:896a8c682c1579e73e4b99",
+        "android_client_info": {
+          "package_name": "dev.jxnata.shopeasy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBghEGC4t6fTouEV5E3V8VeF11uRmNomHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

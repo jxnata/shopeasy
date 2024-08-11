@@ -1,4 +1,5 @@
 import Geolocation from '@react-native-community/geolocation'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import React, { useEffect } from 'react'
@@ -39,6 +40,7 @@ function App(): React.JSX.Element {
 		if (Platform.OS === 'ios') {
 			Purchases.configure({ apiKey: REVENUECAT_API_KEY_IOS })
 		} else if (Platform.OS === 'android') {
+			GoogleSignin.configure()
 			Purchases.configure({ apiKey: REVENUECAT_API_KEY_ANDROID })
 		}
 

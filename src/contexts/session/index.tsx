@@ -1,6 +1,8 @@
 import { AppleRequestResponse } from '@invertase/react-native-apple-authentication'
+import { GoogleSignin, User } from '@react-native-google-signin/google-signin'
 import { ExecutionMethod, Models } from 'appwrite'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { Platform } from 'react-native'
 import { OneSignal } from 'react-native-onesignal'
 
 import { storage } from '../../database'
@@ -11,7 +13,8 @@ type LocalSession = {
 	current: Models.User<Models.Preferences> | null
 	loading: boolean
 	premium: boolean
-	login: (appleRequestResponse: AppleRequestResponse) => Promise<void>
+	appleAuthentication: (appleRequestResponse: AppleRequestResponse) => Promise<void>
+	googleAuthentication: (user: User) => Promise<void>
 	logout: () => Promise<void>
 	checkPremium: () => void
 }
@@ -22,7 +25,8 @@ const initialState: LocalSession = {
 	current: null,
 	loading: true,
 	premium: false,
-	login: async () => {},
+	appleAuthentication: async () => {},
+	googleAuthentication: async () => {},
 	logout: async () => {},
 	checkPremium: async () => {},
 }
@@ -41,7 +45,7 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 	const [user, setUser] = useState<AppSession>(localSession)
 	const [premium, setPremium] = useState(false)
 
-	async function login(appleRequestResponse: AppleRequestResponse) {
+	async function appleAuthentication(appleRequestResponse: AppleRequestResponse) {
 		setLoading(true)
 
 		const result = await functions.createExecution(
@@ -61,7 +65,30 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 		await init()
 	}
 
+	async function googleAuthentication(user: User) {
+		setLoading(true)
+
+		const result = await functions.createExecution(
+			'google-auth',
+			JSON.stringify({ idToken: user.idToken }),
+			false,
+			undefined,
+			ExecutionMethod.POST
+		)
+
+		if (result.responseStatusCode !== 200) throw new Error(result.responseBody)
+
+		const token: Models.Token = JSON.parse(result.responseBody)
+
+		await account.createSession(token.userId, token.secret)
+
+		await init()
+	}
+
 	async function logout() {
+		if (Platform.OS === 'android') {
+			await GoogleSignin.signOut()
+		}
 		await account.deleteSession('current')
 		setUser(null)
 	}
@@ -94,7 +121,9 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 	}, [])
 
 	return (
-		<SessionContext.Provider value={{ current: user, loading, premium, login, logout, checkPremium }}>
+		<SessionContext.Provider
+			value={{ current: user, loading, premium, appleAuthentication, googleAuthentication, logout, checkPremium }}
+		>
 			{props.children}
 		</SessionContext.Provider>
 	)
