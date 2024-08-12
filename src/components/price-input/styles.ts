@@ -1,11 +1,19 @@
 import { MaskedTextInput, MaskedTextInputProps } from 'react-native-mask-text'
 import styled from 'styled-components/native'
 
+import { Font } from '../../theme/global'
+
 interface StyledInputProps extends MaskedTextInputProps {
 	label?: string
 	Right?: JSX.Element
 }
-
+export const PriceContainer = styled.View`
+	gap: 2px;
+`
+export const Label = styled(Font)`
+	font-size: 12px;
+	font-weight: bold;
+`
 export const Input = styled(MaskedTextInput).attrs<StyledInputProps>(({ theme }) => ({
 	placeholderTextColor: theme.base,
 }))`

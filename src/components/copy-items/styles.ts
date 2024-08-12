@@ -9,7 +9,7 @@ export const Container = styled.View`
 `
 export const Content = styled.View`
 	align-items: center;
-	padding: 12px 8px;
+	padding: 12px;
 	gap: 12px;
 `
 export const Percentage = styled(Font)`
@@ -17,6 +17,7 @@ export const Percentage = styled(Font)`
 	font-size: 18px;
 `
 export const Description = styled(Font)`
+	margin-top: 16px;
 	color: ${props => props.theme.foreground};
 	font-size: 14px;
 	opacity: 0.7;

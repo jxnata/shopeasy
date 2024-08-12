@@ -10,6 +10,7 @@ import Banner from '../../components/banner'
 import Icon from '../../components/icon'
 import Input from '../../components/input'
 import ItemRow from '../../components/item'
+import ListFooter from '../../components/list-footer'
 import Options from '../../components/options'
 import { toast } from '../../components/toast'
 import { DB, MODELS } from '../../constants'
@@ -183,6 +184,7 @@ function ListView({ navigation, route }: Props) {
 							<ItemRow item={item} displayCategory={displayCategory(index)} mutate={mutate} />
 						)}
 						ListHeaderComponent={<Banner />}
+						ListFooterComponent={<ListFooter />}
 						showsVerticalScrollIndicator={false}
 						style={{ marginBottom: 12 }}
 					/>

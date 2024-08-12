@@ -1,5 +1,5 @@
 import { debounce } from 'lodash'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -8,14 +8,16 @@ import units from '../../assets/data/units.json'
 import { DB, MODELS } from '../../constants'
 import { databases } from '../../lib/appwrite'
 import { ButtonIcon } from '../../theme/global'
+import { Categories } from '../../types/models/categories'
 import { Item } from '../../types/models/item'
 import { List } from '../../types/models/list'
 import { Local } from '../../types/models/local'
+import { categoryNumber } from '../../utils/category-number'
 import { format } from '../../utils/format'
 import CategoryTag from '../category-tag'
-import Dropdown from '../dropdown'
 import Icon from '../icon'
-import MaskedInput from '../masked-input'
+import PriceInput from '../price-input'
+import SmallDropdown from '../small-dropdown'
 
 const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 	const [data, setData] = useState<Item<string, undefined>>(item)
@@ -24,8 +26,19 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation('translation', { keyPrefix: 'item' })
 	const { control, handleSubmit } = useForm<Partial<Item<List, undefined>>>({
-		defaultValues: { price: data.price, unit: data.unit },
+		defaultValues: { price: data.price, unit: data.unit, category: data.category },
 	})
+
+	const categories = useMemo(
+		() =>
+			Object.values(Categories).map(c => {
+				return {
+					label: t(c, { keyPrefix: 'categories' }),
+					value: categoryNumber(c),
+				}
+			}),
+		[t]
+	)
 
 	const toggle = () => setOpen(old => !old)
 
@@ -68,13 +81,14 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 	}
 
 	const updateItem = async (form: Partial<Item<List, Local>>) => {
-		if (!form.price && !form.unit) return
+		if (!form.price && !form.unit && !form.category) return
 
 		const newPrice = typeof form.price === 'number' ? form.price : Number(form.price) * 100
 
 		const body = {
 			price: newPrice,
 			unit: form.unit || null,
+			category: form.category || data.category,
 		}
 
 		try {
@@ -127,41 +141,61 @@ const ItemRow = ({ item, displayCategory, mutate }: Props) => {
 				)}
 				{open && (
 					<S.CollapsedContent>
-						<Controller
-							control={control}
-							rules={{ required: false }}
-							name='price'
-							render={({ field: { onChange, onBlur, value } }) => (
-								<MaskedInput
-									label={t('price_label')}
-									type='currency'
-									placeholder={t('price')}
-									keyboardType='numeric'
-									onChangeText={onChange}
-									onBlur={onBlur}
-									options={{
-										decimalSeparator: '.',
-										groupSeparator: ',',
-										precision: 2,
-									}}
-									defaultValue={data.price ? parseFloat(data.price.toString()).toFixed(2) : ''}
+						<S.Col>
+							<S.Row>
+								<Controller
+									control={control}
+									rules={{ required: false }}
+									name='price'
+									render={({ field: { onChange, onBlur, value } }) => (
+										<PriceInput
+											label={t('price_label')}
+											type='currency'
+											placeholder={t('price')}
+											keyboardType='numeric'
+											onChangeText={onChange}
+											onBlur={onBlur}
+											options={{
+												decimalSeparator: '.',
+												groupSeparator: ',',
+												precision: 2,
+											}}
+											defaultValue={
+												data.price ? parseFloat(data.price.toString()).toFixed(2) : ''
+											}
+										/>
+									)}
 								/>
-							)}
-						/>
-						<Controller
-							control={control}
-							rules={{ required: false }}
-							name='unit'
-							render={({ field: { onChange, onBlur, value } }) => (
-								<Dropdown
-									label={t('unit_label')}
-									placeholder={t('unit')}
-									options={units}
-									onValueChange={onChange}
-									selectedValue={value || ''}
+								<Controller
+									control={control}
+									rules={{ required: false }}
+									name='unit'
+									render={({ field: { onChange, value } }) => (
+										<SmallDropdown
+											label={t('unit_label')}
+											placeholder={t('unit')}
+											options={units}
+											onValueChange={onChange}
+											selectedValue={value || ''}
+										/>
+									)}
 								/>
-							)}
-						/>
+							</S.Row>
+							<Controller
+								control={control}
+								rules={{ required: false }}
+								name='category'
+								render={({ field: { onChange, value } }) => (
+									<SmallDropdown
+										label={t('category_label')}
+										placeholder={t('category')}
+										options={categories}
+										onValueChange={onChange}
+										selectedValue={value || ''}
+									/>
+								)}
+							/>
+						</S.Col>
 						<S.SaveButton onPress={handleSubmit(updateItem)}>
 							<ButtonIcon name='checkmark' style={{ fontSize: 20 }} />
 						</S.SaveButton>

@@ -44,8 +44,6 @@ function Subscribe({ navigation, route }: Props) {
 
 			checkPremium()
 
-			if (back) return navigation.goBack()
-
 			navigation.replace('home')
 		} catch (e: unknown) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -61,8 +59,6 @@ function Subscribe({ navigation, route }: Props) {
 			toast.success(t('restore_success'))
 
 			checkPremium()
-
-			if (back) return navigation.goBack()
 
 			navigation.replace('home')
 		} catch {

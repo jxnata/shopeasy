@@ -38,7 +38,7 @@ function Home({ navigation }: Props) {
 	}
 
 	const navigateToExpenses = () => {
-		// if (!premium) return navigateToSubscribe()
+		if (!premium) return navigateToSubscribe()
 		navigation.navigate('expenses')
 	}
 
@@ -83,7 +83,7 @@ function Home({ navigation }: Props) {
 						<MenuItem title={t('menu_item_shop')} icon='🛍️' action={navigateToShoppings} />
 						<MenuItem title={t('menu_item_expenses')} icon='💸' action={navigateToExpenses} />
 						<MenuItem title={t('menu_item_profile')} icon='🙋' action={navigateToProfile} />
-						<MenuItem title={t('menu_item_premium')} icon='👑' action={navigateToSubscribe} />
+						{!premium && <MenuItem title={t('menu_item_premium')} icon='👑' action={navigateToSubscribe} />}
 					</S.MenuList>
 				</S.MenuContainer>
 			</S.Content>

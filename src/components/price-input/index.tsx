@@ -13,13 +13,16 @@ const PriceInput = forwardRef<TextInput, InputProps>((props, ref) => {
 	const [isFocused, setIsFocused] = useState(false)
 
 	return (
-		<S.Input
-			ref={ref}
-			{...props}
-			aria-selected={isFocused}
-			onFocus={() => setIsFocused(true)}
-			onBlur={() => setIsFocused(false)}
-		/>
+		<S.PriceContainer>
+			{!!props.label && <S.Label>{props.label}</S.Label>}
+			<S.Input
+				ref={ref}
+				{...props}
+				aria-selected={isFocused}
+				onFocus={() => setIsFocused(true)}
+				onBlur={() => setIsFocused(false)}
+			/>
+		</S.PriceContainer>
 	)
 })
 

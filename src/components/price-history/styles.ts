@@ -33,7 +33,7 @@ export const PremiumContainer = styled.TouchableOpacity`
 `
 export const Premium = styled(Label)`
 	text-align: center;
-	font-size: 18px;
+	font-size: 14px;
 `
 export const RowTitle = styled(Label)`
 	font-size: 12px;

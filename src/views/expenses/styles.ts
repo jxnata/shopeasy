@@ -16,6 +16,7 @@ export const Avatar = styled.Image`
 	border-radius: 64px;
 	border: solid 3px ${props => props.theme.primary};
 `
+export const Scroll = styled.ScrollView``
 export const InfoContainer = styled.View`
 	background: ${props => props.theme.modalBg};
 	margin-top: 16px;
@@ -23,6 +24,9 @@ export const InfoContainer = styled.View`
 	border-radius: 8px;
 	gap: 8px;
 	width: 100%;
+`
+export const EmptyText = styled(Font)`
+	font-weight: 400;
 `
 export const InfoRow = styled.View`
 	padding: 8px;

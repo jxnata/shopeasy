@@ -58,10 +58,6 @@ function ShopView({ navigation, route }: Props) {
 
 	const toggle = useCallback(() => setOptionsOpen(old => !old), [])
 
-	const onRename = () => {
-		setOptionsOpen(false)
-	}
-
 	const onFinish = async () => {
 		if (!list) return
 		try {
@@ -177,10 +173,6 @@ function ShopView({ navigation, route }: Props) {
 						)}
 					</S.Cart>
 					<Options open={optionsOpen} onClose={toggle}>
-						<S.OptionButton onPress={onRename}>
-							<Icon name='create' />
-							<Label>{t('edit_option')}</Label>
-						</S.OptionButton>
 						<S.OptionButton onPress={onConfirmDelete}>
 							<Icon name='trash' />
 							<Label>{t('delete_option')}</Label>

@@ -66,7 +66,8 @@
 			"variation": "Variação:",
 			"average": "Média:",
 			"higher": "Mais caro:",
-			"lower": "Mais barato:"
+			"lower": "Mais barato:",
+			"no_expenses": "Nenhuma compra finalizada para essa lista."
 		},
 		"add": {
 			"title": "Adicionar items",
@@ -108,7 +109,7 @@
 			"auth_failed": "Ocorreu um erro na autenticação.",
 			"auth_unauthorized": "Autenticação não autorizada no dispositivo.",
 			"auth_expired": "O token de autenticação expirou. Por favor, faça login novamente.",
-			"apple_id_auth": "Entre com seu Apple ID",
+			"apple_id_auth": "Entre agora:",
 			"description": "Crie listas de compras, compare preços e economize dinheiro."
 		},
 		"item": {
@@ -118,7 +119,9 @@
 			"unit_plural": "unidades",
 			"needed": "eu preciso de",
 			"price_label": "Preço da unidade",
-			"unit_label": "Unidade"
+			"unit_label": "Unidade",
+			"category_label": "Categoria",
+			"category": "Selecione"
 		},
 		"item_shop": {
 			"price": "Preço",

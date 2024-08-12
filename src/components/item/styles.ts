@@ -67,18 +67,26 @@ export const QuantityButton = styled(Button)`
 `
 export const CollapsedContent = styled.View`
 	flex-direction: row;
-	justify-content: flex-start;
-	align-items: flex-end;
+	justify-content: space-between;
+	align-items: center;
 	gap: 4px;
 	margin-top: 8px;
 `
+export const Col = styled.View`
+	flex-direction: column;
+	gap: 8px;
+`
+export const Row = styled.View`
+	flex-direction: row;
+	gap: 8px;
+`
 export const SaveButton = styled(Button)`
-	background: ${props => props.theme.base};
-	width: 50px;
-	height: 50px;
-	border-radius: 8px;
-	margin-bottom: 4px;
+	background: ${props => props.theme.secondary};
+	width: auto;
+	height: 32px;
+	border-radius: 4px;
 	align-items: center;
 	justify-content: center;
-	border-bottom-width: 0;
+	border-bottom-width: 2px;
+	border-bottom-color: ${props => props.theme.secondaryFocus};
 `

@@ -4,6 +4,7 @@ import { FlatList, RefreshControl } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
+import Banner from '../../components/banner'
 import ShopItem from '../../components/shop-item'
 import { DB, MODELS } from '../../constants'
 import { useSession } from '../../contexts/session'
@@ -52,6 +53,7 @@ function Shoppings({ navigation }: Props) {
 								<S.Text>{t('no_shoppings')}</S.Text>
 							</S.Empty>
 						}
+						ListHeaderComponent={<Banner />}
 					/>
 				</S.Body>
 			</S.Content>

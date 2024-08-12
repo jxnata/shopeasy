@@ -75,8 +75,8 @@ const ShopLocal = ({ list }: Props) => {
 		} catch {
 			toast.error(t('create_place_error'))
 		} finally {
+			await queryClient.invalidateQueries({ queryKey: ['list', list.$id] })
 			setLoading(false)
-			queryClient.invalidateQueries({ queryKey: ['list', list.$id] })
 		}
 	}
 
