@@ -13,7 +13,10 @@ import Add from '../views/add'
 import Auth from '../views/auth'
 import Expenses from '../views/expenses'
 import Home from '../views/home'
+import Intro from '../views/intro'
 import ListView from '../views/list'
+import Onboarding from '../views/onboarding'
+import Permissions from '../views/permissions'
 import Profile from '../views/profile'
 import ListRename from '../views/rename'
 import ShopView from '../views/shop'
@@ -23,7 +26,7 @@ import Subscribe from '../views/subscribe'
 const Stack = createNativeStackNavigator<StackParamList>()
 
 const Routes = () => {
-	const { initialized } = useSettings()
+	const { initialized, oppened } = useSettings()
 	const { current, loading } = useSession()
 	const { t } = useTranslation('translation')
 
@@ -47,6 +50,18 @@ const Routes = () => {
 	}
 
 	if (loading) return <Loading />
+
+	if (!oppened) {
+		return (
+			<NavigationContainer>
+				<Stack.Navigator initialRouteName='intro' screenOptions={{ headerShown: false }}>
+					<Stack.Screen name='intro' component={Intro} />
+					<Stack.Screen name='onboarding' component={Onboarding} />
+					<Stack.Screen name='permissions' component={Permissions} />
+				</Stack.Navigator>
+			</NavigationContainer>
+		)
+	}
 
 	if (!current) {
 		return (

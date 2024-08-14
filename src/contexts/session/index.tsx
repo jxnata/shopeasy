@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { Platform } from 'react-native'
 import { OneSignal } from 'react-native-onesignal'
 
-import { storage } from '../../database'
+import { settings } from '../../database'
 import { account, functions } from '../../lib/appwrite'
 import { checkSubscription } from '../../utils/check-subscription'
 
@@ -38,7 +38,7 @@ export function useSession() {
 }
 
 export function SessionProvider(props: { children: React.ReactNode }) {
-	const storedSession = storage.getString('session')
+	const storedSession = settings.getString('session')
 	const localSession: AppSession = storedSession ? JSON.parse(storedSession) : null
 
 	const [loading, setLoading] = useState(true)
@@ -104,13 +104,13 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 		try {
 			const loggedIn = await account.get()
 			setUser(loggedIn)
-			storage.set('session', JSON.stringify(loggedIn))
+			settings.set('session', JSON.stringify(loggedIn))
 
 			OneSignal.login(loggedIn.$id)
 			OneSignal.User.addEmail(loggedIn.email)
 		} catch {
 			setUser(null)
-			storage.delete('session')
+			settings.delete('session')
 		} finally {
 			setLoading(false)
 		}

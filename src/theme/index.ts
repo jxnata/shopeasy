@@ -1,37 +1,66 @@
-const any = {
-	primary: '#2DD4BF',
-	focus: '#14B8A6',
-	btnText: '#F9FAFB',
-	secondary: '#EC4899',
-	secondaryFocus: '#DB2777',
-}
-
 export const light = {
-	background: '#F3F4F6',
-	foreground: '#353e4b',
-	base: '#353e4b50',
+	background: '#F7F7F7',
+	foreground: '#333333',
+	base: '#22222250',
 	boxBg: '#E5E7EB',
 	modalBg: '#f7f8f9',
 	dangerText: '#932338',
 	dangerBg: '#fad7dd',
 	successText: '#00864e',
 	successBg: '#ccf6e4',
-	...any,
-	logoText: require('../assets/images/logo-text-light.png'),
+	shadow: '#000',
+	logo: require('../assets/images/logo-light.png'),
 }
 
 export const dark = {
-	background: '#374151',
+	background: '#222222',
 	foreground: '#F9FAFB',
-	base: '#F9FAFB50',
-	boxBg: '#313a48',
+	base: '#F7F7F750',
+	boxBg: '#383838',
 	modalBg: '#2c3440',
 	dangerText: '#ef7f93',
 	dangerBg: '#2e0b11',
 	successText: '#5ce2aa',
 	successBg: '#002a18',
-	logoText: require('../assets/images/logo-text-dark.png'),
-	...any,
+	shadow: 'transparent',
+	logo: require('../assets/images/logo-dark.png'),
 }
 
-export default { light, dark }
+export const accents = {
+	green: {
+		primary: '#04773B',
+		secondary: '#cce3d7',
+	},
+	blue: {
+		primary: '#0077B6',
+		secondary: '#cce3f0',
+	},
+	orange: {
+		primary: '#E76F51',
+		secondary: '#fae2dc',
+	},
+	red: {
+		primary: '#BB4430',
+		secondary: '#f1d9d5',
+	},
+	pink: {
+		primary: '#FF579F',
+		secondary: '#ffddeb',
+	},
+	purple: {
+		primary: '#7b2cbf',
+		secondary: '#e4d4f2',
+	},
+	mono: {
+		dark: {
+			primary: '#F7F7F7',
+			secondary: '#333333',
+		},
+		light: {
+			primary: '#222222',
+			secondary: '#F9FAFB',
+		},
+	},
+}
+
+export default { light, dark, accents }

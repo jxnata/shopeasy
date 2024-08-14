@@ -20,6 +20,33 @@
 			"purchase_success": "Assinatura concluída!",
 			"restore_success": "Assinatura recuperada!"
 		},
+		"intro": {
+			"title": "Bem vindo(a) ao ShopEasy!",
+			"description": "Vou te ajudar a organizar suas compras e economizar dinheiro.",
+			"start_button": "Vamos começar"
+		},
+		"onboarding": {
+			"back": "Anterior",
+			"next": "Próximo",
+			"continue": "Continuar",
+			"feature_1_title": "Listas de Compras",
+			"feature_1_description": "Crie e gerencie listas de compras facilmente. Organize os itens por categoria, defina quantidades e marque-os à medida que compra.",
+			"feature_2_title": "Comparar Preços",
+			"feature_2_description": "Encontre as melhores ofertas comparando preços em diferentes lojas e economize dinheiro em suas compras.",
+			"feature_3_title": "Relatórios",
+			"feature_3_description": "Obtenha relatórios detalhados sobre seus hábitos de consumo. Analise suas compras ao longo do tempo, acompanhe suas economias e otimize seu orçamento.",
+			"feature_4_title": "Notificações",
+			"feature_4_description": "Receba lembretes para comprar itens e atualizações sobre suas listas de compras."
+		},
+		"permissions": {
+			"title": "Permissões",
+			"location_description": "Ative a localização para encontrar melhores ofertas de preços perto de você.",
+			"notification_description": "Ative as notificações para receber alertas e lembretes para suas compras.",
+			"deny": "Agora não",
+			"done_description": "Tudo certo! Você ja pode começar a criar suas listas!",
+			"allow": "Sim, ativar",
+			"continue": "Continuar"
+		},
 		"home": {
 			"title": "Listas",
 			"no_lists": "Você ainda não tem listas.",

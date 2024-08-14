@@ -12,4 +12,7 @@ export type StackParamList = {
 	shoppings: undefined
 	subscribe: { back: boolean } | undefined
 	auth: undefined
+	intro: undefined
+	onboarding: undefined
+	permissions: undefined
 }

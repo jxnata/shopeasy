@@ -8,7 +8,7 @@ export const CategoryContainer = styled.View`
 	align-items: center;
 `
 export const CategoryTag = styled.View`
-	background: ${props => props.theme.secondaryFocus}20;
+	background: ${props => props.theme.secondary};
 	padding: 4px 12px;
 	border-radius: 8px;
 	margin-top: 8px;
