@@ -1,7 +1,7 @@
 import { light, dark, accents } from '../theme'
 
 export const getTheme = (
-	mode: 'light' | 'dark',
+	mode: 'light' | 'dark' | null,
 	accent: 'green' | 'blue' | 'orange' | 'red' | 'pink' | 'purple' | 'mono'
 ) => {
 	let theme = null

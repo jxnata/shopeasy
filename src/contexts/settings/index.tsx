@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react'
-import { useMMKVListener } from 'react-native-mmkv'
+import React, { createContext, useContext } from 'react'
+import { useMMKVBoolean, useMMKVListener } from 'react-native-mmkv'
 
 import { settings } from '../../database'
 
@@ -18,32 +18,36 @@ const SettingsContext = createContext<Settings>({
 })
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [oppened, setOppened] = useState(settings.getBoolean('oppened') || false)
-	const [initialized, setInitialized] = useState(settings.getBoolean('initialized') || false)
-	const [buyRejected, setBuyRejected] = useState(settings.getBoolean('buyRejected') || false)
-	const [discountOfferted, setDiscountOfferted] = useState(settings.getBoolean('discountOfferted') || false)
+	const [oppened, setOppened] = useMMKVBoolean('oppened')
+	const [initialized, setInitialized] = useMMKVBoolean('initialized')
+	const [buyRejected, setBuyRejected] = useMMKVBoolean('buyRejected')
+	const [discountOfferted, setDiscountOfferted] = useMMKVBoolean('discountOfferted')
 
 	useMMKVListener(key => {
 		switch (key as keyof Settings) {
 			case 'initialized':
-				return setInitialized(settings.getBoolean('initialized') || false)
+				setInitialized(settings.getBoolean('initialized') || false)
+				break
 
 			case 'oppened':
-				return setOppened(settings.getBoolean('oppened') || false)
+				setOppened(settings.getBoolean('oppened') || false)
+				break
 
 			case 'buyRejected':
-				return setBuyRejected(settings.getBoolean('buyRejected') || false)
+				setBuyRejected(settings.getBoolean('buyRejected') || false)
+				break
 
 			case 'discountOfferted':
-				return setDiscountOfferted(settings.getBoolean('discountOfferted') || false)
+				setDiscountOfferted(settings.getBoolean('discountOfferted') || false)
+				break
 		}
 	}, settings)
 
 	const value = {
-		oppened,
-		initialized,
-		buyRejected,
-		discountOfferted,
+		oppened: !!oppened,
+		initialized: !!initialized,
+		buyRejected: !!buyRejected,
+		discountOfferted: !!discountOfferted,
 	}
 
 	return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>

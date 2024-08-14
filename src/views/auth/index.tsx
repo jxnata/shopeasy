@@ -1,18 +1,29 @@
 import appleAuth, { AppleButton } from '@invertase/react-native-apple-authentication'
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform } from 'react-native'
+import { Platform, useColorScheme } from 'react-native'
+import { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 
 import * as S from './styles'
 import { Props } from './types'
 import { toast } from '../../components/toast'
 import { useSession } from '../../contexts/session'
-import { Container, Label } from '../../theme/global'
+import { Container } from '../../theme/global'
 
 function Auth({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'auth' })
 	const { appleAuthentication, googleAuthentication, loading } = useSession()
+	const scheme = useColorScheme()
+
+	const buttonTranslateY = useSharedValue(100)
+	const buttonStyle = useAnimatedStyle(() => ({
+		transform: [{ translateY: buttonTranslateY.value }],
+	}))
+	const logoOpacity = useSharedValue(0)
+	const logoStyle = useAnimatedStyle(() => ({
+		opacity: logoOpacity.value,
+	}))
 
 	const appleSign = useCallback(async () => {
 		try {
@@ -40,28 +51,25 @@ function Auth({ navigation }: Props) {
 			const userInfo = await GoogleSignin.signIn()
 
 			await googleAuthentication(userInfo)
-			return
-
-			toast.error(t('auth_unauthorized'))
 		} catch {
 			toast.error(t('auth_failed'))
 		}
 	}, [googleAuthentication, t])
 
+	useEffect(() => {
+		logoOpacity.value = withTiming(1, { duration: 1000 })
+		buttonTranslateY.value = withSpring(0, { damping: 15, stiffness: 100 })
+	}, [buttonTranslateY, logoOpacity])
+
 	return (
 		<Container>
 			<S.SafeAreaView>
 				<S.Content>
-					<S.Head>
-						<S.Logo resizeMode='contain' />
+					<S.Body style={buttonStyle}>
 						<S.Description>{t('description')}</S.Description>
-						<S.EmojiList>🛒🍎🍍🥩🍊🍔🥦✅</S.EmojiList>
-					</S.Head>
-					<S.Body>
-						<Label>{t('apple_id_auth')}</Label>
 						{Platform.OS === 'ios' && (
 							<AppleButton
-								buttonStyle={AppleButton.Style.WHITE}
+								buttonStyle={scheme === 'dark' ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
 								buttonType={AppleButton.Type.SIGN_IN}
 								style={{ width: '100%', height: 48 }}
 								onPress={appleSign}
@@ -70,7 +78,9 @@ function Auth({ navigation }: Props) {
 						{Platform.OS === 'android' && (
 							<GoogleSigninButton
 								size={GoogleSigninButton.Size.Wide}
-								color={GoogleSigninButton.Color.Light}
+								color={
+									scheme === 'dark' ? GoogleSigninButton.Color.Light : GoogleSigninButton.Color.Dark
+								}
 								onPress={googleSign}
 								disabled={loading}
 							/>
@@ -78,6 +88,9 @@ function Auth({ navigation }: Props) {
 					</S.Body>
 				</S.Content>
 			</S.SafeAreaView>
+			<S.LogoContainer style={logoStyle}>
+				<S.Logo resizeMode='contain' />
+			</S.LogoContainer>
 		</Container>
 	)
 }

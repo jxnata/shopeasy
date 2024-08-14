@@ -8,16 +8,17 @@ import { Props } from './types'
 import Icon from '../../components/icon'
 import { toast } from '../../components/toast'
 import { useSession } from '../../contexts/session'
+import { settings } from '../../database'
 import { Button, ButtonLabel, Container, Label } from '../../theme/global'
 import { getOfferings } from '../../utils/get-offerings'
 
-function Subscribe({ navigation }: Props) {
+function Purchase({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'subscribe' })
 	const [selectedOffering, setSelectedOffering] = useState<PurchasesPackage>()
 	const { checkPremium } = useSession()
 
 	const onClose = () => {
-		navigation.goBack()
+		settings.set('initialized', true)
 	}
 
 	const { data: offerings } = useQuery<PurchasesPackage[]>({
@@ -135,4 +136,4 @@ function Subscribe({ navigation }: Props) {
 	)
 }
 
-export default Subscribe
+export default Purchase

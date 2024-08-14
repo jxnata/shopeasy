@@ -18,6 +18,7 @@ import ListView from '../views/list'
 import Onboarding from '../views/onboarding'
 import Permissions from '../views/permissions'
 import Profile from '../views/profile'
+import Purchase from '../views/purchase'
 import ListRename from '../views/rename'
 import ShopView from '../views/shop'
 import Shoppings from '../views/shoppings'
@@ -48,7 +49,7 @@ const Routes = () => {
 		},
 		headerShadowVisible: false,
 	}
-
+	console.tron.log(initialized)
 	if (loading) return <Loading />
 
 	if (!oppened) {
@@ -76,8 +77,8 @@ const Routes = () => {
 	if (!initialized) {
 		return (
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName='subscribe' screenOptions={{ headerShown: false }}>
-					<Stack.Screen name='subscribe' component={Subscribe} />
+				<Stack.Navigator initialRouteName='purchase' screenOptions={{ headerShown: false }}>
+					<Stack.Screen name='purchase' component={Purchase} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		)
@@ -94,12 +95,7 @@ const Routes = () => {
 				<Stack.Screen name='rename' component={ListRename} options={{ title: t('rename.title') }} />
 				<Stack.Screen name='shop' component={ShopView} options={{ title: t('shop.title') }} />
 				<Stack.Screen name='shoppings' component={Shoppings} options={{ title: t('shoppings.title') }} />
-				<Stack.Screen
-					name='subscribe'
-					component={Subscribe}
-					options={{ headerShown: false }}
-					initialParams={{ back: true }}
-				/>
+				<Stack.Screen name='subscribe' component={Subscribe} options={{ headerShown: false }} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

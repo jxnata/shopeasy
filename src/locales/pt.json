@@ -3,11 +3,11 @@
 		"subscribe": {
 			"description": "Desfrute de todos os recursos do ShopEasy e eleve sua experiência de compras ao próximo nível!",
 			"premium_features_title": "Recursos Premium:",
-			"feature1": "❌ Sem anúncios",
-			"feature2": "📋 Crie listas sem limitações",
-			"feature3": "🤑 Compare preços e economize",
-			"feature4": "💸 Relatórios de gastos e economia",
-			"feature5": "👑 Acesso prioritário a novidades",
+			"feature1": "Sem anúncios",
+			"feature2": "Crie listas sem limitações",
+			"feature3": "Compare preços e economize",
+			"feature4": "Relatórios de gastos e economia",
+			"feature5": "Acesso prioritário a novidades",
 			"subscribe_button": "Continuar",
 			"restore_button": "Restaurar",
 			"subscribe_description": "Acesso total por apenas",
@@ -136,8 +136,7 @@
 			"auth_failed": "Ocorreu um erro na autenticação.",
 			"auth_unauthorized": "Autenticação não autorizada no dispositivo.",
 			"auth_expired": "O token de autenticação expirou. Por favor, faça login novamente.",
-			"apple_id_auth": "Entre agora:",
-			"description": "Crie listas de compras, compare preços e economize dinheiro."
+			"description": "Inicie sua sessão para acessar todos os recursos do ShopEasy."
 		},
 		"item": {
 			"price": "Preço",

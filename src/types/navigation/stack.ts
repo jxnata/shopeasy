@@ -10,9 +10,10 @@ export type StackParamList = {
 	rename: { list: List } | undefined
 	add: { items: string[]; listId: string }
 	shoppings: undefined
-	subscribe: { back: boolean } | undefined
+	subscribe: undefined
 	auth: undefined
 	intro: undefined
 	onboarding: undefined
 	permissions: undefined
+	purchase: undefined
 }
