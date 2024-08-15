@@ -26,7 +26,7 @@ const Pressable = (props: Props & TouchableOpacityProps) => {
 				{...props}
 				disabled={props.disabled || props.loading}
 			>
-				{!!left && <S.ButtonIcon name={left} />}
+				{!!left && <S.ButtonIcon name={left} aria-label={variant || 'primary'} />}
 				<S.ButtonLabel aria-label={variant || 'primary'}>{title}</S.ButtonLabel>
 				{!!right && (
 					<>

@@ -1,8 +1,8 @@
 import appleAuth, { AppleButton } from '@invertase/react-native-apple-authentication'
-import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 import { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 
 import * as S from './styles'
@@ -67,24 +67,16 @@ function Auth({ navigation }: Props) {
 				<S.Content>
 					<S.Body style={buttonStyle}>
 						<S.Description>{t('description')}</S.Description>
-						{Platform.OS === 'ios' && (
-							<AppleButton
-								buttonStyle={scheme === 'dark' ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
-								buttonType={AppleButton.Type.SIGN_IN}
-								style={{ width: '100%', height: 48 }}
-								onPress={appleSign}
-							/>
-						)}
-						{Platform.OS === 'android' && (
-							<GoogleSigninButton
-								size={GoogleSigninButton.Size.Wide}
-								color={
-									scheme === 'dark' ? GoogleSigninButton.Color.Light : GoogleSigninButton.Color.Dark
-								}
-								onPress={googleSign}
-								disabled={loading}
-							/>
-						)}
+						<AppleButton
+							buttonStyle={scheme === 'dark' ? AppleButton.Style.WHITE : AppleButton.Style.BLACK}
+							buttonType={AppleButton.Type.SIGN_IN}
+							style={{ width: '100%', height: 48 }}
+							onPress={appleSign}
+						/>
+						<S.Button disabled={loading} activeOpacity={0.8} onPress={googleSign}>
+							{loading ? <S.Spinner /> : <S.ButtonIcon name='logo-google' />}
+							<S.ButtonLabel>{t('google_auth')}</S.ButtonLabel>
+						</S.Button>
 					</S.Body>
 				</S.Content>
 			</S.SafeAreaView>

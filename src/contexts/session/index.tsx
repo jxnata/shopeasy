@@ -46,43 +46,51 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 	const [premium, setPremium] = useState(false)
 
 	async function appleAuthentication(appleRequestResponse: AppleRequestResponse) {
-		setLoading(true)
+		try {
+			setLoading(true)
 
-		const result = await functions.createExecution(
-			'apple-auth',
-			JSON.stringify(appleRequestResponse),
-			false,
-			undefined,
-			ExecutionMethod.POST
-		)
+			const result = await functions.createExecution(
+				'apple-auth',
+				JSON.stringify(appleRequestResponse),
+				false,
+				undefined,
+				ExecutionMethod.POST
+			)
 
-		if (result.responseStatusCode !== 200) throw new Error(result.responseBody)
+			if (result.responseStatusCode !== 200) throw new Error(result.responseBody)
 
-		const token: Models.Token = JSON.parse(result.responseBody)
+			const token: Models.Token = JSON.parse(result.responseBody)
 
-		await account.createSession(token.userId, token.secret)
+			await account.createSession(token.userId, token.secret)
 
-		await init()
+			await init()
+		} finally {
+			setLoading(false)
+		}
 	}
 
 	async function googleAuthentication(user: User) {
-		setLoading(true)
+		try {
+			setLoading(true)
 
-		const result = await functions.createExecution(
-			'google-auth',
-			JSON.stringify({ idToken: user.idToken }),
-			false,
-			undefined,
-			ExecutionMethod.POST
-		)
+			const result = await functions.createExecution(
+				'google-auth',
+				JSON.stringify({ idToken: user.idToken }),
+				false,
+				undefined,
+				ExecutionMethod.POST
+			)
 
-		if (result.responseStatusCode !== 200) throw new Error(result.responseBody)
+			if (result.responseStatusCode !== 200) throw new Error(result.responseBody)
 
-		const token: Models.Token = JSON.parse(result.responseBody)
+			const token: Models.Token = JSON.parse(result.responseBody)
 
-		await account.createSession(token.userId, token.secret)
+			await account.createSession(token.userId, token.secret)
 
-		await init()
+			await init()
+		} finally {
+			setLoading(false)
+		}
 	}
 
 	async function logout() {

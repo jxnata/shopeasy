@@ -36,10 +36,10 @@ function App(): React.JSX.Element {
 		if (Platform.OS === 'ios') {
 			Purchases.configure({ apiKey: REVENUECAT_API_KEY_IOS })
 		} else if (Platform.OS === 'android') {
-			GoogleSignin.configure()
 			Purchases.configure({ apiKey: REVENUECAT_API_KEY_ANDROID })
 		}
 
+		GoogleSignin.configure()
 		mobileAds().initialize()
 	}, [])
 
