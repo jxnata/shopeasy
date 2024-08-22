@@ -9,10 +9,8 @@ export enum Categories {
 	SPORTS = 'sports',
 	DISHWARE = 'dishware',
 	DRINKS = 'drinks',
-	FOOD_SWEET = 'food_sweet',
-	FOOD_MARINE = 'food_marine',
-	FOOD_ASIAN = 'food_asian',
-	FOOD_PREPARED = 'food_prepared',
+	SWEET = 'sweet',
+	FOOD = 'food',
 	VEGETABLES = 'vegetables',
 	FRUITS = 'fruits',
 }

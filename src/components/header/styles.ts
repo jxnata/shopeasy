@@ -7,8 +7,7 @@ export const Head = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 24px;
-	gap: 8px;
+	margin-bottom: 12px;
 `
 export const Left = styled.View`
 	flex-direction: row;
@@ -17,6 +16,6 @@ export const Left = styled.View`
 	gap: 4px;
 `
 export const Text = styled(Font)`
-	font-size: 28px;
+	font-size: 24px;
 	font-weight: bold;
 `

@@ -2,7 +2,7 @@ import styled from 'styled-components/native'
 
 import { Font } from '../../theme/global'
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled.View`
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
@@ -20,6 +20,12 @@ export const Description = styled(Font)`
 	font-size: 12px;
 	color: ${props => props.theme.foreground}60;
 `
-export const Column = styled.View`
+export const Column = styled.TouchableOpacity`
+	flex: 1;
 	flex-direction: column;
+`
+export const CopyButton = styled.TouchableOpacity`
+	padding: 8px;
+	align-items: center;
+	justify-content: center;
 `

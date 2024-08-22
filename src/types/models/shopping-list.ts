@@ -5,9 +5,9 @@ export interface ShoppingList {
 	name: string
 	finished: boolean
 	total: number | null
-	qty: number | null
 	items: ListItem[]
 	local: string
+	date: number
 }
 
-export type ShoppingListData = Omit<ShoppingList, 'id'>
+export type ShoppingListData = Omit<ShoppingList, 'id' | 'date'>

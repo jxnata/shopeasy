@@ -20,18 +20,14 @@ export const categoryNumber = (category: string) => {
 			return 8
 		case 'drinks':
 			return 9
-		case 'food_sweet':
+		case 'sweet':
 			return 10
-		case 'food_marine':
+		case 'food':
 			return 11
-		case 'food_asian':
-			return 12
-		case 'food_prepared':
-			return 13
 		case 'vegetables':
-			return 14
+			return 12
 		case 'fruits':
-			return 15
+			return 13
 		default:
 			return 0
 	}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, ScrollView } from 'react-native'
+import { OneSignal } from 'react-native-onesignal'
 import { useAnimatedRef, useSharedValue } from 'react-native-reanimated'
 
 import * as S from './styles'
@@ -8,12 +9,15 @@ import { Props } from './types'
 import OnbarodingItem from '../../components/onboarding-item'
 import Paginator from '../../components/paginator'
 import Pressable from '../../components/shared/pressable'
+import { ONE_SIGNAL_APP_ID } from '../../constants'
+import { settings } from '../../database'
 import { Container } from '../../theme/global'
 
 function Onboarding({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'onboarding' })
 	const scrollX = useSharedValue(0)
 	const [activeIndex, setActiveIndex] = useState(0)
+	const [loading, setLoading] = useState(false)
 	const scrollViewRef = useAnimatedRef<ScrollView>()
 
 	const bouncyData = [
@@ -25,19 +29,12 @@ function Onboarding({ navigation }: Props) {
 		},
 		{
 			id: 2,
-			title: t('feature_2_title'),
-			description: t('feature_2_description'),
-
-			image: require('../../assets/images/shop.png'),
-		},
-		{
-			id: 3,
 			title: t('feature_3_title'),
 			description: t('feature_3_description'),
 			image: require('../../assets/images/expenses.png'),
 		},
 		{
-			id: 4,
+			id: 3,
 			title: t('feature_4_title'),
 			description: t('feature_4_description'),
 			image: require('../../assets/images/notifications.png'),
@@ -69,8 +66,14 @@ function Onboarding({ navigation }: Props) {
 		handleScroll('left')
 	}
 
-	const onComplete = () => {
-		navigation.navigate('permissions')
+	const onComplete = async () => {
+		setLoading(true)
+		OneSignal.initialize(ONE_SIGNAL_APP_ID)
+
+		await OneSignal.Notifications.requestPermission(true)
+
+		settings.set('oppened', true)
+		setLoading(false)
 	}
 
 	return (
@@ -110,7 +113,12 @@ function Onboarding({ navigation }: Props) {
 					</ScrollView>
 					<S.Footer>
 						<Paginator itemsLength={bouncyData.length} activeIndex={activeIndex} />
-						<Pressable title={t('continue')} right='arrow-forward-outline' onPress={handleNextPress} />
+						<Pressable
+							title={t('continue')}
+							right='arrow-forward-outline'
+							loading={loading}
+							onPress={handleNextPress}
+						/>
 					</S.Footer>
 				</S.Content>
 			</S.SafeAreaView>

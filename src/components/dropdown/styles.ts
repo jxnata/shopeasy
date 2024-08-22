@@ -50,7 +50,9 @@ export const Item = styled.Pressable`
 `
 export const Text = styled(Font)``
 export const Label = styled(Font)`
+	font-size: 12px;
 	font-weight: bold;
+	margin-bottom: 4px;
 `
 export const Space = styled.View`
 	height: 30px;

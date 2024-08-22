@@ -104,23 +104,19 @@ function Purchase({ navigation }: Props) {
 					</S.CloseButton>
 
 					<S.Offer>
-						{offerings.map(offer => (
-							<S.OfferButton
-								aria-checked={selectedOffering && selectedOffering.identifier === offer.identifier}
-								key={offer.identifier}
-								onPress={() => setSelectedOffering(offer)}
-							>
-								<S.OfferTitle>{t(offer.identifier)}</S.OfferTitle>
-								<S.OfferDescription>
-									{t('subscribe_description')} {offer.product.priceString}/{t(offer.packageType)}
-								</S.OfferDescription>
-								{offer.identifier === '$rc_annual' && (
-									<S.OfferBadge>
-										<S.OfferBadgeText>25% OFF</S.OfferBadgeText>
-									</S.OfferBadge>
-								)}
-							</S.OfferButton>
-						))}
+						<S.OfferProducts>
+							{offerings.map(offer => (
+								<S.OfferButton
+									aria-checked={selectedOffering && selectedOffering.identifier === offer.identifier}
+									key={offer.identifier}
+									onPress={() => setSelectedOffering(offer)}
+								>
+									<S.OfferTitle>{t(offer.identifier)}</S.OfferTitle>
+									<S.OfferPrice>{offer.product.priceString}</S.OfferPrice>
+									<S.OfferDescription>{t('subscribe_description')}</S.OfferDescription>
+								</S.OfferButton>
+							))}
+						</S.OfferProducts>
 						<S.ButtonContainer>
 							<Button onPress={onPurchase}>
 								<ButtonLabel>{t('subscribe_button')}</ButtonLabel>

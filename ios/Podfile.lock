@@ -1314,6 +1314,27 @@ PODS:
   - RNPurchases (8.0.0):
     - PurchasesHybridCommon (= 13.0.0)
     - React-Core
+  - RNReactNativeHapticFeedback (2.3.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNReanimated (3.15.0):
     - DoubleConversion
     - glog
@@ -1470,6 +1491,7 @@ DEPENDENCIES:
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
+  - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -1615,6 +1637,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-localize"
   RNPurchases:
     :path: "../node_modules/react-native-purchases"
+  RNReactNativeHapticFeedback:
+    :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1696,6 +1720,7 @@ SPEC CHECKSUMS:
   RNGoogleSignin: 08dc4ba7eac2096c7fecfe109f0950fa4683c803
   RNLocalize: b77875884750cb6a58cd6865863fe2ba2729b72b
   RNPurchases: 3fa0a17f13bf3eee78d9242d49456268580fb687
+  RNReactNativeHapticFeedback: 6d6363faa31a6cb23e467e02304b585ec59f0930
   RNReanimated: 45553a3ae29a75a76269595f8554d07d4090e392
   RNScreens: 5aeecbb09aa7285379b6e9f3c8a3c859bb16401c
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d

@@ -1,3 +1,4 @@
+import { Dimensions } from 'react-native'
 import styled from 'styled-components/native'
 
 import { Button, ButtonLabel, Font } from '../../theme/global'
@@ -52,7 +53,14 @@ export const Offer = styled.View`
 	width: 100%;
 	gap: 8px;
 `
+export const OfferProducts = styled.View`
+	width: 100%;
+	gap: 8px;
+	flex-direction: row;
+	justify-content: space-around;
+`
 export const OfferButton = styled(Button)`
+	width: ${Dimensions.get('screen').width / 3.4}px;
 	background: transparent;
 	border-radius: 12px;
 	border: solid 2px ${props => (props['aria-checked'] ? props.theme.primary : props.theme.base)};
@@ -65,6 +73,11 @@ export const OfferButton = styled(Button)`
 `
 export const OfferTitle = styled(Font)`
 	font-weight: bold;
+`
+export const OfferPrice = styled(Font)`
+	color: #d28600;
+	font-weight: bold;
+	font-size: 14px;
 `
 export const OfferDescription = styled(Font)`
 	font-size: 14px;

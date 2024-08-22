@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { Button, Font } from '../../theme/global'
+import { Button, ButtonLabel, Font } from '../../theme/global'
 
 export const Content = styled.SafeAreaView`
 	flex: 1;
@@ -28,6 +28,7 @@ export const AddButton = styled(Button)`
 	background: transparent;
 	border-bottom-width: 0;
 	height: auto;
+	margin-bottom: 12px;
 `
 export const GhostButton = styled(Button)`
 	background: transparent;
@@ -40,4 +41,36 @@ export const OptionButton = styled(Button)`
 	background: ${props => props.theme.background};
 	border-bottom-width: 0;
 	margin-bottom: 8px;
+`
+export const Cart = styled.View`
+	position: absolute;
+	bottom: 12px;
+	left: 12px;
+	right: 12px;
+	padding: 12px;
+	border-radius: 12px;
+	background: ${props => props.theme.boxBg}70;
+	align-items: center;
+	flex-direction: row;
+	gap: 12px;
+`
+export const CartLeft = styled.View`
+	flex: 1;
+	gap: 8px;
+`
+export const CartTotal = styled.View`
+	flex-direction: row;
+	align-items: baseline;
+	gap: 4px;
+`
+export const FinishButton = styled(Button)`
+	width: auto;
+	padding: 4px 16px;
+`
+export const FinishedText = styled(ButtonLabel)`
+	font-size: 14px;
+	font-weight: bold;
+`
+export const Total = styled(Font)`
+	font-size: 16px;
 `

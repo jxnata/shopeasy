@@ -6,14 +6,15 @@ const { width } = Dimensions.get('screen')
 
 export const Container = styled.TouchableOpacity`
 	border-radius: 12px;
-	background: ${props => props.theme.modalBg};
+	background: ${props => props.theme.boxBg};
 	width: ${width / 4}px;
 	height: ${width / 4}px;
 	margin-right: 8px;
 `
-export const IconContainer = styled(Label)`
+export const IconContainer = styled.View`
 	padding-left: 12px;
 	padding-top: 8px;
+	opacity: ${props => (props['aria-selected'] ? 1 : 0.3)};
 `
 export const TextContainer = styled.View`
 	position: absolute;

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useShoppingLists } from './useShoppingLists'
 import { ShoppingList } from '../../types/models/shopping-list'
 
-export const useShoppingList = (listId: string) => {
+export const useShoppingList = (listId?: string) => {
 	const [list, setList] = useState<ShoppingList | null>(null)
 	const { lists } = useShoppingLists()
 

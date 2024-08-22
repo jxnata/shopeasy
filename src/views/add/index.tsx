@@ -1,134 +1,127 @@
-import { useQueryClient } from '@tanstack/react-query'
-import { ID } from 'appwrite'
-import debounce from 'lodash/debounce'
-import flatten from 'lodash/flatten'
-import toLower from 'lodash/toLower'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import lowerCase from 'lodash/lowerCase'
+import trim from 'lodash/trim'
+import React, { useCallback, useRef, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { TextInput } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
+import units from '../../assets/data/units.json'
+import Dropdown from '../../components/dropdown'
+import Header from '../../components/header'
 import Input from '../../components/input'
-import SuggestionItem from '../../components/suggestion-item'
-import { DB, MODELS } from '../../constants'
+import Pressable from '../../components/shared/pressable'
 import { useSession } from '../../contexts/session'
-import { databases } from '../../lib/appwrite'
-import { Button, ButtonIcon, ButtonLabel, Container } from '../../theme/global'
-import { getCategory } from '../../utils/get-category'
-import { getItems } from '../../utils/get-items'
-import { getPermissions } from '../../utils/get-permissions'
-import { randomItems } from '../../utils/random-items'
+import { addItemToList } from '../../database/models/lists'
+import { Container } from '../../theme/global'
+import { ListItem } from '../../types/models/list-item'
 
 function Add({ navigation, route }: Props) {
 	const { items, listId } = route.params
 	const { current } = useSession()
 	const [tempItems, setTempItems] = useState<string[]>(items)
 	const { t } = useTranslation('translation', { keyPrefix: 'add' })
-	const [search, setSearch] = useState<string>('')
-	const inputRef = useRef<TextInput>(null)
+	const { control, handleSubmit } = useForm<Partial<ListItem>>({
+		defaultValues: { qty: 1, have: 0 },
+	})
 
-	const queryClient = useQueryClient()
+	const nameRef = useRef<TextInput>(null)
+	const haveRef = useRef<TextInput>(null)
 
-	const suggestions = useMemo(() => getItems(), [])
-
-	const filteredSuggestions = useMemo(() => {
-		const flattened = flatten(suggestions.map(s => s.items))
-
-		if (!search) return randomItems(flattened, 10)
-
-		return flattened.filter(s => s.includes(toLower(search))).slice(0, 10)
-	}, [search, suggestions])
+	const nextFocus = () => {
+		if (!haveRef.current) return
+		haveRef.current.focus()
+	}
 
 	const createItem = useCallback(
-		async (name: string) => {
-			if (!current || !name || !listId) return
+		(data: Partial<ListItem>) => {
+			if (!current || !data.name || !listId) return
 
 			try {
-				await databases.createDocument(
-					DB,
-					MODELS.ITEM,
-					ID.unique(),
-					{ name, qty: 1, list: listId, category: getCategory(name).number },
-					getPermissions(current.$id)
-				)
+				const newItem = {
+					name: trim(lowerCase(data.name)),
+					have: data.have || 0,
+					qty: 1,
+					unit: data.unit || null,
+					price: null,
+					checked: false,
+				}
+				addItemToList(listId, newItem)
+				setTempItems([...tempItems, data.name])
 			} catch {
-				setTempItems(tempItems.filter(i => i !== name))
+				setTempItems(tempItems.filter(i => i !== data.name))
+			} finally {
+				navigation.goBack()
 			}
 		},
-		[current, listId, tempItems]
+		[current, listId, navigation, tempItems]
 	)
-
-	const pressItem = useCallback(
-		(item: string) => {
-			setSearch('')
-			if (inputRef.current) inputRef.current.clear()
-
-			if (tempItems.includes(toLower(item))) {
-				setTempItems(tempItems.filter(i => i !== item))
-				return
-			}
-			setTempItems([toLower(item), ...tempItems])
-			createItem(item)
-		},
-		[createItem, tempItems]
-	)
-
-	const debouncedSearch = debounce(async term => {
-		setSearch(term)
-	}, 500)
-
-	const goBack = () => navigation.goBack()
-
-	useEffect(() => {
-		return () => {
-			queryClient.invalidateQueries({ queryKey: ['items', listId] })
-		}
-	}, [listId, queryClient])
 
 	return (
 		<Container>
 			<S.Content>
-				<S.Header>
-					<S.Title>{t('title')}</S.Title>
-				</S.Header>
 				<S.Body>
-					<Input
-						ref={inputRef}
-						onChangeText={debouncedSearch}
-						clearButtonMode='while-editing'
-						placeholder={t('search_placeholder')}
-						autoCapitalize='none'
-						autoComplete='off'
-						autoCorrect={false}
-						maxLength={32}
-						autoFocus
+					<Header title={t('title')} />
+					<Controller
+						control={control}
+						rules={{ required: false }}
+						name='name'
+						render={({ field: { onChange, onBlur, value } }) => (
+							<Input
+								label={t('item_name')}
+								ref={nameRef}
+								clearButtonMode='while-editing'
+								placeholder={t('search_placeholder')}
+								autoCapitalize='none'
+								maxLength={32}
+								autoFocus
+								onChangeText={onChange}
+								value={value ? value.toString() : ''}
+								onBlur={onBlur}
+								onEndEditing={nextFocus}
+							/>
+						)}
 					/>
-					<S.Scroll>
-						<S.Suggestions>
-							{filteredSuggestions.map((item, i) => (
-								<SuggestionItem
-									key={i}
-									item={item}
-									inList={tempItems.includes(toLower(item))}
-									onPress={pressItem}
+					<S.Col>
+						<Controller
+							control={control}
+							rules={{ required: false }}
+							name='have'
+							render={({ field: { onChange, onBlur, value } }) => (
+								<Input
+									label={t('item_have')}
+									ref={haveRef}
+									keyboardType='number-pad'
+									maxLength={5}
+									onChangeText={onChange}
+									value={value ? value.toString() : ''}
+									onBlur={onBlur}
 								/>
-							))}
-							{filteredSuggestions.length === 0 && search.length > 0 && (
-								<S.Empty>
-									<SuggestionItem
-										item={toLower(search)}
-										inList={tempItems.includes(toLower(search))}
-										onPress={pressItem}
-									/>
-								</S.Empty>
 							)}
-						</S.Suggestions>
-					</S.Scroll>
-					<Button onPress={goBack}>
-						<ButtonIcon name='checkmark-circle' />
-						<ButtonLabel>{t('confirm_button')}</ButtonLabel>
-					</Button>
+						/>
+						<Controller
+							control={control}
+							rules={{ required: false }}
+							name='unit'
+							render={({ field: { onChange, value } }) => (
+								<Dropdown
+									label={t('unit')}
+									placeholder={t('unit')}
+									options={units}
+									onValueChange={onChange}
+									selectedValue={value || ''}
+								/>
+							)}
+						/>
+						<S.ButtonContainer>
+							<Pressable
+								title={t('confirm_button')}
+								left='add-circle'
+								onPress={handleSubmit(createItem)}
+							/>
+						</S.ButtonContainer>
+					</S.Col>
 				</S.Body>
 			</S.Content>
 		</Container>

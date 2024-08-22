@@ -1,19 +1,18 @@
-import { Item } from '../models/item'
-import { List } from '../models/list'
+import { ListItem } from '../models/list-item'
+import { ShoppingList } from '../models/shopping-list'
 
 export type StackParamList = {
 	home: undefined
 	profile: undefined
 	expenses: undefined
-	list: { list: List } | undefined
-	shop: { list: List; items?: Item<string, undefined>[] } | undefined
-	rename: { list: List } | undefined
+	list: { list: ShoppingList } | undefined
+	shop: { list: ShoppingList; items?: ListItem[] } | undefined
+	rename: { list: ShoppingList } | undefined
 	add: { items: string[]; listId: string }
 	shoppings: undefined
 	subscribe: undefined
 	auth: undefined
 	intro: undefined
 	onboarding: undefined
-	permissions: undefined
 	purchase: undefined
 }

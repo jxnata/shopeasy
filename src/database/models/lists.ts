@@ -4,10 +4,11 @@ import { storage } from '..'
 import { ListItem, ListItemData } from '../../types/models/list-item'
 import { ShoppingList, ShoppingListData } from '../../types/models/shopping-list'
 
-export const createShoppingList = (data: ShoppingListData): ShoppingListData => {
+export const createShoppingList = (data: ShoppingListData): ShoppingList => {
 	const newList: ShoppingList = {
 		id: ID.unique(),
 		...data,
+		date: Date.now(),
 	}
 	const lists = getAllShoppingLists()
 	lists.push(newList)
@@ -25,11 +26,11 @@ export const getAllShoppingLists = (): ShoppingList[] => {
 	return listsJSON ? JSON.parse(listsJSON) : []
 }
 
-export const updateShoppingList = (updatedList: ShoppingList): void => {
+export const updateShoppingList = (id: string, updatedList: Partial<ShoppingList>): void => {
 	const lists = getAllShoppingLists()
-	const index = lists.findIndex(list => list.id === updatedList.id)
+	const index = lists.findIndex(list => list.id === id)
 	if (index !== -1) {
-		lists[index] = updatedList
+		lists[index] = { ...lists[index], ...updatedList }
 		saveShoppingLists(lists)
 	}
 }
@@ -48,7 +49,7 @@ export const addItemToList = (listId: string, item: ListItemData): void => {
 	const list = getShoppingList(listId)
 	if (list) {
 		list.items.push({ ...item, id: ID.unique() })
-		updateShoppingList(list)
+		updateShoppingList(listId, list)
 	}
 }
 
@@ -56,17 +57,17 @@ export const removeItemFromList = (listId: string, itemId: string): void => {
 	const list = getShoppingList(listId)
 	if (list) {
 		list.items = list.items.filter(item => item.id !== itemId)
-		updateShoppingList(list)
+		updateShoppingList(listId, list)
 	}
 }
 
-export const updateItemInList = (listId: string, updatedItem: ListItem): void => {
+export const updateItemInList = (listId: string, itemId: string, updatedItem: Partial<ListItem>): void => {
 	const list = getShoppingList(listId)
 	if (list) {
-		const itemIndex = list.items.findIndex(item => item.id === updatedItem.id)
+		const itemIndex = list.items.findIndex(item => item.id === itemId)
 		if (itemIndex !== -1) {
-			list.items[itemIndex] = updatedItem
-			updateShoppingList(list)
+			list.items[itemIndex] = { ...list.items[itemIndex], ...updatedItem }
+			updateShoppingList(listId, list)
 		}
 	}
 }

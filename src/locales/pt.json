@@ -10,11 +10,14 @@
 			"feature5": "Acesso prioritário a novidades",
 			"subscribe_button": "Continuar",
 			"restore_button": "Restaurar",
-			"subscribe_description": "Acesso total por apenas",
+			"subscribe_description": "Todos os recursos incluídos",
 			"$rc_monthly": "Mensal",
 			"$rc_annual": "Anual",
-			"MONTHLY": "mês",
-			"ANNUAL": "ano",
+			"$rc_lifetime": "Vitalício",
+			"MONTHLY": "/mês",
+			"ANNUAL": "/ano",
+			"LIFETIME": "",
+			"offer": "OFERTA",
 			"purchase_error": "Ocorreu um erro ao assinar o produto.",
 			"restore_error": "Ocorreu um erro ao recuperar sua assintura.",
 			"purchase_success": "Assinatura concluída!",
@@ -34,7 +37,7 @@
 			"feature_2_title": "Comparar Preços",
 			"feature_2_description": "Encontre as melhores ofertas comparando preços em diferentes lojas e economize dinheiro em suas compras.",
 			"feature_3_title": "Relatórios",
-			"feature_3_description": "Obtenha relatórios detalhados sobre seus hábitos de consumo. Analise suas compras ao longo do tempo, acompanhe suas economias e otimize seu orçamento.",
+			"feature_3_description": "Analise suas compras ao longo do tempo, acompanhe suas economias e otimize seu orçamento.",
 			"feature_4_title": "Notificações",
 			"feature_4_description": "Receba lembretes para comprar itens e atualizações sobre suas listas de compras."
 		},
@@ -71,7 +74,11 @@
 			"delete_text": "Tem certeza que deseja excluir esta lista? Todos os itens dela serão excluídos.",
 			"cancel": "Cancelar",
 			"delete_confirm": "Sim, excluir",
-			"delete_error": "Ocorreu um erro ao excluir a lista."
+			"delete_error": "Ocorreu um erro ao excluir a lista.",
+			"items": "itens",
+			"total": "Total:",
+			"finish": "Finalizar",
+			"finish_done": "Concluído"
 		},
 		"profile": {
 			"title": "Perfil",
@@ -98,39 +105,18 @@
 		},
 		"add": {
 			"title": "Adicionar items",
+			"item_name": "Nome do item",
+			"item_have": "Quantos você tem?",
 			"search_placeholder": "O que deseja comprar?",
-			"confirm_button": "Confirmar"
+			"unit": "Unidade",
+			"unit_label": "Unidade",
+			"confirm_button": "Adicionar"
 		},
 		"rename": {
 			"title": "Renomear",
 			"list_name": "Nome da lista",
 			"edit_error": "Ocorreu um erro ao renomear a lista.",
 			"edit_button": "Salvar"
-		},
-		"shop": {
-			"title": "Nova compra",
-			"shop_name": "Insira um nome",
-			"shop_name_label": "Onde você vai fazer essa compra?",
-			"tip_text": "Dica: toque no nome do item para ver os últimos preços que você pagou por ele.",
-			"list_item": "Item",
-			"list_price": "Preço Total",
-			"edit_option": "Renomear",
-			"delete_option": "Excluir compra",
-			"delete_title": "Excluir lista",
-			"delete_text": "Tem certeza que deseja excluir esta compra? Todos os itens dela serão excluídos.",
-			"delete_confirm": "Sim, excluir",
-			"cancel": "Cancelar",
-			"delete_error": "Ocorreu um erro ao excluir a compra.",
-			"finish_error": "Ocorreu um erro ao finalizar a compra.",
-			"total": "Total:",
-			"finish": "Finalizar",
-			"finish_done": "Concluído"
-		},
-		"shoppings": {
-			"title": "Compras",
-			"no_shoppings": "Nenhuma compra. Você pode criar uma a partir de uma lista de compras.",
-			"no_name": "Sem nome",
-			"items": "itens"
 		},
 		"auth": {
 			"auth_failed": "Ocorreu um erro na autenticação.",
@@ -148,7 +134,10 @@
 			"price_label": "Preço da unidade",
 			"unit_label": "Unidade",
 			"category_label": "Categoria",
-			"category": "Selecione"
+			"category": "Selecione",
+			"qty_label": "Quantity",
+			"have": "eu tenho",
+			"havent": "não tenho nenhum"
 		},
 		"item_shop": {
 			"price": "Preço",

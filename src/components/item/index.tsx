@@ -1,215 +1,199 @@
-import { debounce } from 'lodash'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
+import Animated, {
+	useSharedValue,
+	useAnimatedStyle,
+	withTiming,
+	interpolate,
+	Extrapolation,
+} from 'react-native-reanimated'
 
 import * as S from './styles'
 import units from '../../assets/data/units.json'
-import { DB, MODELS } from '../../constants'
-import { databases } from '../../lib/appwrite'
-import { ButtonIcon } from '../../theme/global'
-import { Categories } from '../../types/models/categories'
-import { Item } from '../../types/models/item'
-import { List } from '../../types/models/list'
-import { Local } from '../../types/models/local'
-import { categoryNumber } from '../../utils/category-number'
+import { removeItemFromList, updateItemInList } from '../../database/models/lists'
+import { ListItem } from '../../types/models/list-item'
 import { format } from '../../utils/format'
-import CategoryTag from '../category-tag'
 import Icon from '../icon'
 import PriceInput from '../price-input'
 import SmallDropdown from '../small-dropdown'
 
-const ItemRow = ({ item, displayCategory, mutate }: Props) => {
-	const [data, setData] = useState<Item<string, undefined>>(item)
-	const [quantity, setQuantity] = useState<number>(data.qty)
-	const [deleted, setDeleted] = useState<boolean>(false)
+const ItemRow = ({ item, listId }: Props) => {
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation('translation', { keyPrefix: 'item' })
-	const { control, handleSubmit } = useForm<Partial<Item<List, undefined>>>({
-		defaultValues: { price: data.price, unit: data.unit, category: data.category },
+	const { control, register } = useForm<Partial<ListItem>>({
+		defaultValues: { price: item.price, unit: item.unit, qty: item.qty },
 	})
 
-	const categories = useMemo(
-		() =>
-			Object.values(Categories).map(c => {
-				return {
-					label: t(c, { keyPrefix: 'categories' }),
-					value: categoryNumber(c),
-				}
-			}),
-		[t]
+	const animationValue = useSharedValue(0)
+
+	const toggle = () => {
+		if (open) {
+			setTimeout(() => setOpen(false), 200)
+		} else {
+			setOpen(old => !old)
+		}
+		animationValue.value = withTiming(open ? 0 : 1, { duration: 200 })
+	}
+
+	const animatedStyle = useAnimatedStyle(() => {
+		return {
+			height: interpolate(animationValue.value, [0, 1], [0, 64], Extrapolation.CLAMP),
+			opacity: interpolate(animationValue.value, [0, 1], [0, 1], Extrapolation.CLAMP),
+		}
+	})
+
+	const deleteItem = useCallback(() => {
+		removeItemFromList(listId, item.id)
+	}, [item.id, listId])
+
+	const updatePrice = useCallback(
+		(price: string) => {
+			if (!price) return
+			if (isNaN(Number(price))) return
+
+			const newPrice = typeof price === 'number' ? price : Number(price) * 100
+
+			updateItemInList(listId, item.id, { price: newPrice })
+		},
+		[item.id, listId]
 	)
 
-	const toggle = () => setOpen(old => !old)
+	const updateUnit = useCallback(
+		(unit: string) => {
+			if (!unit) return
+
+			updateItemInList(listId, item.id, { unit })
+		},
+		[item.id, listId]
+	)
 
 	const updateQuantity = useCallback(
-		async (qty: number) => {
-			if (qty === data.qty) return
+		(qty: number) => {
 			if (qty < 1) return
 
-			try {
-				const updated: Item<string, undefined> = await databases.updateDocument(DB, MODELS.ITEM, item.$id, {
-					qty,
-				})
-				mutate()
-				setData(updated)
-			} catch {
-				setQuantity(data.qty)
-			}
+			updateItemInList(listId, item.id, { qty })
 		},
-		[data.qty, item.$id, mutate]
+		[item.id, listId]
 	)
 
-	const deleteItem = useCallback(async () => {
-		try {
-			setDeleted(true)
-			await databases.deleteDocument(DB, MODELS.ITEM, item.$id)
-			mutate()
-		} catch {
-			setDeleted(false)
-		}
-	}, [item.$id, mutate])
+	const updateChecked = useCallback(
+		(checked: boolean) => {
+			if (checked) ReactNativeHapticFeedback.trigger('impactMedium')
+			updateItemInList(listId, item.id, { checked })
+		},
+		[item.id, listId]
+	)
 
-	const debouncedUpdateQuantity = debounce(qty => updateQuantity(qty), 1000)
-
-	const increase = () => setQuantity(old => old + 1)
-
-	const decrease = async () => {
-		if (quantity < 1) return
-		if (quantity === 1) deleteItem()
-		setQuantity(old => old - 1)
-	}
-
-	const updateItem = async (form: Partial<Item<List, Local>>) => {
-		if (!form.price && !form.unit && !form.category) return
-
-		const newPrice = typeof form.price === 'number' ? form.price : Number(form.price) * 100
-
-		const body = {
-			price: newPrice,
-			unit: form.unit || null,
-			category: form.category || data.category,
-		}
-
-		try {
-			await databases.updateDocument(DB, MODELS.ITEM, item.$id, body)
-			setData({ ...data, price: body.price, unit: body.unit })
-			mutate()
-		} catch {
-		} finally {
-			toggle()
-		}
-	}
-
-	useEffect(() => {
-		debouncedUpdateQuantity(quantity)
-
-		return () => {
-			debouncedUpdateQuantity.cancel()
-		}
-	}, [quantity, debouncedUpdateQuantity])
-
-	if (deleted) return null
+	register('price', { onChange: e => updatePrice(e.target.value) })
+	register('unit', { onChange: e => updateUnit(e.target.value) })
+	register('qty', { onChange: e => updateQuantity(e.target.value) })
+	register('checked', { onChange: e => updateChecked(e.target.value) })
 
 	return (
-		<S.ItemContainer>
-			{displayCategory && <CategoryTag category={item.category} />}
-			<S.Container>
-				<S.Collapsed>
-					<S.RowContainer onPress={toggle} hitSlop={{ top: 10, bottom: 10 }}>
-						<S.Text>{item.name}</S.Text>
-					</S.RowContainer>
-					<S.QuantityContainer>
-						<S.QuantityButton onPress={decrease}>
-							<Icon name={quantity <= 1 ? 'trash-outline' : 'remove'} />
-						</S.QuantityButton>
-						<S.Text>{quantity}</S.Text>
-						<S.QuantityButton onPress={increase}>
-							<Icon name='add' />
-						</S.QuantityButton>
-					</S.QuantityContainer>
-				</S.Collapsed>
-				{!!data.price && (
-					<S.SmallContainer>
-						<S.Small>
-							{format(data.price / 100)} • {t('needed')} {quantity}
+		<S.Container>
+			<S.Collapsed aria-checked={item.checked}>
+				<Controller
+					control={control}
+					rules={{ required: false }}
+					name='checked'
+					render={({ field: { onChange, value } }) => (
+						<S.CheckButton onPress={() => onChange(!value)}>
+							<S.CheckIcon
+								name={value ? 'checkmark-circle' : 'ellipse-outline'}
+								style={{ fontSize: 24 }}
+							/>
+						</S.CheckButton>
+					)}
+				/>
+				<S.RowContainer onPress={toggle} hitSlop={{ top: 10, bottom: 10 }} activeOpacity={0.7}>
+					<S.Col>
+						<S.Text aria-checked={item.checked}>{item.name}</S.Text>
+						<S.Small aria-checked={item.checked}>
+							{item.have > 0 ? t('have') : t('havent')} {item.have > 0 ? item.have : ''}{' '}
+							{item.unit ? (item.have > 0 ? item.unit : '') : ''}
 						</S.Small>
-						<S.Small>
-							{data.unit ? data.unit : quantity > 1 ? t('unit_plural') : t('unit_singular')}
-						</S.Small>
-					</S.SmallContainer>
-				)}
-				{open && (
+					</S.Col>
+					<S.ColRight>
+						<S.SmallContainer>
+							<S.Small>
+								{item.price ? format(item.price / 100) : ''} ⅹ {item.qty}
+							</S.Small>
+							<S.Small>{item.unit}</S.Small>
+						</S.SmallContainer>
+						<Icon name={open ? 'chevron-up' : 'chevron-down'} />
+					</S.ColRight>
+				</S.RowContainer>
+			</S.Collapsed>
+			{open && (
+				<Animated.View style={animatedStyle}>
 					<S.CollapsedContent>
-						<S.Col>
-							<S.Row>
-								<Controller
-									control={control}
-									rules={{ required: false }}
-									name='price'
-									render={({ field: { onChange, onBlur, value } }) => (
-										<PriceInput
-											label={t('price_label')}
-											type='currency'
-											placeholder={t('price')}
-											keyboardType='numeric'
-											onChangeText={onChange}
-											onBlur={onBlur}
-											options={{
-												decimalSeparator: '.',
-												groupSeparator: ',',
-												precision: 2,
-											}}
-											defaultValue={
-												data.price ? parseFloat(data.price.toString()).toFixed(2) : ''
-											}
-										/>
-									)}
-								/>
-								<Controller
-									control={control}
-									rules={{ required: false }}
-									name='unit'
-									render={({ field: { onChange, value } }) => (
-										<SmallDropdown
-											label={t('unit_label')}
-											placeholder={t('unit')}
-											options={units}
-											onValueChange={onChange}
-											selectedValue={value || ''}
-										/>
-									)}
-								/>
-							</S.Row>
+						<S.Row>
 							<Controller
 								control={control}
 								rules={{ required: false }}
-								name='category'
+								name='qty'
+								render={({ field: { onChange, onBlur } }) => (
+									<PriceInput
+										label={t('qty_label')}
+										mask='9999'
+										keyboardType='number-pad'
+										onChangeText={onChange}
+										onBlur={onBlur}
+										defaultValue={item.qty ? item.qty.toString() : ''}
+									/>
+								)}
+							/>
+							<Controller
+								control={control}
+								rules={{ required: false }}
+								name='unit'
 								render={({ field: { onChange, value } }) => (
 									<SmallDropdown
-										label={t('category_label')}
-										placeholder={t('category')}
-										options={categories}
+										label={t('unit_label')}
+										placeholder={t('unit')}
+										options={units}
 										onValueChange={onChange}
 										selectedValue={value || ''}
 									/>
 								)}
 							/>
-						</S.Col>
-						<S.SaveButton onPress={handleSubmit(updateItem)}>
-							<ButtonIcon name='checkmark' style={{ fontSize: 20 }} />
-						</S.SaveButton>
+							<Controller
+								control={control}
+								rules={{ required: false }}
+								name='price'
+								render={({ field: { onChange, onBlur } }) => (
+									<PriceInput
+										label={t('price_label')}
+										type='currency'
+										placeholder={t('price')}
+										keyboardType='numeric'
+										onChangeText={onChange}
+										onBlur={onBlur}
+										options={{
+											decimalSeparator: '.',
+											groupSeparator: ',',
+											precision: 2,
+										}}
+										defaultValue={item.price ? parseFloat(item.price.toString()).toFixed(2) : ''}
+									/>
+								)}
+							/>
+							<S.QuantityButton onPress={deleteItem}>
+								<Icon name='trash-outline' />
+							</S.QuantityButton>
+						</S.Row>
 					</S.CollapsedContent>
-				)}
-			</S.Container>
-		</S.ItemContainer>
+				</Animated.View>
+			)}
+		</S.Container>
 	)
 }
 
 export default ItemRow
 
 type Props = {
-	item: Item<string, undefined>
-	displayCategory?: boolean
-	mutate: () => void
+	item: ListItem
+	listId: string
 }

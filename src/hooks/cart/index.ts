@@ -1,16 +1,14 @@
 import { useMemo } from 'react'
 
-import { Item } from '../../types/models/item'
-import { List } from '../../types/models/list'
-import { Local } from '../../types/models/local'
+import { ListItem } from '../../types/models/list-item'
 
-export const useCart = (items: Item<List, Local>[]) => {
+export const useCart = (items: ListItem[]) => {
 	const percentage = useMemo(() => {
 		return items.length ? Math.round((items.filter(i => i.checked).length / items.length) * 100) : 0
 	}, [items])
 
 	const total = useMemo(() => {
-		return items.filter(i => i.checked).reduce((acc, item) => acc + (item.price || 0), 0)
+		return items.filter(i => i.checked).reduce((acc, item) => acc + (item.price || 0) * (item.qty || 1), 0)
 	}, [items])
 
 	return {

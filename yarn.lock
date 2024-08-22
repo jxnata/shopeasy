@@ -8875,6 +8875,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-haptic-feedback@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "react-native-haptic-feedback@npm:2.3.1"
+  peerDependencies:
+    react-native: ">=0.60.0"
+  checksum: 2d6e39f59431150ffc350f79a8814d9d549b2b08cadec3f4e4b597893c1fcd158c794a7a48019d7eb32cf37ce6dfdea6b9a9f585e41d3f7fc464fd159ee91ca6
+  languageName: node
+  linkType: hard
+
 "react-native-localize@npm:^3.2.0":
   version: 3.2.0
   resolution: "react-native-localize@npm:3.2.0"
@@ -9674,6 +9683,7 @@ __metadata:
     react-i18next: ^14.1.0
     react-native: 0.74.3
     react-native-google-mobile-ads: ^14.2.1
+    react-native-haptic-feedback: ^2.3.1
     react-native-localize: ^3.2.0
     react-native-mask-text: ^0.14.2
     react-native-mmkv: ^2.12.2

@@ -4,7 +4,11 @@ export const APPWRITE_PROJECT = 'shopeasy'
 
 export const AUTH_CALLBACK_URL = 'https://jxnata.github.io/shopeasy/auth/callback'
 
-export const SUBSCRIPTIONS = ['dev.jxnata.shopeasy.premium', 'dev.jxnata.shopeasy.premium.yearly']
+export const SUBSCRIPTIONS = [
+	'dev.jxnata.shopeasy.premium.lifetime',
+	'dev.jxnata.shopeasy.premium.yearly',
+	'dev.jxnata.shopeasy.premium.monthly',
+]
 
 export const REVENUECAT_API_KEY_IOS = 'appl_aZzcTkJbajSkMyDSsvOEilOaBym'
 export const REVENUECAT_API_KEY_ANDROID = ''

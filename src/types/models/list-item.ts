@@ -2,9 +2,9 @@ export type ListItem = {
 	id: string
 	name: string
 	qty: number
+	have: number
 	unit: string | null
 	price: number | null
-	category: number
 	checked: boolean
 }
 

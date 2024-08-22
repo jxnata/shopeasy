@@ -1,25 +1,22 @@
 import styled from 'styled-components/native'
 
-import { Button, Font } from '../../theme/global'
+import { Button, ButtonIcon, Font } from '../../theme/global'
 
-export const ItemContainer = styled.View`
-	flex-direction: column;
-	gap: 8px;
-`
 export const Container = styled.View`
 	flex-direction: column;
 	gap: 4px;
 	background: ${props => props.theme.boxBg};
-	border-radius: 12px;
+	border-radius: 8px;
 	margin-bottom: 8px;
-	padding: 12px;
+	padding: 8px 12px;
 `
 export const Collapsed = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	gap: 6px;
+	gap: 4px;
 	width: auto;
+	opacity: ${props => (props['aria-checked'] ? 0.4 : 1)};
 `
 export const CategoryContainer = styled.View`
 	flex-direction: row;
@@ -38,20 +35,30 @@ export const CategoryText = styled(Font)`
 `
 export const RowContainer = styled.TouchableOpacity`
 	flex: 1;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 `
 export const SmallContainer = styled.View`
 	flex-direction: row;
 	justify-content: flex-start;
-	gap: 4px;
 	opacity: 0.8;
 `
+export const Col = styled.View``
+export const ColRight = styled.View`
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
+`
 export const Text = styled(Font)`
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: bold;
+	text-decoration-line: ${props => (props['aria-checked'] ? 'line-through' : 'none')};
 `
 export const Small = styled(Font)`
 	font-size: 12px;
 	font-weight: bold;
+	opacity: 0.8;
 `
 export const QuantityContainer = styled.View`
 	flex-direction: row;
@@ -72,21 +79,28 @@ export const CollapsedContent = styled.View`
 	gap: 4px;
 	margin-top: 8px;
 `
-export const Col = styled.View`
-	flex-direction: column;
-	gap: 8px;
-`
 export const Row = styled.View`
 	flex-direction: row;
 	gap: 8px;
+	align-items: flex-end;
 `
 export const SaveButton = styled(Button)`
-	background: ${props => props.theme.secondary};
 	width: auto;
 	height: 32px;
 	border-radius: 4px;
 	align-items: center;
 	justify-content: center;
-	border-bottom-width: 2px;
-	border-bottom-color: ${props => props.theme.secondaryFocus};
+`
+export const CheckButton = styled(Button)`
+	background: transparent;
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	align-items: center;
+	justify-content: center;
+	border-bottom-width: 0;
+	padding: 0;
+`
+export const CheckIcon = styled(ButtonIcon)`
+	color: ${props => props.theme.primary};
 `
