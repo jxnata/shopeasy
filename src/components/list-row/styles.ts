@@ -18,11 +18,16 @@ export const Title = styled(Font)`
 `
 export const Description = styled(Font)`
 	font-size: 12px;
-	color: ${props => props.theme.foreground}60;
+	color: ${props => props.theme.foreground};
 `
 export const Column = styled.TouchableOpacity`
 	flex: 1;
 	flex-direction: column;
+`
+export const Row = styled.View`
+	flex-direction: row;
+	align-items: center;
+	gap: 2px;
 `
 export const CopyButton = styled.TouchableOpacity`
 	padding: 8px;

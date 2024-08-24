@@ -1,4 +1,3 @@
-import { ListItem } from '../models/list-item'
 import { ShoppingList } from '../models/shopping-list'
 
 export type StackParamList = {
@@ -7,10 +6,8 @@ export type StackParamList = {
 	expenses: undefined
 	create: undefined
 	list: { list: ShoppingList } | undefined
-	shop: { list: ShoppingList; items?: ListItem[] } | undefined
-	rename: { list: ShoppingList } | undefined
+	edit: { list: ShoppingList } | undefined
 	add: { items: string[]; listId: string }
-	shoppings: undefined
 	subscribe: undefined
 	auth: undefined
 	intro: undefined

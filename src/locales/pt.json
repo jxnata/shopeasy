@@ -4,7 +4,7 @@
 			"description": "Desfrute de todos os recursos do ShopEasy e eleve sua experiência de compras ao próximo nível!",
 			"premium_features_title": "Recursos Premium:",
 			"feature1": "Sem anúncios",
-			"feature2": "Listas ilimitadas",
+			"feature2": "Seja alertado para as suas compras",
 			"feature3": "Crie listas com IA rapidamente",
 			"feature4": "Relatórios de gastos e economia",
 			"feature5": "Acesso prioritário a novidades",
@@ -59,7 +59,11 @@
 			"menu_item_shop": "Compras",
 			"menu_item_expenses": "Despesas",
 			"menu_item_profile": "Perfil",
-			"menu_item_premium": "Premium"
+			"menu_item_premium": "Premium",
+			"copy_title": "Duplicar lista",
+			"copy_text": "Deseja mesmo duplicar esta lista?",
+			"cancel": "Cancelar",
+			"copy_confirm": "Duplicar"
 		},
 		"create": {
 			"title": "Criar lista",
@@ -80,11 +84,6 @@
 			"create_button": "Salvar",
 			"shop_now_button": "Ir às compras",
 			"create_error": "Ocorreu um erro ao criar a lista.",
-			"delete_title": "Excluir lista",
-			"delete_text": "Tem certeza que deseja excluir esta lista? Todos os itens dela serão excluídos.",
-			"cancel": "Cancelar",
-			"delete_confirm": "Sim, excluir",
-			"delete_error": "Ocorreu um erro ao excluir a lista.",
 			"items": "itens",
 			"total": "Total:",
 			"finish": "Finalizar",
@@ -124,11 +123,23 @@
 			"unit_label": "Unidade",
 			"confirm_button": "Adicionar"
 		},
-		"rename": {
-			"title": "Renomear",
+		"edit": {
+			"title": "Editar lista",
 			"list_name": "Nome da lista",
+			"notification": "Alerta",
+			"notification_date": "Quando quer ser alertado?",
+			"create_button": "Criar lista",
+			"notification_title": "Alerta de compra",
+			"notification_description": "Você tem uma compra para fazer hoje. Toque para ver mais.",
+			"premium_notice": "Ative o ShopEasy Premium para receber alertas de compras.",
 			"edit_error": "Ocorreu um erro ao renomear a lista.",
-			"edit_button": "Salvar"
+			"edit_button": "Salvar",
+			"cancel_button": "Cancelar",
+			"delete_title": "Excluir lista",
+			"delete_text": "Tem certeza que deseja excluir esta lista? Todos os itens dela serão excluídos.",
+			"cancel": "Cancelar",
+			"delete_confirm": "Sim, excluir",
+			"delete_error": "Ocorreu um erro ao excluir a lista."
 		},
 		"auth": {
 			"auth_failed": "Ocorreu um erro na autenticação.",
@@ -147,19 +158,10 @@
 			"unit_label": "Unidade",
 			"category_label": "Categoria",
 			"category": "Selecione",
-			"qty_label": "Quantity",
+			"qty_label": "Quantidade",
 			"have": "eu tenho",
 			"havent": "não tenho nenhum",
 			"accept": "Aceitar"
-		},
-		"item_shop": {
-			"price": "Preço",
-			"unit": "Unidade",
-			"unit_singular": "unidade",
-			"unit_plural": "unidades",
-			"i_need": "preciso de",
-			"price_label": "Preço da unidade",
-			"unit_label": "Unidade"
 		},
 		"price_history": {
 			"title": "Histórico de preços",

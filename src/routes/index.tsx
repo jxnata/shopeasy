@@ -10,6 +10,7 @@ import { StackParamList } from '../types/navigation/stack'
 import Add from '../views/add'
 import Auth from '../views/auth'
 import CreateList from '../views/create'
+import ListEdit from '../views/edit'
 import Expenses from '../views/expenses'
 import Home from '../views/home'
 import Intro from '../views/intro'
@@ -17,7 +18,6 @@ import ListView from '../views/list'
 import Onboarding from '../views/onboarding'
 import Profile from '../views/profile'
 import Purchase from '../views/purchase'
-import ListRename from '../views/rename'
 import Subscribe from '../views/subscribe'
 
 const Stack = createNativeStackNavigator<StackParamList>()
@@ -74,8 +74,8 @@ const Routes = () => {
 					options={{ title: t('list.title'), presentation: 'modal' }}
 				/>
 				<Stack.Screen
-					name='rename'
-					component={ListRename}
+					name='edit'
+					component={ListEdit}
 					options={{ title: t('rename.title'), presentation: 'modal' }}
 				/>
 				<Stack.Screen

@@ -19,7 +19,7 @@ import Icon from '../icon'
 import PriceInput from '../price-input'
 import SmallDropdown from '../small-dropdown'
 
-const ItemRow = ({ item, listId }: Props) => {
+const ItemRow = ({ item, listId, shopping, finished }: Props) => {
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation('translation', { keyPrefix: 'item' })
 	const { control, register } = useForm<Partial<ListItem>>({
@@ -94,19 +94,21 @@ const ItemRow = ({ item, listId }: Props) => {
 	return (
 		<S.Container>
 			<S.Collapsed aria-checked={item.checked}>
-				<Controller
-					control={control}
-					rules={{ required: false }}
-					name='checked'
-					render={({ field: { onChange, value } }) => (
-						<S.CheckButton onPress={() => onChange(!value)}>
-							<S.CheckIcon
-								name={value ? 'checkmark-circle' : 'ellipse-outline'}
-								style={{ fontSize: 24 }}
-							/>
-						</S.CheckButton>
-					)}
-				/>
+				{shopping && (
+					<Controller
+						control={control}
+						rules={{ required: false }}
+						name='checked'
+						render={({ field: { onChange, value } }) => (
+							<S.CheckButton onPress={() => onChange(!value)} disabled={finished}>
+								<S.CheckIcon
+									name={value ? 'checkmark-circle' : 'ellipse-outline'}
+									style={{ fontSize: 24 }}
+								/>
+							</S.CheckButton>
+						)}
+					/>
+				)}
 				<S.RowContainer onPress={toggle} hitSlop={{ top: 10, bottom: 10 }} activeOpacity={0.7}>
 					<S.Col>
 						<S.Text aria-checked={item.checked}>{item.name}</S.Text>
@@ -142,6 +144,7 @@ const ItemRow = ({ item, listId }: Props) => {
 										onChangeText={onChange}
 										onBlur={onBlur}
 										defaultValue={item.qty ? item.qty.toString() : ''}
+										readOnly={finished}
 									/>
 								)}
 							/>
@@ -156,6 +159,7 @@ const ItemRow = ({ item, listId }: Props) => {
 										options={units}
 										onValueChange={onChange}
 										selectedValue={value || ''}
+										disabled={finished}
 									/>
 								)}
 							/>
@@ -177,10 +181,11 @@ const ItemRow = ({ item, listId }: Props) => {
 											precision: 2,
 										}}
 										defaultValue={item.price ? parseFloat(item.price.toString()).toFixed(2) : ''}
+										readOnly={finished}
 									/>
 								)}
 							/>
-							<S.QuantityButton onPress={deleteItem}>
+							<S.QuantityButton onPress={deleteItem} disabled={finished}>
 								<Icon name='trash-outline' />
 							</S.QuantityButton>
 						</S.Row>
@@ -195,5 +200,7 @@ export default ItemRow
 
 type Props = {
 	item: ListItem
+	shopping: boolean
+	finished: boolean
 	listId: string
 }

@@ -13,5 +13,5 @@ export const useShoppingLists = () => {
 		setLists(storedLists)
 	}, [storageValue])
 
-	return { lists }
+	return { lists: lists.sort((a, b) => b.date - a.date), setLists }
 }

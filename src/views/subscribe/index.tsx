@@ -80,7 +80,7 @@ function Subscribe({ navigation }: Props) {
 								<S.FeatureText>{t('feature1')}</S.FeatureText>
 							</S.FeatureLine>
 							<S.FeatureLine>
-								<Icon name='infinite' />
+								<Icon name='notifications' />
 								<S.FeatureText>{t('feature2')}</S.FeatureText>
 							</S.FeatureLine>
 							<S.FeatureLine>

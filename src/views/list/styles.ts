@@ -49,6 +49,14 @@ export const OptionButton = styled(Button)`
 	background: ${props => props.theme.background};
 	border-bottom-width: 0;
 	margin-bottom: 8px;
+	flex: 1;
+`
+export const DangerOption = styled(OptionButton)`
+	background: ${props => props.theme.dangerBg};
+`
+export const OptionGroup = styled.View`
+	flex-direction: row;
+	gap: 8px;
 `
 export const CartLeft = styled.View`
 	flex: 1;
@@ -78,11 +86,15 @@ export const Cart = styled.View`
 	right: 12px;
 	padding: 12px;
 	border-radius: 12px;
-	/* border: solid 1px ${props => props.theme.boxBg}; */
 	align-items: center;
 	flex-direction: row;
 	gap: 12px;
 	overflow: hidden;
+`
+export const Row = styled.View`
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
 `
 export const Blur = styled(BlurView)`
 	width: ${Dimensions.get('screen').width - 24}px;

@@ -130,7 +130,15 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 
 	return (
 		<SessionContext.Provider
-			value={{ current: user, loading, premium, appleAuthentication, googleAuthentication, logout, checkPremium }}
+			value={{
+				current: user,
+				loading,
+				premium,
+				appleAuthentication,
+				googleAuthentication,
+				logout,
+				checkPremium,
+			}}
 		>
 			{props.children}
 		</SessionContext.Provider>
