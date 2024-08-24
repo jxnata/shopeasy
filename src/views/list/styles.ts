@@ -1,3 +1,5 @@
+import { BlurView } from '@react-native-community/blur'
+import { Dimensions } from 'react-native'
 import styled from 'styled-components/native'
 
 import { Button, ButtonLabel, Font } from '../../theme/global'
@@ -24,11 +26,17 @@ export const Title = styled(Font)`
 	font-size: 24px;
 	font-weight: bold;
 `
+export const ButtonsContainer = styled.View`
+	flex-direction: row;
+	gap: 8px;
+	align-items: center;
+	justify-content: space-between;
+`
 export const AddButton = styled(Button)`
 	background: transparent;
-	border-bottom-width: 0;
 	height: auto;
 	margin-bottom: 12px;
+	flex: 1;
 `
 export const GhostButton = styled(Button)`
 	background: transparent;
@@ -41,18 +49,6 @@ export const OptionButton = styled(Button)`
 	background: ${props => props.theme.background};
 	border-bottom-width: 0;
 	margin-bottom: 8px;
-`
-export const Cart = styled.View`
-	position: absolute;
-	bottom: 12px;
-	left: 12px;
-	right: 12px;
-	padding: 12px;
-	border-radius: 12px;
-	background: ${props => props.theme.boxBg}70;
-	align-items: center;
-	flex-direction: row;
-	gap: 12px;
 `
 export const CartLeft = styled.View`
 	flex: 1;
@@ -73,4 +69,23 @@ export const FinishedText = styled(ButtonLabel)`
 `
 export const Total = styled(Font)`
 	font-size: 16px;
+`
+export const Cart = styled.View`
+	position: absolute;
+	bottom: 12px;
+	left: 12px;
+	right: 12px;
+	padding: 12px;
+	border-radius: 12px;
+	/* border: solid 1px ${props => props.theme.boxBg}; */
+	align-items: center;
+	flex-direction: row;
+	gap: 12px;
+	overflow: hidden;
+`
+export const Blur = styled(BlurView)`
+	width: ${Dimensions.get('screen').width - 24}px;
+	height: 74px;
+	position: absolute;
+	top: 0;
 `

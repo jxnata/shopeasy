@@ -5,6 +5,7 @@ export type StackParamList = {
 	home: undefined
 	profile: undefined
 	expenses: undefined
+	create: undefined
 	list: { list: ShoppingList } | undefined
 	shop: { list: ShoppingList; items?: ListItem[] } | undefined
 	rename: { list: ShoppingList } | undefined

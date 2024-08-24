@@ -4,8 +4,8 @@
 			"description": "Desfrute de todos os recursos do ShopEasy e eleve sua experiência de compras ao próximo nível!",
 			"premium_features_title": "Recursos Premium:",
 			"feature1": "Sem anúncios",
-			"feature2": "Crie listas sem limitações",
-			"feature3": "Compare preços e economize",
+			"feature2": "Listas ilimitadas",
+			"feature3": "Crie listas com IA rapidamente",
 			"feature4": "Relatórios de gastos e economia",
 			"feature5": "Acesso prioritário a novidades",
 			"subscribe_button": "Continuar",
@@ -34,8 +34,8 @@
 			"continue": "Continuar",
 			"feature_1_title": "Listas de Compras",
 			"feature_1_description": "Crie e gerencie listas de compras facilmente. Organize os itens por categoria, defina quantidades e marque-os à medida que compra.",
-			"feature_2_title": "Comparar Preços",
-			"feature_2_description": "Encontre as melhores ofertas comparando preços em diferentes lojas e economize dinheiro em suas compras.",
+			"feature_2_title": "Listas com IA",
+			"feature_2_description": "Crie listas rapidamente usando uma inteligência artificial que sugere itens baseados no seu gosto.",
 			"feature_3_title": "Relatórios",
 			"feature_3_description": "Analise suas compras ao longo do tempo, acompanhe suas economias e otimize seu orçamento.",
 			"feature_4_title": "Notificações",
@@ -61,10 +61,19 @@
 			"menu_item_profile": "Perfil",
 			"menu_item_premium": "Premium"
 		},
-		"list": {
+		"create": {
 			"title": "Criar lista",
 			"list_name": "Nome da lista",
-			"add_items": "Adicionar items",
+			"notification": "Alerta",
+			"notification_date": "Quando quer ser alertado?",
+			"create_button": "Criar lista",
+			"notification_title": "Alerta de compra",
+			"notification_description": "Você tem uma compra para fazer hoje. Toque para ver mais."
+		},
+		"list": {
+			"title": "Lista",
+			"list_name": "Nome da lista",
+			"add_items": "Adicionar",
 			"edit_option": "Renomear",
 			"delete_option": "Excluir",
 			"create_button": "Salvar",
@@ -78,7 +87,9 @@
 			"items": "itens",
 			"total": "Total:",
 			"finish": "Finalizar",
-			"finish_done": "Concluído"
+			"finish_done": "Concluído",
+			"ai_suggestions": "Sugerir (IA)",
+			"off_ai_suggestions": "Desativar"
 		},
 		"profile": {
 			"title": "Perfil",
@@ -137,7 +148,8 @@
 			"category": "Selecione",
 			"qty_label": "Quantity",
 			"have": "eu tenho",
-			"havent": "não tenho nenhum"
+			"havent": "não tenho nenhum",
+			"accept": "Aceitar"
 		},
 		"item_shop": {
 			"price": "Preço",

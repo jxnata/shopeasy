@@ -23,7 +23,7 @@ const ItemRow = ({ item, listId }: Props) => {
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation('translation', { keyPrefix: 'item' })
 	const { control, register } = useForm<Partial<ListItem>>({
-		defaultValues: { price: item.price, unit: item.unit, qty: item.qty },
+		defaultValues: { price: item.price, unit: item.unit, qty: item.qty, checked: item.checked },
 	})
 
 	const animationValue = useSharedValue(0)

@@ -18,7 +18,7 @@ function Home({ navigation }: Props) {
 
 	const { lists } = useShoppingLists()
 
-	const onCreate = () => navigation.navigate('list')
+	const onCreate = () => navigation.navigate('create')
 
 	const onCopy = (item: ShoppingList) => {
 		//to-do

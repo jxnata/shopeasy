@@ -9,6 +9,7 @@ import { useSettings } from '../contexts/settings'
 import { StackParamList } from '../types/navigation/stack'
 import Add from '../views/add'
 import Auth from '../views/auth'
+import CreateList from '../views/create'
 import Expenses from '../views/expenses'
 import Home from '../views/home'
 import Intro from '../views/intro'
@@ -67,6 +68,11 @@ const Routes = () => {
 				<Stack.Screen name='list' component={ListView} options={{ title: t('list.title') }} />
 				<Stack.Screen name='subscribe' component={Subscribe} options={{ headerShown: false }} />
 				<Stack.Screen name='add' component={Add} options={{ title: t('add.title'), presentation: 'modal' }} />
+				<Stack.Screen
+					name='create'
+					component={CreateList}
+					options={{ title: t('list.title'), presentation: 'modal' }}
+				/>
 				<Stack.Screen
 					name='rename'
 					component={ListRename}

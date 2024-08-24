@@ -85,13 +85,13 @@ function Purchase({ navigation }: Props) {
 								<S.FeatureText>{t('feature2')}</S.FeatureText>
 							</S.FeatureLine>
 							<S.FeatureLine>
-								<Icon name='cash' />
+								<Icon name='sparkles' />
 								<S.FeatureText>{t('feature3')}</S.FeatureText>
 							</S.FeatureLine>
-							<S.FeatureLine>
+							{/* <S.FeatureLine>
 								<Icon name='pie-chart' />
 								<S.FeatureText>{t('feature4')}</S.FeatureText>
-							</S.FeatureLine>
+							</S.FeatureLine> */}
 							<S.FeatureLine>
 								<Icon name='diamond' />
 								<S.FeatureText>{t('feature5')}</S.FeatureText>

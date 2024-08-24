@@ -29,12 +29,18 @@ function Onboarding({ navigation }: Props) {
 		},
 		{
 			id: 2,
-			title: t('feature_3_title'),
-			description: t('feature_3_description'),
-			image: require('../../assets/images/expenses.png'),
+			title: t('feature_2_title'),
+			description: t('feature_2_description'),
+			image: require('../../assets/images/ai.png'),
 		},
+		// {
+		// 	id: 3,
+		// 	title: t('feature_3_title'),
+		// 	description: t('feature_3_description'),
+		// 	image: require('../../assets/images/expenses.png'),
+		// },
 		{
-			id: 3,
+			id: 4,
 			title: t('feature_4_title'),
 			description: t('feature_4_description'),
 			image: require('../../assets/images/notifications.png'),
