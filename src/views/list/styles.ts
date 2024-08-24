@@ -62,6 +62,7 @@ export const CartTotal = styled.View`
 export const FinishButton = styled(Button)`
 	width: auto;
 	padding: 4px 16px;
+	opacity: ${props => (props['aria-disabled'] ? 0.6 : 1)};
 `
 export const FinishedText = styled(ButtonLabel)`
 	font-size: 14px;

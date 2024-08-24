@@ -198,7 +198,11 @@ function ListView({ navigation, route }: Props) {
 									{itemsList.length} {t('items')}
 								</Label>
 							</S.CartLeft>
-							<S.FinishButton onPress={onShop}>
+							<S.FinishButton
+								aria-disabled={!itemsList.length}
+								disabled={!itemsList.length}
+								onPress={onShop}
+							>
 								<ButtonIcon name='cart' />
 								<ButtonLabel>{t('shop_now_button')}</ButtonLabel>
 							</S.FinishButton>

@@ -68,7 +68,8 @@
 			"notification_date": "Quando quer ser alertado?",
 			"create_button": "Criar lista",
 			"notification_title": "Alerta de compra",
-			"notification_description": "Você tem uma compra para fazer hoje. Toque para ver mais."
+			"notification_description": "Você tem uma compra para fazer hoje. Toque para ver mais.",
+			"premium_notice": "Ative o ShopEasy Premium para receber alertas de compras."
 		},
 		"list": {
 			"title": "Lista",

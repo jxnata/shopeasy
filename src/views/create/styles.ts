@@ -22,6 +22,19 @@ export const InuptLabel = styled(Font)`
 	font-weight: bold;
 	margin-bottom: 4px;
 `
+export const Notice = styled(Font)`
+	font-size: 12px;
+	opacity: 0.7;
+`
+export const NoticeBox = styled.View`
+	margin: 12px 0;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding: 12px;
+	border-radius: 8px;
+	background-color: ${props => props.theme.boxBg};
+`
 export const Row = styled.View`
 	flex-direction: row;
 	justify-content: space-between;

@@ -19,7 +19,7 @@ import { ShoppingList, ShoppingListData } from '../../types/models/shopping-list
 function CreateList({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'create' })
 
-	const { current } = useSession()
+	const { current, premium } = useSession()
 	const currentId = useMemo(() => (current ? current.$id : undefined), [current])
 	const { control, handleSubmit, watch, setValue } = useForm<Partial<ShoppingList>>()
 
@@ -81,43 +81,51 @@ function CreateList({ navigation }: Props) {
 							/>
 						)}
 					/>
-					<S.Row>
-						<S.Col>
-							<S.InuptLabel>{t('notification')}</S.InuptLabel>
-							<Controller
-								control={control}
-								rules={{ required: false }}
-								name='notification_id'
-								render={({ field: { onChange, value } }) => (
-									<Switch
-										onValueChange={checked => toggleNotification(checked, onChange)}
-										value={!!value}
-									/>
-								)}
-							/>
-						</S.Col>
-						{notificationEnabled && (
+					{!premium && (
+						<S.NoticeBox>
+							<S.Notice>{t('premium_notice')}</S.Notice>
+						</S.NoticeBox>
+					)}
+					{premium && (
+						<S.Row>
 							<S.Col>
-								<S.InuptLabel>{t('notification_date')}</S.InuptLabel>
+								<S.InuptLabel>{t('notification')}</S.InuptLabel>
 								<Controller
 									control={control}
 									rules={{ required: false }}
-									name='notification_time'
+									name='notification_id'
 									render={({ field: { onChange, value } }) => (
-										<RNDateTimePicker
-											mode='datetime'
-											disabled={!notificationEnabled}
-											value={value ? new Date(value) : new Date()}
-											onChange={value =>
-												onChange(new Date(value.nativeEvent.timestamp).getTime())
-											}
-											// minimumDate={new Date(Date.now() + 1000 * 60 * 60)}
+										<Switch
+											disabled={!premium}
+											onValueChange={checked => toggleNotification(checked, onChange)}
+											value={!!value}
 										/>
 									)}
 								/>
 							</S.Col>
-						)}
-					</S.Row>
+							{notificationEnabled && (
+								<S.Col>
+									<S.InuptLabel>{t('notification_date')}</S.InuptLabel>
+									<Controller
+										control={control}
+										rules={{ required: false }}
+										name='notification_time'
+										render={({ field: { onChange, value } }) => (
+											<RNDateTimePicker
+												mode='datetime'
+												disabled={!notificationEnabled || !premium}
+												value={value ? new Date(value) : new Date()}
+												onChange={value =>
+													onChange(new Date(value.nativeEvent.timestamp).getTime())
+												}
+												minimumDate={new Date(Date.now() + 1000 * 60 * 60)}
+											/>
+										)}
+									/>
+								</S.Col>
+							)}
+						</S.Row>
+					)}
 
 					<Button onPress={handleSubmit(onSave)}>
 						<ButtonLabel>{t('create_button')}</ButtonLabel>
