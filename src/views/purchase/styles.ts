@@ -71,6 +71,11 @@ export const OfferButton = styled(Button)`
 	padding: 8px 16px;
 	align-items: flex-start;
 `
+export const OfferTitleContainer = styled.View`
+	flex-direction: row;
+	align-items: center;
+	gap: 2px;
+`
 export const OfferTitle = styled(Font)`
 	font-weight: bold;
 `

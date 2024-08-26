@@ -40,7 +40,7 @@ export const FeatureText = styled(Font)`
 `
 export const CloseButton = styled.Pressable`
 	position: absolute;
-	top: 0;
+	top: 12px;
 	right: 8px;
 	background-color: ${props => props.theme.boxBg};
 	width: 32px;
@@ -70,6 +70,11 @@ export const OfferButton = styled(Button)`
 	height: auto;
 	padding: 8px 16px;
 	align-items: flex-start;
+`
+export const OfferTitleContainer = styled.View`
+	flex-direction: row;
+	align-items: center;
+	gap: 2px;
 `
 export const OfferTitle = styled(Font)`
 	font-weight: bold;

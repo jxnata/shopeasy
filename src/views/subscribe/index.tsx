@@ -110,7 +110,12 @@ function Subscribe({ navigation }: Props) {
 									key={offer.identifier}
 									onPress={() => setSelectedOffering(offer)}
 								>
-									<S.OfferTitle>{t(offer.identifier)}</S.OfferTitle>
+									<S.OfferTitleContainer>
+										{selectedOffering && selectedOffering.identifier === offer.identifier && (
+											<Icon name='checkmark-circle' />
+										)}
+										<S.OfferTitle>{t(offer.identifier)}</S.OfferTitle>
+									</S.OfferTitleContainer>
 									<S.OfferPrice>{offer.product.priceString}</S.OfferPrice>
 									<S.OfferDescription>{t('subscribe_description')}</S.OfferDescription>
 								</S.OfferButton>

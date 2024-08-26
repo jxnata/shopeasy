@@ -18,7 +18,11 @@ const ListRow = ({ item, onPress, onCopy }: Props) => {
 	return (
 		<S.Container>
 			<S.Column onPress={open}>
-				<S.Title>{item.name}</S.Title>
+				<S.Row>
+					<S.Title>{item.name}</S.Title>
+					{item.finished && <Icon name='checkmark-circle' size={12} />}
+					{item.shopping && !item.finished && <Icon name='cart' size={12} />}
+				</S.Row>
 				<S.Row>
 					<S.Description>
 						{item.total ? format(item.total / 100) : item.items.length + ' ' + t('items')} •{' '}

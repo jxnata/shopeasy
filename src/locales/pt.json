@@ -63,11 +63,14 @@
 			"copy_title": "Duplicar lista",
 			"copy_text": "Deseja mesmo duplicar esta lista?",
 			"cancel": "Cancelar",
-			"copy_confirm": "Duplicar"
+			"copy_confirm": "Duplicar",
+			"profile": "Perfil",
+			"premium": "Premium"
 		},
 		"create": {
 			"title": "Criar lista",
 			"list_name": "Nome da lista",
+			"list_name_placeholder": "Pode ser o nome do mercado",
 			"notification": "Alerta",
 			"notification_date": "Quando quer ser alertado?",
 			"create_button": "Criar lista",
@@ -98,6 +101,7 @@
 			"created_at": "Desde",
 			"premium": "Premium",
 			"premium_button": "Assinar Premium",
+			"color": "Cor",
 			"logout_button": "Sair"
 		},
 		"expenses": {

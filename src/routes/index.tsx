@@ -66,7 +66,6 @@ const Routes = () => {
 				<Stack.Screen name='home' component={Home} options={{ title: t('home.title') }} />
 				<Stack.Screen name='expenses' component={Expenses} options={{ title: t('expenses.title') }} />
 				<Stack.Screen name='list' component={ListView} options={{ title: t('list.title') }} />
-				<Stack.Screen name='subscribe' component={Subscribe} options={{ headerShown: false }} />
 				<Stack.Screen name='add' component={Add} options={{ title: t('add.title'), presentation: 'modal' }} />
 				<Stack.Screen
 					name='create'
@@ -82,6 +81,11 @@ const Routes = () => {
 					name='profile'
 					component={Profile}
 					options={{ title: t('profile.title'), presentation: 'modal' }}
+				/>
+				<Stack.Screen
+					name='subscribe'
+					component={Subscribe}
+					options={{ headerShown: false, presentation: 'modal' }}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>

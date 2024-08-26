@@ -4,6 +4,7 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import React, { useEffect } from 'react'
 import { AppState, AppStateStatus, Platform, StatusBar, useColorScheme } from 'react-native'
 import mobileAds from 'react-native-google-mobile-ads'
+import { useMMKVString } from 'react-native-mmkv'
 import Purchases from 'react-native-purchases'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
@@ -13,14 +14,17 @@ import { toastConfig } from './src/components/toast'
 import { REVENUECAT_API_KEY_ANDROID, REVENUECAT_API_KEY_IOS } from './src/constants'
 import { SessionProvider } from './src/contexts/session'
 import { SettingsProvider } from './src/contexts/settings'
+import { settings } from './src/database'
 import { clientPersister } from './src/database/cache'
 import Routes from './src/routes'
+import { AppColor } from './src/types/all/colors'
 import { getTheme } from './src/utils/get-theme'
 
 const queryClient = new QueryClient()
 
 function App(): React.JSX.Element {
 	const scheme = useColorScheme()
+	const [color] = useMMKVString('color', settings)
 
 	function onAppStateChange(status: AppStateStatus) {
 		focusManager.setFocused(status === 'active')
@@ -45,7 +49,7 @@ function App(): React.JSX.Element {
 
 	if (!scheme) return <></>
 
-	const colors = getTheme(scheme, 'mono')
+	const colors = getTheme(scheme, (color || 'mono') as AppColor)
 
 	return (
 		<SafeAreaProvider>

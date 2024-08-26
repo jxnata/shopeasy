@@ -1,3 +1,5 @@
+import { BlurView } from '@react-native-community/blur'
+import { Dimensions } from 'react-native'
 import styled from 'styled-components/native'
 
 import { Button, Font } from '../../theme/global'
@@ -38,5 +40,38 @@ export const AddButton = styled(Button)`
 	right: 16px;
 	z-index: 2;
 `
-export const MenuContainer = styled.View``
-export const MenuList = styled.ScrollView``
+export const TabButton = styled(Button)`
+	width: 64px;
+	height: 48px;
+	padding: 4px;
+	background-color: ${props => (props['aria-selected'] ? props.theme.boxBg : props.theme.boxBg + '30')};
+	border-radius: 8px;
+	flex-direction: column;
+`
+export const TabLabel = styled(Font)`
+	font-size: 12px;
+	font-weight: 500;
+`
+export const TabBar = styled.View`
+	position: absolute;
+	bottom: 32px;
+	left: 12px;
+	right: 12px;
+	padding: 8px;
+	border-radius: 12px;
+	align-items: center;
+	flex-direction: row;
+	gap: 12px;
+	overflow: hidden;
+`
+export const Row = styled.View`
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
+`
+export const Blur = styled(BlurView)`
+	width: ${Dimensions.get('screen').width - 24}px;
+	height: 74px;
+	position: absolute;
+	top: 0;
+`

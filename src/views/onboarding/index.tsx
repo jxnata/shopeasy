@@ -10,7 +10,7 @@ import OnbarodingItem from '../../components/onboarding-item'
 import Paginator from '../../components/paginator'
 import Pressable from '../../components/shared/pressable'
 import { ONE_SIGNAL_APP_ID } from '../../constants'
-import { settings } from '../../database'
+import { useSettings } from '../../contexts/settings'
 import { Container } from '../../theme/global'
 
 function Onboarding({ navigation }: Props) {
@@ -19,6 +19,7 @@ function Onboarding({ navigation }: Props) {
 	const [activeIndex, setActiveIndex] = useState(0)
 	const [loading, setLoading] = useState(false)
 	const scrollViewRef = useAnimatedRef<ScrollView>()
+	const { setOppened } = useSettings()
 
 	const bouncyData = [
 		{
@@ -78,7 +79,7 @@ function Onboarding({ navigation }: Props) {
 
 		await OneSignal.Notifications.requestPermission(true)
 
-		settings.set('oppened', true)
+		setOppened(true)
 		setLoading(false)
 	}
 

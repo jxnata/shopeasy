@@ -8,7 +8,7 @@ import { Props } from './types'
 import Icon from '../../components/icon'
 import { toast } from '../../components/toast'
 import { useSession } from '../../contexts/session'
-import { settings } from '../../database'
+import { useSettings } from '../../contexts/settings'
 import { Button, ButtonLabel, Container, Label } from '../../theme/global'
 import { getOfferings } from '../../utils/get-offerings'
 
@@ -16,9 +16,10 @@ function Purchase({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'subscribe' })
 	const [selectedOffering, setSelectedOffering] = useState<PurchasesPackage>()
 	const { checkPremium } = useSession()
+	const { setInitialized } = useSettings()
 
 	const onClose = () => {
-		settings.set('initialized', true)
+		setInitialized(true)
 	}
 
 	const { data: offerings } = useQuery<PurchasesPackage[]>({
@@ -111,7 +112,12 @@ function Purchase({ navigation }: Props) {
 									key={offer.identifier}
 									onPress={() => setSelectedOffering(offer)}
 								>
-									<S.OfferTitle>{t(offer.identifier)}</S.OfferTitle>
+									<S.OfferTitleContainer>
+										{selectedOffering && selectedOffering.identifier === offer.identifier && (
+											<Icon name='checkmark-circle' />
+										)}
+										<S.OfferTitle>{t(offer.identifier)}</S.OfferTitle>
+									</S.OfferTitleContainer>
 									<S.OfferPrice>{offer.product.priceString}</S.OfferPrice>
 									<S.OfferDescription>{t('subscribe_description')}</S.OfferDescription>
 								</S.OfferButton>

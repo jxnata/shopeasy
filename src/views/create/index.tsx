@@ -75,7 +75,7 @@ function CreateList({ navigation }: Props) {
 								label={t('list_name')}
 								value={value}
 								onChangeText={onChange}
-								placeholder={t('list_name')}
+								placeholder={t('list_name_placeholder')}
 								maxLength={32}
 								autoFocus
 							/>

@@ -10,6 +10,8 @@ export const light = {
 	successBg: '#ccf6e4',
 	shadow: '#000',
 	logo: require('../assets/images/logo-light.png'),
+	primary: '',
+	secondary: '',
 }
 
 export const dark = {
@@ -24,6 +26,8 @@ export const dark = {
 	successBg: '#002a18',
 	shadow: 'transparent',
 	logo: require('../assets/images/logo-dark.png'),
+	primary: '',
+	secondary: '',
 }
 
 export const accents = {

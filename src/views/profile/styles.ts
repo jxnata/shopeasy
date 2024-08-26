@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { Button, Font } from '../../theme/global'
+import { Button, ButtonIcon, Font } from '../../theme/global'
 
 export const Content = styled.SafeAreaView`
 	flex: 1;
@@ -12,13 +12,13 @@ export const Body = styled.View`
 	align-items: center;
 `
 export const Avatar = styled.Image`
-	width: 128px;
-	height: 128px;
+	width: 72px;
+	height: 72px;
 	border-radius: 64px;
-	border: solid 3px ${props => props.theme.primary};
+	border: solid 3px ${props => props.theme.secondary};
 `
 export const InfoContainer = styled.View`
-	background: ${props => props.theme.modalBg};
+	background: ${props => props.theme.boxBg}60;
 	margin: 32px 8px 8px 8px;
 	padding: 8px;
 	border-radius: 8px;
@@ -31,10 +31,13 @@ export const InfoRow = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	background: ${props => props.theme.boxBg};
 `
 export const InfoLabel = styled(Font)`
 	font-weight: bold;
+`
+export const ButtonLabel = styled(Font)`
+	font-weight: bold;
+	color: ${props => props.theme.primary};
 `
 export const InfoValue = styled(Font)`
 	font-weight: 500;
@@ -47,4 +50,35 @@ export const LogoutButton = styled(Button)`
 `
 export const PremiumButton = styled(LogoutButton)`
 	background: ${props => props.theme.secondary};
+`
+export const PremiumIcon = styled(ButtonIcon)`
+	color: ${props => props.theme.primary};
+`
+export const CloseButton = styled.Pressable`
+	position: absolute;
+	top: 12px;
+	right: 8px;
+	background-color: ${props => props.theme.boxBg};
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	align-items: center;
+	justify-content: center;
+`
+export const ColorContainer = styled.View`
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+	padding: 8px;
+	border-radius: 8px;
+	background: ${props => props.theme.boxBg};
+`
+export const Color = styled.TouchableOpacity`
+	width: 24px;
+	height: 24px;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+	border: solid 2px transparent;
 `

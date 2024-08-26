@@ -179,7 +179,7 @@ function ListView({ navigation, route }: Props) {
 										<S.Total>{t('total')}</S.Total>
 										<Label>{format(total)}</Label>
 									</S.CartTotal>
-									<Progress percentage={percentage} />
+									{!list.finished && <Progress percentage={percentage} />}
 								</S.CartLeft>
 								{!list.finished && (
 									<S.FinishButton onPress={onFinish}>
@@ -187,6 +187,7 @@ function ListView({ navigation, route }: Props) {
 										<ButtonLabel>{t('finish')}</ButtonLabel>
 									</S.FinishButton>
 								)}
+								{list.finished && <Label>{new Date(list.date).toLocaleDateString()}</Label>}
 							</S.Cart>
 						)}
 						{!list.shopping && (

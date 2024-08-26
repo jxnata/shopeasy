@@ -1,9 +1,9 @@
-import { light, dark, accents } from '../theme'
+import { ColorSchemeName } from 'react-native'
 
-export const getTheme = (
-	mode: 'light' | 'dark' | null,
-	accent: 'green' | 'blue' | 'orange' | 'red' | 'pink' | 'purple' | 'mono'
-) => {
+import { light, dark, accents } from '../theme'
+import { AppColor } from '../types/all/colors'
+
+export const getTheme = (mode: ColorSchemeName, accent: AppColor) => {
 	let theme = null
 
 	switch (mode) {
