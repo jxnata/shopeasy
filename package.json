@@ -33,6 +33,7 @@
 		"react-hook-form": "^7.52.1",
 		"react-i18next": "^14.1.0",
 		"react-native": "0.74.3",
+		"react-native-context-menu-view": "^1.16.0",
 		"react-native-google-mobile-ads": "^14.2.1",
 		"react-native-haptic-feedback": "^2.3.1",
 		"react-native-localize": "^3.2.0",

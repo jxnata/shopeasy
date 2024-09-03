@@ -41,29 +41,10 @@
 			"feature_4_title": "Notificações",
 			"feature_4_description": "Receba lembretes para comprar itens e atualizações sobre suas listas de compras."
 		},
-		"permissions": {
-			"title": "Permissões",
-			"location_description": "Ative a localização para encontrar melhores ofertas de preços perto de você.",
-			"notification_description": "Ative as notificações para receber alertas e lembretes para suas compras.",
-			"deny": "Agora não",
-			"done_description": "Tudo certo! Você ja pode começar a criar suas listas!",
-			"allow": "Sim, ativar",
-			"continue": "Continuar"
-		},
 		"home": {
 			"title": "Listas",
 			"no_lists": "Você ainda não tem listas.",
 			"create_button": "Criar agora",
-			"add_list_button": "Adicionar",
-			"menu_item_create": "Nova lista",
-			"menu_item_shop": "Compras",
-			"menu_item_expenses": "Despesas",
-			"menu_item_profile": "Perfil",
-			"menu_item_premium": "Premium",
-			"copy_title": "Duplicar lista",
-			"copy_text": "Deseja mesmo duplicar esta lista?",
-			"cancel": "Cancelar",
-			"copy_confirm": "Duplicar",
 			"profile": "Perfil",
 			"premium": "Premium"
 		},
@@ -80,10 +61,7 @@
 		},
 		"list": {
 			"title": "Lista",
-			"list_name": "Nome da lista",
 			"add_items": "Adicionar",
-			"edit_option": "Renomear",
-			"delete_option": "Excluir",
 			"create_button": "Salvar",
 			"shop_now_button": "Ir às compras",
 			"create_error": "Ocorreu um erro ao criar a lista.",
@@ -92,7 +70,18 @@
 			"finish": "Finalizar",
 			"finish_done": "Concluído",
 			"ai_suggestions": "Sugerir (IA)",
-			"off_ai_suggestions": "Desativar"
+			"off_ai_suggestions": "Desativar",
+			"options": "Opções",
+			"copy": "Duplicar",
+			"edit": "Editar",
+			"delete": "Excluir",
+			"delete_title": "Excluir lista",
+			"delete_text": "Tem certeza que deseja excluir esta lista? Todos os itens dela serão excluídos.",
+			"delete_confirm": "Sim, excluir",
+			"copy_title": "Duplicar lista",
+			"copy_text": "Deseja mesmo duplicar esta lista?",
+			"copy_confirm": "Duplicar",
+			"cancel": "Cancelar"
 		},
 		"profile": {
 			"title": "Perfil",
@@ -148,20 +137,14 @@
 		"auth": {
 			"auth_failed": "Ocorreu um erro na autenticação.",
 			"auth_unauthorized": "Autenticação não autorizada no dispositivo.",
-			"auth_expired": "O token de autenticação expirou. Por favor, faça login novamente.",
 			"description": "Inicie sua sessão para acessar todos os recursos do ShopEasy.",
 			"google_auth": "Iniciar sessão com o Google"
 		},
 		"item": {
 			"price": "Preço",
 			"unit": "Unidade",
-			"unit_singular": "unidade",
-			"unit_plural": "unidades",
-			"needed": "eu preciso de",
 			"price_label": "Preço da unidade",
 			"unit_label": "Unidade",
-			"category_label": "Categoria",
-			"category": "Selecione",
 			"qty_label": "Quantidade",
 			"have": "eu tenho",
 			"havent": "não tenho nenhum",
@@ -180,28 +163,6 @@
 			"create_place_error": "Erro ao selecionar o local.",
 			"local_label": "Onde vai fazer essa compra?",
 			"local_placeholder": "Pesquise um local..."
-		},
-		"copy_items": {
-			"copy_items_error": "Ocorreu um erro ao adicionar os itens a lista.",
-			"description": "Adicionando itens... por favor, aguarde. Não saia dessa tela enquanto não estiver concluído."
-		},
-		"categories": {
-			"others": "Outros",
-			"household": "Móveis e utensílios",
-			"office": "Escritório",
-			"eletronics": "Eletrônicos",
-			"clothing": "Vestuário",
-			"music": "Música",
-			"games": "Jogos",
-			"sports": "Esportes",
-			"dishware": "Eletrodomésticos",
-			"drinks": "Bebidas",
-			"food_sweet": "Doces",
-			"food_marine": "Frutos do mar",
-			"food_asian": "Comida asíatica",
-			"food_prepared": "Comida preparada",
-			"vegetables": "Verduras",
-			"fruits": "Frutas"
 		}
 	}
 }

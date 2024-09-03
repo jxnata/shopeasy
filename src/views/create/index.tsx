@@ -43,7 +43,7 @@ function CreateList({ navigation }: Props) {
 			if (form.notification_id && form.notification_time) {
 				PushNotificationIOS.addNotificationRequest({
 					title: t('notification_title'),
-					body: t('notification_body'),
+					body: t('notification_description'),
 					repeats: false,
 					fireDate: new Date(form.notification_time),
 					id: form.notification_id,

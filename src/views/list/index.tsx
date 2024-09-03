@@ -128,7 +128,7 @@ function ListView({ navigation, route }: Props) {
 			<S.Content>
 				{!!list && (
 					<S.Body>
-						<Header title={list.name} Right={HeaderRight} />
+						<Header title={list.name} Right={HeaderRight} backButton />
 						{!list.shopping && (
 							<S.ButtonsContainer>
 								{itemsList.length > 3 && (

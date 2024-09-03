@@ -7,7 +7,6 @@ export const Container = styled.View`
 	align-items: center;
 	justify-content: space-between;
 	padding: 12px 16px;
-	gap: 4px;
 	background: ${props => props.theme.boxBg};
 	border-radius: 12px;
 	margin-bottom: 8px;

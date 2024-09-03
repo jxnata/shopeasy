@@ -1024,6 +1024,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-context-menu-view (1.16.0):
+    - React
   - react-native-geolocation (3.3.0):
     - DoubleConversion
     - glog
@@ -1485,6 +1487,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
+  - react-native-context-menu-view (from `../node_modules/react-native-context-menu-view`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-onesignal (from `../node_modules/react-native-onesignal`)
@@ -1603,6 +1606,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
+  react-native-context-menu-view:
+    :path: "../node_modules/react-native-context-menu-view"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-mmkv:
@@ -1722,6 +1727,7 @@ SPEC CHECKSUMS:
   React-logger: fa92ba4d3a5d39ac450f59be2a3cec7b099f0304
   React-Mapbuffer: 9f68550e7c6839d01411ac8896aea5c868eff63a
   react-native-blur: a2acf22fd7bd13621df5e0b1c130b81adea7009c
+  react-native-context-menu-view: 30915369a9b5887904c571b616653acf3f1c8edb
   react-native-geolocation: 5c5dd5de4571c55014e9e98214b273eed854f293
   react-native-mmkv: 8c9a677e64a1ac89b0c6cf240feea528318b3074
   react-native-onesignal: 592184d34780d04ebbea2b9844d5b6088606cb30

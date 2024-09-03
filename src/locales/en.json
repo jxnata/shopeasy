@@ -1,17 +1,168 @@
 {
 	"translation": {
 		"subscribe": {
-			"description": "Enjoy all the features of ShopEasy and elevate your shopping experience to the next level!",
+			"description": "Enjoy all ShopEasy features and take your shopping experience to the next level!",
 			"premium_features_title": "Premium Features:",
-			"feature1": "🔔 Alerts for your purchases",
-			"feature2": "🤑 Compare prices and save",
-			"feature3": "📝 Share your lists",
-			"feature4": "💸 Spending and savings reports",
-			"feature5": "👑 Priority access to new features",
-			"subscribe_button": "Subscribe now"
+			"feature1": "Ad-free",
+			"feature2": "Get alerted for your purchases",
+			"feature3": "Quickly create lists with AI",
+			"feature4": "Spending and savings reports",
+			"feature5": "Priority access to new features",
+			"subscribe_button": "Continue",
+			"restore_button": "Restore",
+			"subscribe_description": "All features included",
+			"$rc_monthly": "Monthly",
+			"$rc_annual": "Annual",
+			"$rc_lifetime": "Lifetime",
+			"MONTHLY": "/month",
+			"ANNUAL": "/year",
+			"LIFETIME": "",
+			"offer": "OFFER",
+			"purchase_error": "An error occurred while subscribing to the product.",
+			"restore_error": "An error occurred while recovering your subscription.",
+			"purchase_success": "Subscription completed!",
+			"restore_success": "Subscription recovered!"
+		},
+		"intro": {
+			"title": "Welcome to ShopEasy!",
+			"description": "I'll help you organize your shopping and save money.",
+			"start_button": "Let's get started"
+		},
+		"onboarding": {
+			"back": "Previous",
+			"next": "Next",
+			"continue": "Continue",
+			"feature_1_title": "Shopping Lists",
+			"feature_1_description": "Create and manage shopping lists easily. Organize items by category, set quantities, and check them off as you shop.",
+			"feature_2_title": "AI-powered Lists",
+			"feature_2_description": "Quickly create lists using artificial intelligence that suggests items based on your preferences.",
+			"feature_3_title": "Reports",
+			"feature_3_description": "Analyze your purchases over time, track your savings, and optimize your budget.",
+			"feature_4_title": "Notifications",
+			"feature_4_description": "Receive reminders to buy items and updates about your shopping lists."
 		},
 		"home": {
-			"hello": "hello world"
+			"title": "Lists",
+			"no_lists": "You don't have any lists yet.",
+			"create_button": "Create now",
+			"profile": "Profile",
+			"premium": "Premium"
+		},
+		"create": {
+			"title": "Create list",
+			"list_name": "List name",
+			"list_name_placeholder": "It can be the store name",
+			"notification": "Alert",
+			"notification_date": "When do you want to be alerted?",
+			"create_button": "Create list",
+			"notification_title": "Shopping alert",
+			"notification_description": "You have a purchase to make today. Tap to see more.",
+			"premium_notice": "Activate ShopEasy Premium to receive shopping alerts."
+		},
+		"list": {
+			"title": "List",
+			"add_items": "Add",
+			"create_button": "Save",
+			"shop_now_button": "Go shopping",
+			"create_error": "An error occurred while creating the list.",
+			"items": "items",
+			"total": "Total:",
+			"finish": "Finish",
+			"finish_done": "Completed",
+			"ai_suggestions": "Suggest (AI)",
+			"off_ai_suggestions": "Disable",
+			"options": "Options",
+			"copy": "Duplicate",
+			"edit": "Edit",
+			"delete": "Delete",
+			"delete_title": "Delete list",
+			"delete_text": "Are you sure you want to delete this list? All items in it will be deleted.",
+			"delete_confirm": "Yes, delete",
+			"copy_title": "Duplicate list",
+			"copy_text": "Do you really want to duplicate this list?",
+			"copy_confirm": "Duplicate",
+			"cancel": "Cancel"
+		},
+		"profile": {
+			"title": "Profile",
+			"name": "Name",
+			"email": "Email",
+			"created_at": "Since",
+			"premium": "Premium",
+			"premium_button": "Subscribe to Premium",
+			"color": "Color",
+			"logout_button": "Log out"
+		},
+		"expenses": {
+			"title": "Expenses",
+			"list": "List",
+			"select_list": "Select a list",
+			"no_list": "You don't have any purchases yet. Create a list to get started, after that your expense reports will be generated!",
+			"variation_increase": "Prices have increased",
+			"variation_decrease": "Prices have decreased",
+			"total": "Total:",
+			"variation": "Variation:",
+			"average": "Average:",
+			"higher": "Most expensive:",
+			"lower": "Cheapest:",
+			"no_expenses": "No completed purchases for this list."
+		},
+		"add": {
+			"title": "Add items",
+			"item_name": "Item name",
+			"item_have": "How many do you have?",
+			"search_placeholder": "What do you want to buy?",
+			"unit": "Unit",
+			"unit_label": "Unit",
+			"confirm_button": "Add"
+		},
+		"edit": {
+			"title": "Edit list",
+			"list_name": "List name",
+			"notification": "Alert",
+			"notification_date": "When do you want to be alerted?",
+			"create_button": "Create list",
+			"notification_title": "Shopping alert",
+			"notification_description": "You have a purchase to make today. Tap to see more.",
+			"premium_notice": "Activate ShopEasy Premium to receive shopping alerts.",
+			"edit_error": "An error occurred while renaming the list.",
+			"edit_button": "Save",
+			"cancel_button": "Cancel",
+			"delete_title": "Delete list",
+			"delete_text": "Are you sure you want to delete this list? All items in it will be deleted.",
+			"cancel": "Cancel",
+			"delete_confirm": "Yes, delete",
+			"delete_error": "An error occurred while deleting the list."
+		},
+		"auth": {
+			"auth_failed": "An authentication error occurred.",
+			"auth_unauthorized": "Unauthorized authentication on the device.",
+			"description": "Sign in to access all ShopEasy features.",
+			"google_auth": "Sign in with Google"
+		},
+		"item": {
+			"price": "Price",
+			"unit": "Unit",
+			"price_label": "Unit price",
+			"unit_label": "Unit",
+			"qty_label": "Quantity",
+			"have": "I have",
+			"havent": "I don't have any",
+			"accept": "Accept"
+		},
+		"price_history": {
+			"title": "Price history",
+			"local": "Location",
+			"date": "Date",
+			"price": "Price",
+			"no_expenses": "No history for this item.",
+			"premium": "👑 Get the Premium version to see price history and much more!"
+		},
+		"shop_local": {
+			"shop_in": "Shopping day",
+			"create_place_error": "Error selecting the location.",
+			"local_label": "Where will you make this purchase?",
+			"local_placeholder": "Search for a location..."
 		}
 	}
 }

@@ -8891,6 +8891,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-context-menu-view@npm:^1.16.0":
+  version: 1.16.0
+  resolution: "react-native-context-menu-view@npm:1.16.0"
+  peerDependencies:
+    react: ^16.8.1 || ^17.0.0 || ^18.0.0
+    react-native: ">=0.60.0-rc.0 <1.0.x"
+  checksum: 4d0c85059de3b085bb43b052706920a7e5cf1ec7c4a0de2247e7aed1345bafc636502724f8ce3467530e35a50feb024d34973a169cdf38a9a2d7e8149d0bed9b
+  languageName: node
+  linkType: hard
+
 "react-native-flipper@npm:^0.164.0":
   version: 0.164.0
   resolution: "react-native-flipper@npm:0.164.0"
@@ -9726,6 +9736,7 @@ __metadata:
     react-hook-form: ^7.52.1
     react-i18next: ^14.1.0
     react-native: 0.74.3
+    react-native-context-menu-view: ^1.16.0
     react-native-google-mobile-ads: ^14.2.1
     react-native-haptic-feedback: ^2.3.1
     react-native-localize: ^3.2.0

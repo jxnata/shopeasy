@@ -19,3 +19,4 @@ export const Text = styled(Font)`
 	font-size: 24px;
 	font-weight: bold;
 `
+export const BackButton = styled.TouchableOpacity``
