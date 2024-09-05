@@ -13,12 +13,12 @@ import Header from '../../components/header'
 import Input from '../../components/input'
 import Pressable from '../../components/shared/pressable'
 import { useSession } from '../../contexts/session'
-import { addItemToList } from '../../database/models/lists'
+import { addItemToList } from '../../database/models/shoppings'
 import { Container } from '../../theme/global'
 import { ListItem } from '../../types/models/list-item'
 
-function Add({ navigation, route }: Props) {
-	const { items, listId } = route.params
+function AddShopping({ navigation, route }: Props) {
+	const { items, shoppingId } = route.params
 	const { current } = useSession()
 	const [tempItems, setTempItems] = useState<string[]>(items)
 	const { t } = useTranslation('translation', { keyPrefix: 'add' })
@@ -36,7 +36,7 @@ function Add({ navigation, route }: Props) {
 
 	const createItem = useCallback(
 		(data: Partial<ListItem>) => {
-			if (!current || !data.name || !listId) return
+			if (!current || !data.name || !shoppingId) return
 
 			try {
 				const newItem = {
@@ -47,7 +47,7 @@ function Add({ navigation, route }: Props) {
 					price: null,
 					checked: false,
 				}
-				addItemToList(listId, newItem)
+				addItemToList(shoppingId, newItem)
 				setTempItems([...tempItems, data.name])
 			} catch {
 				setTempItems(tempItems.filter(i => i !== data.name))
@@ -55,7 +55,7 @@ function Add({ navigation, route }: Props) {
 				navigation.goBack()
 			}
 		},
-		[current, listId, navigation, tempItems]
+		[current, shoppingId, navigation, tempItems]
 	)
 
 	return (
@@ -95,7 +95,7 @@ function Add({ navigation, route }: Props) {
 									keyboardType='number-pad'
 									maxLength={5}
 									onChangeText={onChange}
-									value={value ? value.toString() : '0'}
+									value={value ? value.toString() : ''}
 									onBlur={onBlur}
 								/>
 							)}
@@ -128,4 +128,4 @@ function Add({ navigation, route }: Props) {
 	)
 }
 
-export default Add
+export default AddShopping

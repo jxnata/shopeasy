@@ -48,7 +48,9 @@ export const Item = styled.Pressable`
 	margin-top: 5px;
 	gap: 10px;
 `
-export const Text = styled(Font)``
+export const Text = styled(Font)`
+	font-size: 14px;
+`
 export const Label = styled(Font)`
 	font-size: 12px;
 	font-weight: bold;

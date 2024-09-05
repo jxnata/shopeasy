@@ -44,24 +44,37 @@
 		"home": {
 			"title": "Lists",
 			"no_lists": "You don't have any lists yet.",
-			"create_button": "Create now",
-			"profile": "Profile",
-			"premium": "Premium"
+			"create_button": "Create now"
+		},
+		"shoppings": {
+			"title": "Shopping",
+			"no_lists": "You have not completed any shopping list yet."
 		},
 		"create": {
 			"title": "Create list",
 			"list_name": "List name",
-			"list_name_placeholder": "It can be the store name",
+			"list_name_placeholder": "Give a name to your list",
 			"notification": "Alert",
 			"notification_date": "When do you want to be alerted?",
 			"create_button": "Create list",
 			"notification_title": "Shopping alert",
 			"notification_description": "You have a purchase to make today. Tap to see more.",
-			"premium_notice": "Activate ShopEasy Premium to receive shopping alerts."
+			"premium_notice": "Activate ShopEasy Premium to receive shopping alerts.",
+			"none": "None",
+			"day": "Daily",
+			"dayOfWeek": "Weekly",
+			"month": "Monthly",
+			"notification_frequency": "Want to be reminded to shop?"
+		},
+		"create-shopping": {
+			"title": "Create shopping",
+			"shopping_local": "Which market will you buy from?",
+			"shopping_local_placeholder": "Type the place name",
+			"create_button": "Create shopping"
 		},
 		"list": {
 			"title": "List",
-			"add_items": "Add",
+			"add_items": "Add items",
 			"create_button": "Save",
 			"shop_now_button": "Go shopping",
 			"create_error": "An error occurred while creating the list.",
@@ -81,7 +94,20 @@
 			"copy_title": "Duplicate list",
 			"copy_text": "Do you really want to duplicate this list?",
 			"copy_confirm": "Duplicate",
-			"cancel": "Cancel"
+			"cancel": "Cancel",
+			"alerts_on": " reminder",
+			"none": "None",
+			"day": "Daily",
+			"dayOfWeek": "Weekly",
+			"month": "Monthly"
+		},
+		"shopping": {
+			"title": "Shopping",
+			"add_items": "Add",
+			"items": "items",
+			"total": "Total:",
+			"finish": "Finish",
+			"finish_done": "Completed"
 		},
 		"profile": {
 			"title": "Profile",
@@ -132,7 +158,25 @@
 			"delete_text": "Are you sure you want to delete this list? All items in it will be deleted.",
 			"cancel": "Cancel",
 			"delete_confirm": "Yes, delete",
-			"delete_error": "An error occurred while deleting the list."
+			"delete_error": "An error occurred while deleting the list.",
+			"none": "None",
+			"day": "Daily",
+			"dayOfWeek": "Weekly",
+			"month": "Monthly",
+			"notification_frequency": "Want to be reminded to shop?"
+		},
+		"edit-shopping": {
+			"title": "Edit shopping",
+			"shopping_local": "Which market will you buy from?",
+			"shopping_local_placeholder": "Type the place name",
+			"edit_error": "An error occurred while editing the shopping.",
+			"edit_button": "Save",
+			"cancel_button": "Cancel",
+			"delete_title": "Delete shopping",
+			"delete_text": "Are you sure you want to delete this shopping? All items in it will be deleted.",
+			"cancel": "Cancel",
+			"delete_confirm": "Yes, delete",
+			"delete_error": "An error occurred while deleting the shopping."
 		},
 		"auth": {
 			"auth_failed": "An authentication error occurred.",
@@ -163,6 +207,13 @@
 			"create_place_error": "Error selecting the location.",
 			"local_label": "Where will you make this purchase?",
 			"local_placeholder": "Search for a location..."
+		},
+		"root": {
+			"lists": "Lists",
+			"shoppings": "Shopping",
+			"expenses": "Expenses",
+			"profile": "Profile",
+			"premium": "Premium"
 		}
 	}
 }

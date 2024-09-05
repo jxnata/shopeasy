@@ -1,7 +1,6 @@
 import styled from 'styled-components/native'
 
-import Icon from '../../components/icon'
-import { Button, Font } from '../../theme/global'
+import { Font } from '../../theme/global'
 
 export const Content = styled.SafeAreaView`
 	flex: 1;
@@ -42,27 +41,8 @@ export const Row = styled.View`
 	align-items: center;
 	gap: 8px;
 	margin-top: 12px;
+	margin-bottom: 24px;
 `
 export const Col = styled.View`
 	flex-direction: column;
-`
-export const CancelButton = styled(Button)`
-	background: transparent;
-	height: auto;
-	margin: 24px 0;
-`
-export const GhostButton = styled(Button)`
-	background: transparent;
-	border-bottom-width: 0;
-	width: 32px;
-	height: 32px;
-	padding: 0;
-`
-export const TrashIcon = styled(Icon)`
-	color: ${props => props.theme.dangerText};
-	font-family: 'Ionicons';
-	font-size: 24px;
-`
-export const Separator = styled.View`
-	margin-top: 12px;
 `

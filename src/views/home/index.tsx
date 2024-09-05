@@ -7,7 +7,6 @@ import { Props } from './types'
 import Header from '../../components/header'
 import Icon from '../../components/icon'
 import ListRow from '../../components/list-row'
-import TabMenu from '../../components/shared/tab-menu'
 import { useShoppingLists } from '../../hooks/local/useShoppingLists'
 import { ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 
@@ -47,26 +46,6 @@ function Home({ navigation }: Props) {
 						}
 					/>
 				</S.Body>
-				<TabMenu
-					items={[
-						{
-							title: t('title'),
-							icon: 'bag-handle',
-							route: 'home',
-						},
-						{
-							title: t('profile'),
-							icon: 'person',
-							route: 'profile',
-						},
-						{
-							title: t('premium'),
-							icon: 'diamond',
-							route: 'subscribe',
-						},
-					]}
-					current='home'
-				/>
 			</S.Content>
 		</Container>
 	)

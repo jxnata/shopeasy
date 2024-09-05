@@ -5,21 +5,21 @@ import { useColorScheme } from 'react-native'
 import * as S from './styles'
 import { Props } from './types'
 import Banner from '../../components/banner'
-import Icon from '../../components/icon'
+// import Icon from '../../components/icon'
 import Loading from '../../components/loading'
 import { useSession } from '../../contexts/session'
 import { useSettings } from '../../contexts/settings'
 import { Container, Label } from '../../theme/global'
-import { AppColor } from '../../types/all/colors'
+// import { AppColor } from '../../types/all/colors'
 import { avatar } from '../../utils/avatar'
 import { getTheme } from '../../utils/get-theme'
 
-const colors: AppColor[] = ['green', 'blue', 'orange', 'red', 'pink', 'purple', 'mono']
+// const colors: AppColor[] = ['green', 'blue', 'orange', 'red', 'pink', 'purple', 'mono']
 
 function Profile({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'profile' })
 	const { current, premium, logout } = useSession()
-	const { color, setColor } = useSettings()
+	const { color } = useSettings()
 	const mode = useColorScheme()
 	const appTheme = getTheme(mode, color)
 
@@ -27,15 +27,16 @@ function Profile({ navigation }: Props) {
 
 	const navigateToSubscribe = () => navigation.navigate('subscribe')
 
-	const selectColor = (c: AppColor) => {
-		setColor(c)
-	}
+	// const selectColor = (c: AppColor) => {
+	// 	setColor(c)
+	// }
 
 	return (
 		<Container>
 			<S.Content>
 				<S.Body>
 					<S.Avatar source={{ uri: avatar(current.$id, appTheme.primary) }} />
+					<Banner />
 					<S.InfoContainer>
 						<S.InfoRow>
 							<S.InfoLabel>{t('name')}</S.InfoLabel>
@@ -49,7 +50,7 @@ function Profile({ navigation }: Props) {
 							<S.InfoLabel>{t('created_at')}</S.InfoLabel>
 							<S.InfoValue>{new Date(current.$createdAt).toLocaleDateString()}</S.InfoValue>
 						</S.InfoRow>
-						<S.InfoRow>
+						{/* <S.InfoRow>
 							<S.InfoLabel>{t('color')}</S.InfoLabel>
 							<S.ColorContainer>
 								{colors.map(c => (
@@ -68,7 +69,7 @@ function Profile({ navigation }: Props) {
 									</S.Color>
 								))}
 							</S.ColorContainer>
-						</S.InfoRow>
+						</S.InfoRow> */}
 						{!premium && (
 							<S.PremiumButton onPress={navigateToSubscribe}>
 								<S.PremiumIcon name='diamond' />
@@ -83,7 +84,6 @@ function Profile({ navigation }: Props) {
 				<S.CloseButton onPress={() => navigation.goBack()}>
 					<Label>✕</Label>
 				</S.CloseButton>
-				<Banner />
 			</S.Content>
 		</Container>
 	)

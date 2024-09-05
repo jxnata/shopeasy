@@ -41,8 +41,10 @@ export const Row = styled.View`
 	align-items: center;
 	gap: 8px;
 	margin-top: 12px;
-	margin-bottom: 24px;
 `
 export const Col = styled.View`
 	flex-direction: column;
+`
+export const Separator = styled.View`
+	margin-top: 12px;
 `

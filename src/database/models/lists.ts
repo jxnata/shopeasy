@@ -68,11 +68,7 @@ export const updateItemInList = (listId: string, itemId: string, updatedItem: Pa
 		if (itemIndex !== -1) {
 			list.items[itemIndex] = { ...list.items[itemIndex], ...updatedItem }
 
-			const total = list.items
-				.filter(i => i.checked)
-				.reduce((acc, item) => acc + (item.price || 0) * (item.qty || 1), 0)
-
-			updateShoppingList(listId, { ...list, total })
+			updateShoppingList(listId, { ...list })
 		}
 	}
 }

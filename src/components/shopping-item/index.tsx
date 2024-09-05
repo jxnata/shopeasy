@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
@@ -11,17 +12,18 @@ import Animated, {
 
 import * as S from './styles'
 import units from '../../assets/data/units.json'
-import { removeItemFromList, updateItemInList } from '../../database/models/lists'
+import { removeItemFromList, updateItemInList } from '../../database/models/shoppings'
 import { ListItem } from '../../types/models/list-item'
+import { format } from '../../utils/format'
 import Icon from '../icon'
 import PriceInput from '../price-input'
 import SmallDropdown from '../small-dropdown'
 
-const ItemRow = ({ item, listId }: Props) => {
+const ShoppingItemRow = ({ item, shoppingId, finished }: Props) => {
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation('translation', { keyPrefix: 'item' })
 	const { control, register } = useForm<Partial<ListItem>>({
-		defaultValues: { price: item.price, unit: item.unit, have: item.have },
+		defaultValues: { price: item.price, unit: item.unit, qty: item.qty, checked: item.checked },
 	})
 
 	const animationValue = useSharedValue(0)
@@ -43,8 +45,8 @@ const ItemRow = ({ item, listId }: Props) => {
 	})
 
 	const deleteItem = useCallback(() => {
-		removeItemFromList(listId, item.id)
-	}, [item.id, listId])
+		removeItemFromList(shoppingId, item.id)
+	}, [item.id, shoppingId])
 
 	const updatePrice = useCallback(
 		(price: string) => {
@@ -53,43 +55,75 @@ const ItemRow = ({ item, listId }: Props) => {
 
 			const newPrice = typeof price === 'number' ? price : Number(price) * 100
 
-			updateItemInList(listId, item.id, { price: newPrice })
+			updateItemInList(shoppingId, item.id, { price: newPrice })
 		},
-		[item.id, listId]
+		[item.id, shoppingId]
 	)
 
 	const updateUnit = useCallback(
 		(unit: string) => {
 			if (!unit) return
 
-			updateItemInList(listId, item.id, { unit })
+			updateItemInList(shoppingId, item.id, { unit })
 		},
-		[item.id, listId]
+		[item.id, shoppingId]
 	)
 
-	const updateHave = useCallback(
-		(have: number) => {
-			updateItemInList(listId, item.id, { have: have > 0 ? have : 0 })
+	const updateQuantity = useCallback(
+		(qty: number) => {
+			if (qty < 1) return
+
+			updateItemInList(shoppingId, item.id, { qty })
 		},
-		[item.id, listId]
+		[item.id, shoppingId]
+	)
+
+	const updateChecked = useCallback(
+		(checked: boolean) => {
+			if (checked) ReactNativeHapticFeedback.trigger('impactMedium')
+			updateItemInList(shoppingId, item.id, { checked })
+		},
+		[item.id, shoppingId]
 	)
 
 	register('price', { onChange: e => updatePrice(e.target.value) })
 	register('unit', { onChange: e => updateUnit(e.target.value) })
-	register('have', { onChange: e => updateHave(e.target.value) })
+	register('qty', { onChange: e => updateQuantity(e.target.value) })
+	register('checked', { onChange: e => updateChecked(e.target.value) })
 
 	return (
 		<S.Container>
-			<S.Collapsed>
+			<S.Collapsed aria-checked={item.checked}>
+				<Controller
+					control={control}
+					rules={{ required: false }}
+					name='checked'
+					render={({ field: { onChange, value } }) => (
+						<S.CheckButton onPress={() => onChange(!value)} disabled={finished}>
+							<S.CheckIcon
+								name={value ? 'checkmark-circle' : 'ellipse-outline'}
+								style={{ fontSize: 24 }}
+							/>
+						</S.CheckButton>
+					)}
+				/>
 				<S.RowContainer onPress={toggle} hitSlop={{ top: 10, bottom: 10 }} activeOpacity={0.7}>
 					<S.Col>
-						<S.Text>{item.name}</S.Text>
-						<S.Small>
+						<S.Text aria-checked={item.checked}>{item.name}</S.Text>
+						<S.Small aria-checked={item.checked}>
 							{item.have > 0 ? t('have') : t('havent')} {item.have > 0 ? item.have : ''}{' '}
 							{item.unit ? (item.have > 0 ? item.unit : '') : ''}
 						</S.Small>
 					</S.Col>
-					<Icon name={open ? 'chevron-up' : 'chevron-down'} />
+					<S.ColRight>
+						<S.SmallContainer>
+							<S.Small>
+								{item.price ? format(item.price / 100) : ''} ⅹ {item.qty}
+							</S.Small>
+							<S.Small>{item.unit}</S.Small>
+						</S.SmallContainer>
+						<Icon name={open ? 'chevron-up' : 'chevron-down'} />
+					</S.ColRight>
 				</S.RowContainer>
 			</S.Collapsed>
 			{open && (
@@ -99,15 +133,16 @@ const ItemRow = ({ item, listId }: Props) => {
 							<Controller
 								control={control}
 								rules={{ required: false }}
-								name='have'
+								name='qty'
 								render={({ field: { onChange, onBlur } }) => (
 									<PriceInput
-										label={t('have')}
+										label={t('qty_label')}
 										mask='9999'
 										keyboardType='number-pad'
 										onChangeText={onChange}
 										onBlur={onBlur}
-										defaultValue={item.have ? item.have.toString() : '0'}
+										defaultValue={item.qty ? item.qty.toString() : ''}
+										readOnly={finished}
 									/>
 								)}
 							/>
@@ -122,6 +157,7 @@ const ItemRow = ({ item, listId }: Props) => {
 										options={units}
 										onValueChange={onChange}
 										selectedValue={value || ''}
+										disabled={finished}
 									/>
 								)}
 							/>
@@ -143,10 +179,11 @@ const ItemRow = ({ item, listId }: Props) => {
 											precision: 2,
 										}}
 										defaultValue={item.price ? parseFloat(item.price.toString()).toFixed(2) : ''}
+										readOnly={finished}
 									/>
 								)}
 							/>
-							<S.QuantityButton onPress={deleteItem}>
+							<S.QuantityButton onPress={deleteItem} disabled={finished}>
 								<Icon name='trash-outline' />
 							</S.QuantityButton>
 							<S.QuantityButton onPress={toggle}>
@@ -160,9 +197,10 @@ const ItemRow = ({ item, listId }: Props) => {
 	)
 }
 
-export default ItemRow
+export default ShoppingItemRow
 
 type Props = {
 	item: ListItem
-	listId: string
+	finished: boolean
+	shoppingId: string
 }

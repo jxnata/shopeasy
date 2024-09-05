@@ -47,7 +47,7 @@ const Dropdown = ({ selectedValue, options, label, placeholder, onValueChange }:
 									) : (
 										<Icon name='ellipse-outline' />
 									)}
-									<S.Label>{item.label}</S.Label>
+									<S.Text>{item.label}</S.Text>
 								</S.Item>
 							)}
 							keyExtractor={item => item.label}

@@ -8,6 +8,7 @@ import { Alert, Switch } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
+import Dropdown from '../../components/dropdown'
 import Header from '../../components/header'
 import Input from '../../components/input'
 import { toast } from '../../components/toast'
@@ -28,6 +29,16 @@ function ListEdit({ navigation, route }: Props) {
 
 	const notificationEnabled = !!watch('notification_id')
 
+	const notificationFrequencies = useMemo(
+		() => [
+			{ label: t('none'), value: 'none' },
+			{ label: t('day'), value: 'day' },
+			{ label: t('dayOfWeek'), value: 'dayOfWeek' },
+			{ label: t('month'), value: 'month' },
+		],
+		[t]
+	)
+
 	const onSave = async (form: Partial<ShoppingListData>) => {
 		if (!currentId || !form.name) return
 
@@ -35,10 +46,21 @@ function ListEdit({ navigation, route }: Props) {
 			if (form.notification_id && form.notification_time) {
 				PushNotificationIOS.removePendingNotificationRequests([form.notification_id])
 
+				let repeatsComponent
+
+				if (form.notification_frequency !== 'none') {
+					repeatsComponent = {
+						month: form.notification_frequency === 'month',
+						dayOfWeek: form.notification_frequency === 'dayOfWeek',
+						day: form.notification_frequency === 'day',
+					}
+				}
+
 				PushNotificationIOS.addNotificationRequest({
 					title: t('notification_title'),
 					body: t('notification_description'),
-					repeats: false,
+					repeats: form.notification_frequency !== 'none',
+					repeatsComponent,
 					fireDate: new Date(form.notification_time),
 					id: form.notification_id,
 				})
@@ -97,7 +119,7 @@ function ListEdit({ navigation, route }: Props) {
 		<Container>
 			<S.Content>
 				<S.Body>
-					<Header title={t('title')} Right={HeaderRight} />
+					<Header backButton title={t('title')} Right={HeaderRight} />
 					<Controller
 						control={control}
 						rules={{ required: true }}
@@ -117,47 +139,67 @@ function ListEdit({ navigation, route }: Props) {
 							<S.Notice>{t('premium_notice')}</S.Notice>
 						</S.NoticeBox>
 					)}
-					{premium && !list.finished && (
-						<S.Row>
-							<S.Col>
-								<S.InuptLabel>{t('notification')}</S.InuptLabel>
-								<Controller
-									control={control}
-									rules={{ required: false }}
-									name='notification_id'
-									render={({ field: { onChange, value } }) => (
-										<Switch
-											disabled={!premium}
-											onValueChange={checked => toggleNotification(checked, onChange)}
-											value={!!value}
-										/>
-									)}
-								/>
-							</S.Col>
-							{notificationEnabled && (
+					{premium && (
+						<>
+							<S.Row>
 								<S.Col>
-									<S.InuptLabel>{t('notification_date')}</S.InuptLabel>
+									<S.InuptLabel>{t('notification')}</S.InuptLabel>
 									<Controller
 										control={control}
 										rules={{ required: false }}
-										name='notification_time'
+										name='notification_id'
 										render={({ field: { onChange, value } }) => (
-											<RNDateTimePicker
-												mode='datetime'
-												disabled={!notificationEnabled || !premium}
-												value={value ? new Date(value) : new Date()}
-												onChange={value =>
-													onChange(new Date(value.nativeEvent.timestamp).getTime())
-												}
-												minimumDate={new Date(Date.now() + 1000 * 60 * 60)}
+											<Switch
+												disabled={!premium}
+												onValueChange={checked => toggleNotification(checked, onChange)}
+												value={!!value}
 											/>
 										)}
 									/>
 								</S.Col>
-							)}
-						</S.Row>
+								{notificationEnabled && (
+									<S.Col>
+										<S.InuptLabel>{t('notification_date')}</S.InuptLabel>
+										<Controller
+											control={control}
+											rules={{ required: false }}
+											name='notification_time'
+											render={({ field: { onChange, value } }) => (
+												<RNDateTimePicker
+													mode='datetime'
+													disabled={!notificationEnabled || !premium}
+													value={value ? new Date(value) : new Date()}
+													onChange={value =>
+														onChange(new Date(value.nativeEvent.timestamp).getTime())
+													}
+													minimumDate={new Date(Date.now() + 1000 * 60 * 60)}
+												/>
+											)}
+										/>
+									</S.Col>
+								)}
+							</S.Row>
+							<S.Row>
+								{notificationEnabled && (
+									<Controller
+										control={control}
+										rules={{ required: false }}
+										name='notification_frequency'
+										render={({ field: { onChange, value } }) => (
+											<Dropdown
+												label={t('notification_frequency')}
+												placeholder={t('notification_frequency')}
+												options={notificationFrequencies}
+												onValueChange={onChange}
+												selectedValue={value || ''}
+											/>
+										)}
+									/>
+								)}
+							</S.Row>
+						</>
 					)}
-
+					<S.Separator />
 					<Button onPress={handleSubmit(onSave)}>
 						<ButtonLabel>{t('edit_button')}</ButtonLabel>
 					</Button>

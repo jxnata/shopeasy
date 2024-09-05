@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, useColorScheme } from 'react-native'
@@ -8,15 +9,12 @@ import Header from '../../components/header'
 import Icon from '../../components/icon'
 import ItemRow from '../../components/item'
 import ListFooter from '../../components/list-footer'
-import { Progress } from '../../components/progress'
 import SuggestionItem, { SuggestionSkeleton } from '../../components/suggestion-item'
 import { toast } from '../../components/toast'
 import { useSession } from '../../contexts/session'
-import { addItemToList, updateShoppingList } from '../../database/models/lists'
-import { useCart } from '../../hooks/cart'
+import { addItemToList } from '../../database/models/lists'
 import { useShoppingList } from '../../hooks/local/useShoppingList'
 import { ButtonIcon, ButtonLabel, Container, Label } from '../../theme/global'
-import { format } from '../../utils/format'
 import { getSuggestions } from '../../utils/get-suggestions'
 import { showInterstitial } from '../../utils/show-interstitial'
 
@@ -41,8 +39,6 @@ function ListView({ navigation, route }: Props) {
 			return a.name.localeCompare(b.name)
 		})
 	}, [list])
-
-	const { percentage, total } = useCart(items)
 
 	const itemsList = useMemo(() => items.map(i => i.name), [items])
 
@@ -90,38 +86,30 @@ function ListView({ navigation, route }: Props) {
 		navigation.navigate('edit', { list })
 	}, [list, navigation])
 
-	const onFinish = () => {
-		if (!list) return
-		updateShoppingList(list.id, { finished: true })
-	}
-
 	const onShop = () => {
 		if (!list) return
 
 		if (!premium) showInterstitial()
 
-		updateShoppingList(list.id, { shopping: true })
+		// @ts-ignore
+		navigation.navigate('shoppings-stack', { screen: 'create-shopping', params: { list } })
 	}
 
 	const HeaderRight = useCallback(() => {
 		return (
 			<S.Row>
-				{list && list.shopping && !list.finished && (
-					<S.GhostButton onPress={fetchSuggestions} disabled={loadingSuggestions}>
-						<Icon name='sparkles' />
-					</S.GhostButton>
-				)}
-				{list && list.shopping && !list.finished && (
-					<S.GhostButton onPress={onAdd}>
-						<Icon name='add-circle' />
-					</S.GhostButton>
-				)}
+				<S.GhostButton onPress={fetchSuggestions} disabled={loadingSuggestions}>
+					<Icon name='sparkles' />
+				</S.GhostButton>
+				<S.GhostButton onPress={onAdd}>
+					<Icon name='add-circle' />
+				</S.GhostButton>
 				<S.GhostButton onPress={onEdit}>
 					<Icon name='ellipsis-vertical' />
 				</S.GhostButton>
 			</S.Row>
 		)
-	}, [fetchSuggestions, list, loadingSuggestions, onAdd, onEdit])
+	}, [fetchSuggestions, loadingSuggestions, onAdd, onEdit])
 
 	return (
 		<Container>
@@ -129,31 +117,22 @@ function ListView({ navigation, route }: Props) {
 				{!!list && (
 					<S.Body>
 						<Header title={list.name} Right={HeaderRight} backButton />
-						{!list.shopping && (
-							<S.ButtonsContainer>
-								{itemsList.length > 3 && (
-									<S.AddButton onPress={fetchSuggestions} disabled={loadingSuggestions}>
-										<Icon name='sparkles' />
-										<Label>{t('ai_suggestions')}</Label>
-									</S.AddButton>
-								)}
-								<S.AddButton onPress={onAdd}>
-									<Icon name='add-circle' />
-									<Label>{t('add_items')}</Label>
+						<S.ButtonsContainer>
+							{itemsList.length > 3 && (
+								<S.AddButton onPress={fetchSuggestions} disabled={loadingSuggestions}>
+									<Icon name='sparkles' />
+									<Label>{t('ai_suggestions')}</Label>
 								</S.AddButton>
-							</S.ButtonsContainer>
-						)}
+							)}
+							<S.AddButton onPress={onAdd}>
+								<Icon name='add-circle' />
+								<Label>{t('add_items')}</Label>
+							</S.AddButton>
+						</S.ButtonsContainer>
 						<FlatList
 							data={items}
 							keyExtractor={item => item.id}
-							renderItem={({ item }) => (
-								<ItemRow
-									item={item}
-									shopping={list.shopping}
-									finished={list.finished}
-									listId={listId!}
-								/>
-							)}
+							renderItem={({ item }) => <ItemRow item={item} listId={listId!} />}
 							ListFooterComponent={<ListFooter />}
 							ListHeaderComponent={
 								<>
@@ -171,43 +150,22 @@ function ListView({ navigation, route }: Props) {
 							showsVerticalScrollIndicator={false}
 							style={{ marginBottom: 12 }}
 						/>
-						{list.shopping && (
-							<S.Cart>
-								<S.Blur blurType={scheme === 'dark' ? 'dark' : 'light'} />
-								<S.CartLeft>
-									<S.CartTotal>
-										<S.Total>{t('total')}</S.Total>
-										<Label>{format(total)}</Label>
-									</S.CartTotal>
-									{!list.finished && <Progress percentage={percentage} />}
-								</S.CartLeft>
-								{!list.finished && (
-									<S.FinishButton onPress={onFinish}>
-										<ButtonIcon name='checkmark-circle' />
-										<ButtonLabel>{t('finish')}</ButtonLabel>
-									</S.FinishButton>
-								)}
-								{list.finished && <Label>{new Date(list.date).toLocaleDateString()}</Label>}
-							</S.Cart>
-						)}
-						{!list.shopping && (
-							<S.Cart>
-								<S.Blur blurType={scheme === 'dark' ? 'dark' : 'light'} />
-								<S.CartLeft>
-									<Label>
-										{itemsList.length} {t('items')}
-									</Label>
-								</S.CartLeft>
-								<S.FinishButton
-									aria-disabled={!itemsList.length}
-									disabled={!itemsList.length}
-									onPress={onShop}
-								>
-									<ButtonIcon name='cart' />
-									<ButtonLabel>{t('shop_now_button')}</ButtonLabel>
-								</S.FinishButton>
-							</S.Cart>
-						)}
+						<S.Cart>
+							<S.Blur blurType={scheme === 'dark' ? 'dark' : 'light'} />
+							<S.CartLeft>
+								<Label>
+									{itemsList.length} {t('items')}
+								</Label>
+							</S.CartLeft>
+							<S.FinishButton
+								aria-disabled={!itemsList.length}
+								disabled={!itemsList.length}
+								onPress={onShop}
+							>
+								<ButtonIcon name='cart' />
+								<ButtonLabel>{t('shop_now_button')}</ButtonLabel>
+							</S.FinishButton>
+						</S.Cart>
 					</S.Body>
 				)}
 			</S.Content>

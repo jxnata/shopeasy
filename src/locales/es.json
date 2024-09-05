@@ -44,14 +44,16 @@
 		"home": {
 			"title": "Listas",
 			"no_lists": "Aún no tienes listas.",
-			"create_button": "Crear ahora",
-			"profile": "Perfil",
-			"premium": "Premium"
+			"create_button": "Crear ahora"
+		},
+		"shoppings": {
+			"title": "Compras",
+			"no_lists": "Aún no has finalizado ninguna lista de compras."
 		},
 		"create": {
 			"title": "Crear lista",
 			"list_name": "Nombre de la lista",
-			"list_name_placeholder": "Puede ser el nombre del supermercado",
+			"list_name_placeholder": "Dé un nombre a tu lista",
 			"notification": "Alerta",
 			"notification_date": "¿Cuándo quieres ser alertado?",
 			"create_button": "Crear lista",
@@ -163,6 +165,13 @@
 			"create_place_error": "Error al seleccionar el lugar.",
 			"local_label": "¿Dónde harás esta compra?",
 			"local_placeholder": "Busca un lugar..."
+		},
+		"root": {
+			"lists": "Listas",
+			"shoppings": "Compras",
+			"expenses": "Despesas",
+			"profile": "Perfil",
+			"premium": "Premium"
 		}
 	}
 }

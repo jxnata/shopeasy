@@ -19,6 +19,7 @@
 		"@react-native-community/geolocation": "^3.3.0",
 		"@react-native-community/push-notification-ios": "^1.11.0",
 		"@react-native-google-signin/google-signin": "^12.2.1",
+		"@react-navigation/bottom-tabs": "^6.6.1",
 		"@react-navigation/native": "^6.1.17",
 		"@react-navigation/native-stack": "^6.9.26",
 		"@tanstack/query-sync-storage-persister": "^5.51.21",

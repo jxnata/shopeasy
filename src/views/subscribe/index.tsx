@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -37,7 +38,7 @@ function Subscribe({ navigation }: Props) {
 
 			checkPremium()
 
-			navigation.replace('home')
+			navigation.goBack()
 		} catch (e: unknown) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
@@ -53,7 +54,7 @@ function Subscribe({ navigation }: Props) {
 
 			checkPremium()
 
-			navigation.replace('home')
+			navigation.goBack()
 		} catch {
 			toast.error(t('restore_error'))
 		}

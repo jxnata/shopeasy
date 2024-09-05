@@ -6,66 +6,34 @@ import { Alert } from 'react-native'
 import ContextMenu from 'react-native-context-menu-view'
 
 import * as S from './styles'
-import { useSession } from '../../contexts/session'
-import { createShoppingList, deleteShoppingList } from '../../database/models/lists'
-import { ShoppingList } from '../../types/models/shopping-list'
+import { deleteShopping } from '../../database/models/shoppings'
+import { Shopping } from '../../types/models/shopping'
 import { StackParamList } from '../../types/navigation/stack'
-import { showInterstitial } from '../../utils/show-interstitial'
+import { format } from '../../utils/format'
 import Icon from '../icon'
 import { toast } from '../toast'
 
-const ListRow = ({ item }: Props) => {
-	const { premium } = useSession()
+const ShoppingRow = ({ item }: Props) => {
 	const navigation = useNavigation<ScreenNavigationProp>()
 
 	const { t } = useTranslation('translation', { keyPrefix: 'list' })
 
-	const showIcon = item.notification_id && item.notification_time && item.notification_frequency !== 'none'
+	const showIcon = item.notification_id && item.notification_time && item.notification_time > Date.now()
 
-	const onOpenList = () => navigation.navigate('list', { list: item })
-
-	const onCopy = useCallback(() => {
-		const data = {
-			name: item.name,
-			shopping: false,
-			finished: false,
-			items: item.items.map(i => ({ ...i, checked: false })),
-			total: 0,
-		}
-
-		const newList = createShoppingList(data)
-
-		if (!premium) showInterstitial()
-
-		navigation.navigate('list', { list: newList })
-	}, [item.items, item.name, navigation, premium])
+	const onOpenShopping = () => navigation.navigate('shopping', { shopping: item })
 
 	const onEdit = useCallback(() => {
-		navigation.navigate('edit', { list: item })
+		navigation.navigate('edit-shopping', { shopping: item })
 	}, [item, navigation])
 
 	const onDelete = useCallback(() => {
 		if (!item) return
 		try {
-			deleteShoppingList(item.id)
+			deleteShopping(item.id)
 		} catch {
 			toast.error(t('delete_error'))
 		}
 	}, [item, t])
-
-	const onConfirmCopy = useCallback(() => {
-		Alert.alert(t('copy_title'), t('copy_text'), [
-			{
-				text: t('cancel'),
-				style: 'cancel',
-			},
-			{
-				text: t('copy_confirm'),
-				onPress: onCopy,
-				style: 'default',
-			},
-		])
-	}, [onCopy, t])
 
 	const onConfirmDelete = useCallback(() => {
 		Alert.alert(t('delete_title'), t('delete_text'), [
@@ -83,39 +51,31 @@ const ListRow = ({ item }: Props) => {
 
 	return (
 		<S.Container>
-			<S.Column onPress={onOpenList}>
+			<S.Column onPress={onOpenShopping}>
 				<S.Row>
-					<S.Title>{item.name}</S.Title>
+					<S.Title>{item.local}</S.Title>
+					{item.finished && <Icon name='checkmark-circle' size={12} />}
 				</S.Row>
 				<S.Row>
-					<S.Description>{item.items.length + ' ' + t('items')}</S.Description>
-				</S.Row>
-				<S.Row>
+					<S.Description>
+						{item.total ? format(item.total / 100) : item.items.length + ' ' + t('items')} •{' '}
+						{new Date(item.notification_time || item.date).toLocaleDateString()}
+					</S.Description>
 					{showIcon && <Icon name='notifications' size={12} />}
-					{showIcon && (
-						<S.Description>
-							{t(item.notification_frequency as string)}
-							{t('alerts_on')}
-						</S.Description>
-					)}
 				</S.Row>
 			</S.Column>
 			<ContextMenu
 				title={t('options')}
 				actions={[
-					{ title: t('copy'), systemIcon: 'doc.on.doc' },
 					{ title: t('edit'), systemIcon: 'square.and.pencil' },
 					{ title: t('delete'), systemIcon: 'trash', destructive: true },
 				]}
 				onPress={e => {
 					switch (e.nativeEvent.index) {
 						case 0:
-							onConfirmCopy()
-							break
-						case 1:
 							onEdit()
 							break
-						case 2:
+						case 1:
 							onConfirmDelete()
 							break
 					}
@@ -132,10 +92,10 @@ const ListRow = ({ item }: Props) => {
 	)
 }
 
-export default ListRow
+export default ShoppingRow
 
 type Props = {
-	item: ShoppingList
+	item: Shopping
 }
 
 type ScreenNavigationProp = NativeStackNavigationProp<StackParamList>

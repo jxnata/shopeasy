@@ -16,6 +16,7 @@ export const Collapsed = styled.View`
 	align-items: center;
 	gap: 4px;
 	width: auto;
+	opacity: ${props => (props['aria-checked'] ? 0.4 : 1)};
 `
 export const CategoryContainer = styled.View`
 	flex-direction: row;
@@ -46,6 +47,7 @@ export const ColRight = styled.View`
 export const Text = styled(Font)`
 	font-size: 16px;
 	font-weight: bold;
+	text-decoration-line: ${props => (props['aria-checked'] ? 'line-through' : 'none')};
 `
 export const Small = styled(Font)`
 	font-size: 12px;
