@@ -131,7 +131,9 @@
 			"average": "Average:",
 			"higher": "Most expensive:",
 			"lower": "Cheapest:",
-			"no_expenses": "No completed purchases for this list."
+			"no_expenses": "No completed purchases for this list.",
+			"premium_feature": "Get the Premium version to see your expenses!",
+			"premium_button": "Get Premium"
 		},
 		"add": {
 			"title": "Add items",
@@ -201,12 +203,6 @@
 			"price": "Price",
 			"no_expenses": "No history for this item.",
 			"premium": "👑 Get the Premium version to see price history and much more!"
-		},
-		"shop_local": {
-			"shop_in": "Shopping day",
-			"create_place_error": "Error selecting the location.",
-			"local_label": "Where will you make this purchase?",
-			"local_placeholder": "Search for a location..."
 		},
 		"congratulations": {
 			"title": "Congratulations!",

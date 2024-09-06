@@ -1,57 +1,54 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useColorScheme } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
-import Banner from '../../components/banner'
 import BarChart from '../../components/bar-chart'
 import Dropdown from '../../components/dropdown'
-import Loading from '../../components/loading'
-import { DB, MODELS } from '../../constants'
+import Header from '../../components/header'
+import Icon from '../../components/icon'
+import Pressable from '../../components/shared/pressable'
 import { useSession } from '../../contexts/session'
-import { useDocuments } from '../../hooks/documents'
 import { useExpenses } from '../../hooks/expenses'
-import { databases, queries } from '../../lib/appwrite'
+import { useShoppingLists } from '../../hooks/local/useShoppingLists'
+import { useShoppings } from '../../hooks/local/useShoppings'
 import { Container } from '../../theme/global'
-import { List } from '../../types/models/list'
+import { ShoppingList } from '../../types/models/shopping-list'
 import { format } from '../../utils/format'
 
 function Expenses({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'expenses' })
-	const [selectedList, setSelectedList] = useState<List>()
-	const { current } = useSession()
-	const currentId = useMemo(() => (current ? current.$id : undefined), [current])
-	const selectedListId = useMemo(() => (selectedList ? selectedList.$id : undefined), [selectedList])
+	const [selectedList, setSelectedList] = useState<ShoppingList>()
+	const { premium } = useSession()
+	const scheme = useColorScheme()
+	const selectedListId = useMemo(() => (selectedList ? selectedList.id : undefined), [selectedList])
 
-	const { data: lists, loading } = useDocuments<List[]>({
-		queryKey: ['lists', currentId],
-		initialData: [],
-		enabled: !!currentId,
-		queryFn: async () => await databases.listDocuments(DB, MODELS.LIST, queries.listsByUser(currentId)),
-	})
+	const { lists } = useShoppingLists()
 
-	const { data: expenses } = useDocuments<List[]>({
-		queryKey: ['lists-expenses', selectedListId],
-		initialData: [],
-		enabled: !!selectedListId,
-		queryFn: async () =>
-			await databases.listDocuments(DB, MODELS.LIST, queries.listsToExpenses(currentId, selectedListId)),
-	})
+	const { shoppings } = useShoppings()
 
-	const { average, highest, lowest, total, variation } = useExpenses(expenses)
+	const shoppingsByList = useMemo(
+		() => shoppings.filter(e => e.list_id === selectedListId),
+		[shoppings, selectedListId]
+	)
 
-	const selectList = useCallback((listId: string) => setSelectedList(lists.find(l => l.$id === listId)), [lists])
+	const { average, highest, lowest, total, variation } = useExpenses(shoppingsByList)
 
-	const dropdownLists = useMemo(() => lists.map(l => ({ label: l.name, value: l.$id })), [lists])
+	const selectList = useCallback((listId: string) => setSelectedList(lists.find(l => l.id === listId)), [lists])
+
+	const dropdownLists = useMemo(() => lists.map(l => ({ label: l.name, value: l.id })), [lists])
 
 	const chartData = useMemo(() => {
-		return expenses.map(e => ({
-			label: new Date(e.$createdAt).toLocaleDateString(),
+		return shoppings.map(e => ({
+			label: new Date(e.date).toLocaleDateString(),
 			value: e.total ? e.total / 100 : 0,
 		}))
-	}, [expenses])
+	}, [shoppings])
 
-	if (!current || loading) return <Loading />
+	const onGoPremium = useCallback(() => {
+		navigation.navigate('subscribe')
+	}, [navigation])
 
 	if (dropdownLists.length === 0) {
 		return (
@@ -70,20 +67,21 @@ function Expenses({ navigation }: Props) {
 	return (
 		<Container>
 			<S.Content>
+				<Header title={t('title')} />
 				<S.Body>
 					<Dropdown
-						label={t('list')}
+						label={t('select_list')}
 						placeholder={t('select_list')}
 						options={dropdownLists}
 						selectedValue={selectedListId || ''}
 						onValueChange={value => selectList(value)}
 					/>
-					{!!selectedListId && !expenses.length && (
+					{!!selectedListId && !shoppingsByList.length && (
 						<S.EmptyContainer>
 							<S.EmptyText>{t('no_expenses')}</S.EmptyText>
 						</S.EmptyContainer>
 					)}
-					{!!selectedListId && !!expenses.length && (
+					{!!selectedListId && !!shoppingsByList.length && (
 						<S.Scroll showsVerticalScrollIndicator={false}>
 							<S.InfoContainer>
 								<S.InfoRow>
@@ -98,9 +96,9 @@ function Expenses({ navigation }: Props) {
 									<S.InfoRow>
 										<S.InfoLabel>{t('higher')}</S.InfoLabel>
 										<S.InfoRight>
-											<S.InfoSmallTitle>{highest.local.name}</S.InfoSmallTitle>
+											<S.InfoSmallTitle>{highest.local}</S.InfoSmallTitle>
 											<S.InfoSmallText>
-												{new Date(highest.$createdAt).toLocaleDateString()}
+												{new Date(highest.date).toLocaleDateString()}
 											</S.InfoSmallText>
 										</S.InfoRight>
 									</S.InfoRow>
@@ -109,9 +107,9 @@ function Expenses({ navigation }: Props) {
 									<S.InfoRow>
 										<S.InfoLabel>{t('lower')}</S.InfoLabel>
 										<S.InfoRight>
-											<S.InfoSmallTitle>{lowest.local.name}</S.InfoSmallTitle>
+											<S.InfoSmallTitle>{lowest.local}</S.InfoSmallTitle>
 											<S.InfoSmallText>
-												{new Date(lowest.$createdAt).toLocaleDateString()}
+												{new Date(lowest.date).toLocaleDateString()}
 											</S.InfoSmallText>
 										</S.InfoRight>
 									</S.InfoRow>
@@ -136,10 +134,26 @@ function Expenses({ navigation }: Props) {
 									<BarChart data={chartData} />
 								</S.InfoContainer>
 							)}
+							<S.Separator />
 						</S.Scroll>
 					)}
+					{!premium && (
+						<>
+							<S.Blur blurType={scheme === 'dark' ? 'dark' : 'light'} />
+							<S.BlurContainer>
+								<S.BlurContent>
+									<Icon name='diamond' size={24} />
+									<S.EmptyText>{t('premium_feature')}</S.EmptyText>
+									<Pressable
+										title={t('premium_button')}
+										onPress={onGoPremium}
+										right='arrow-forward'
+									/>
+								</S.BlurContent>
+							</S.BlurContainer>
+						</>
+					)}
 				</S.Body>
-				<Banner />
 			</S.Content>
 		</Container>
 	)

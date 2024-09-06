@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { Font } from '../../theme/global'
 
 export const Content = styled.View`
-	margin-top: 24px;
+	margin-top: 8px;
 	margin-bottom: 8px;
 `
 export const X = styled(Font)`

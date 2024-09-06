@@ -10,7 +10,7 @@ export const BarContainer = styled.View`
 export const Bar = styled.View`
 	width: 32px;
 	border-radius: 8px;
-	background: ${props => props.theme.secondary};
+	background: ${props => props.theme.primary};
 `
 export const LabelDate = styled(Label)`
 	margin-top: 4px;

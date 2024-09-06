@@ -1,13 +1,13 @@
 {
 	"translation": {
 		"subscribe": {
-			"description": "¡Disfruta de todas las funciones de ShopEasy y lleva tu experiencia de compras al siguiente nivel!",
-			"premium_features_title": "Características Premium:",
+			"description": "¡Disfruta de todas las funciones de ShopEasy y lleva tu experiencia de compra al siguiente nivel!",
+			"premium_features_title": "Funciones Premium:",
 			"feature1": "Sin anuncios",
 			"feature2": "Recibe alertas para tus compras",
 			"feature3": "Crea listas rápidamente con IA",
 			"feature4": "Informes de gastos y ahorros",
-			"feature5": "Acceso prioritario a novedades",
+			"feature5": "Acceso prioritario a nuevas funciones",
 			"subscribe_button": "Continuar",
 			"restore_button": "Restaurar",
 			"subscribe_description": "Todas las funciones incluidas",
@@ -24,46 +24,57 @@
 			"restore_success": "¡Suscripción recuperada!"
 		},
 		"intro": {
-			"title": "¡Bienvenido/a a ShopEasy!",
+			"title": "¡Bienvenido a ShopEasy!",
 			"description": "Te ayudaré a organizar tus compras y ahorrar dinero.",
-			"start_button": "Comencemos"
+			"start_button": "Empecemos"
 		},
 		"onboarding": {
 			"back": "Anterior",
 			"next": "Siguiente",
 			"continue": "Continuar",
 			"feature_1_title": "Listas de Compras",
-			"feature_1_description": "Crea y gestiona listas de compras fácilmente. Organiza los artículos por categoría, establece cantidades y márcarlos a medida que compras.",
+			"feature_1_description": "Crea y gestiona listas de compras fácilmente. Organiza artículos por categoría, establece cantidades y márcalos mientras compras.",
 			"feature_2_title": "Listas con IA",
-			"feature_2_description": "Crea listas rápidamente usando inteligencia artificial que sugiere artículos basados en tus gustos.",
+			"feature_2_description": "Crea listas rápidamente usando inteligencia artificial que sugiere artículos basados en tus preferencias.",
 			"feature_3_title": "Informes",
-			"feature_3_description": "Analiza tus compras a lo largo del tiempo, haz un seguimiento de tus ahorros y optimiza tu presupuesto.",
+			"feature_3_description": "Analiza tus compras a lo largo del tiempo, rastrea tus ahorros y optimiza tu presupuesto.",
 			"feature_4_title": "Notificaciones",
 			"feature_4_description": "Recibe recordatorios para comprar artículos y actualizaciones sobre tus listas de compras."
 		},
 		"home": {
 			"title": "Listas",
-			"no_lists": "Aún no tienes listas.",
+			"no_lists": "Aún no tienes ninguna lista.",
 			"create_button": "Crear ahora"
 		},
 		"shoppings": {
 			"title": "Compras",
-			"no_lists": "Aún no has finalizado ninguna lista de compras."
+			"no_lists": "Aún no has completado ninguna lista de compras."
 		},
 		"create": {
 			"title": "Crear lista",
 			"list_name": "Nombre de la lista",
-			"list_name_placeholder": "Dé un nombre a tu lista",
+			"list_name_placeholder": "Dale un nombre a tu lista",
 			"notification": "Alerta",
 			"notification_date": "¿Cuándo quieres ser alertado?",
 			"create_button": "Crear lista",
-			"notification_title": "Alerta de compra",
-			"notification_description": "Tienes una compra para hacer hoy. Toca para ver más.",
-			"premium_notice": "Activa ShopEasy Premium para recibir alertas de compras."
+			"notification_title": "Alerta de compras",
+			"notification_description": "Tienes una compra que hacer hoy. Toca para ver más.",
+			"premium_notice": "Activa ShopEasy Premium para recibir alertas de compras.",
+			"none": "Ninguno",
+			"day": "Diariamente",
+			"dayOfWeek": "Semanalmente",
+			"month": "Mensualmente",
+			"notification_frequency": "¿Quieres que te recordemos hacer compras?"
+		},
+		"create-shopping": {
+			"title": "Crear compra",
+			"shopping_local": "¿En qué mercado vas a comprar?",
+			"shopping_local_placeholder": "Escribe el nombre del lugar",
+			"create_button": "Crear compra"
 		},
 		"list": {
 			"title": "Lista",
-			"add_items": "Añadir",
+			"add_items": "Añadir artículos",
 			"create_button": "Guardar",
 			"shop_now_button": "Ir de compras",
 			"create_error": "Ocurrió un error al crear la lista.",
@@ -83,7 +94,20 @@
 			"copy_title": "Duplicar lista",
 			"copy_text": "¿Realmente quieres duplicar esta lista?",
 			"copy_confirm": "Duplicar",
-			"cancel": "Cancelar"
+			"cancel": "Cancelar",
+			"alerts_on": " recordatorio",
+			"none": "Ninguno",
+			"day": "Diariamente",
+			"dayOfWeek": "Semanalmente",
+			"month": "Mensualmente"
+		},
+		"shopping": {
+			"title": "Compras",
+			"add_items": "Añadir",
+			"items": "artículos",
+			"total": "Total:",
+			"finish": "Finalizar",
+			"finish_done": "Completado"
 		},
 		"profile": {
 			"title": "Perfil",
@@ -99,15 +123,17 @@
 			"title": "Gastos",
 			"list": "Lista",
 			"select_list": "Selecciona una lista",
-			"no_list": "Aún no tienes compras. ¡Crea una lista para empezar, después de eso se generarán tus informes de gastos!",
+			"no_list": "Aún no tienes ninguna compra. ¡Crea una lista para empezar, después de eso se generarán tus informes de gastos!",
 			"variation_increase": "Los precios han aumentado",
-			"variation_decrease": "Los precios han bajado",
+			"variation_decrease": "Los precios han disminuido",
 			"total": "Total:",
 			"variation": "Variación:",
 			"average": "Promedio:",
 			"higher": "Más caro:",
 			"lower": "Más barato:",
-			"no_expenses": "No hay compras finalizadas para esta lista."
+			"no_expenses": "No hay compras completadas para esta lista.",
+			"premium_feature": "¡Obtén la versión Premium para ver tus gastos!",
+			"premium_button": "Obtener Premium"
 		},
 		"add": {
 			"title": "Añadir artículos",
@@ -124,8 +150,8 @@
 			"notification": "Alerta",
 			"notification_date": "¿Cuándo quieres ser alertado?",
 			"create_button": "Crear lista",
-			"notification_title": "Alerta de compra",
-			"notification_description": "Tienes una compra para hacer hoy. Toca para ver más.",
+			"notification_title": "Alerta de compras",
+			"notification_description": "Tienes una compra que hacer hoy. Toca para ver más.",
 			"premium_notice": "Activa ShopEasy Premium para recibir alertas de compras.",
 			"edit_error": "Ocurrió un error al renombrar la lista.",
 			"edit_button": "Guardar",
@@ -134,10 +160,28 @@
 			"delete_text": "¿Estás seguro de que quieres eliminar esta lista? Todos los artículos en ella serán eliminados.",
 			"cancel": "Cancelar",
 			"delete_confirm": "Sí, eliminar",
-			"delete_error": "Ocurrió un error al eliminar la lista."
+			"delete_error": "Ocurrió un error al eliminar la lista.",
+			"none": "Ninguno",
+			"day": "Diariamente",
+			"dayOfWeek": "Semanalmente",
+			"month": "Mensualmente",
+			"notification_frequency": "¿Quieres que te recordemos hacer compras?"
+		},
+		"edit-shopping": {
+			"title": "Editar compra",
+			"shopping_local": "¿En qué mercado vas a comprar?",
+			"shopping_local_placeholder": "Escribe el nombre del lugar",
+			"edit_error": "Ocurrió un error al editar la compra.",
+			"edit_button": "Guardar",
+			"cancel_button": "Cancelar",
+			"delete_title": "Eliminar compra",
+			"delete_text": "¿Estás seguro de que quieres eliminar esta compra? Todos los artículos en ella serán eliminados.",
+			"cancel": "Cancelar",
+			"delete_confirm": "Sí, eliminar",
+			"delete_error": "Ocurrió un error al eliminar la compra."
 		},
 		"auth": {
-			"auth_failed": "Ocurrió un error en la autenticación.",
+			"auth_failed": "Ocurrió un error de autenticación.",
 			"auth_unauthorized": "Autenticación no autorizada en el dispositivo.",
 			"description": "Inicia sesión para acceder a todas las funciones de ShopEasy.",
 			"google_auth": "Iniciar sesión con Google"
@@ -145,11 +189,11 @@
 		"item": {
 			"price": "Precio",
 			"unit": "Unidad",
-			"price_label": "Precio por unidad",
+			"price_label": "Precio unitario",
 			"unit_label": "Unidad",
 			"qty_label": "Cantidad",
-			"have": "tengo",
-			"havent": "no tengo ninguno",
+			"have": "Tengo",
+			"havent": "No tengo ninguno",
 			"accept": "Aceptar"
 		},
 		"price_history": {
@@ -158,18 +202,17 @@
 			"date": "Fecha",
 			"price": "Precio",
 			"no_expenses": "No hay historial para este artículo.",
-			"premium": "👑 ¡Adquiere la versión Premium para ver el historial de precios y mucho más!"
+			"premium": "👑 ¡Obtén la versión Premium para ver el historial de precios y mucho más!"
 		},
-		"shop_local": {
-			"shop_in": "Día de compra",
-			"create_place_error": "Error al seleccionar el lugar.",
-			"local_label": "¿Dónde harás esta compra?",
-			"local_placeholder": "Busca un lugar..."
+		"congratulations": {
+			"title": "¡Felicidades!",
+			"description": "Te has suscrito exitosamente a ShopEasy Premium. ¡Disfruta de todas las funciones y lleva tu experiencia de compras al siguiente nivel!",
+			"back_button": "Volver"
 		},
 		"root": {
 			"lists": "Listas",
 			"shoppings": "Compras",
-			"expenses": "Despesas",
+			"expenses": "Gastos",
 			"profile": "Perfil",
 			"premium": "Premium"
 		}

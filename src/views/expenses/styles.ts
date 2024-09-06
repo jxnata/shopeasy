@@ -1,3 +1,5 @@
+import { BlurView } from '@react-native-community/blur'
+import { Dimensions } from 'react-native'
 import styled from 'styled-components/native'
 
 import { Font } from '../../theme/global'
@@ -67,4 +69,27 @@ export const EmptyContainer = styled.View`
 	flex: 1;
 	justify-content: center;
 	align-items: center;
+`
+export const BlurContainer = styled.View`
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+`
+export const BlurContent = styled.View`
+	justify-content: center;
+	align-items: center;
+	border-radius: 12px;
+	background: ${props => props.theme.secondary};
+	padding: 16px;
+	gap: 8px;
+`
+export const Separator = styled.View`
+	margin-top: 64px;
+`
+export const Blur = styled(BlurView)`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: ${Dimensions.get('screen').width}px;
+	height: ${Dimensions.get('screen').height}px;
 `
