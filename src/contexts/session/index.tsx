@@ -41,7 +41,7 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 	const storedSession = settings.getString('session')
 	const localSession: AppSession = storedSession ? JSON.parse(storedSession) : null
 
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(!localSession)
 	const [user, setUser] = useState<AppSession>(localSession)
 	const [premium, setPremium] = useState(false)
 

@@ -5,7 +5,11 @@ export async function checkSubscription() {
 		const customerInfo = await Purchases.getCustomerInfo()
 		const active = customerInfo.entitlements.active
 
-		if (typeof active['monthly'] !== 'undefined' || typeof active['yearly'] !== 'undefined') {
+		if (
+			typeof active['monthly'] !== 'undefined' ||
+			typeof active['yearly'] !== 'undefined' ||
+			typeof active['lifetime'] !== 'undefined'
+		) {
 			return true
 		}
 

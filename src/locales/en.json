@@ -208,6 +208,11 @@
 			"local_label": "Where will you make this purchase?",
 			"local_placeholder": "Search for a location..."
 		},
+		"congratulations": {
+			"title": "Congratulations!",
+			"description": "You've successfully subscribed to ShopEasy Premium. Enjoy all the features and take your shopping experience to the next level!",
+			"back_button": "Go back"
+		},
 		"root": {
 			"lists": "Lists",
 			"shoppings": "Shopping",

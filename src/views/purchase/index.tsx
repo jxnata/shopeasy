@@ -62,7 +62,7 @@ function Purchase({ navigation }: Props) {
 	}
 
 	useEffect(() => {
-		if (offerings.length > 0) setSelectedOffering(offerings[offerings.length - 1])
+		if (offerings.length > 0) setSelectedOffering(offerings[0])
 	}, [offerings])
 
 	return (

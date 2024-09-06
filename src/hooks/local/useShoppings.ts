@@ -5,8 +5,8 @@ import { storage } from '../../database'
 import { Shopping } from '../../types/models/shopping'
 
 export const useShoppings = () => {
-	const [shoppings, setShoppings] = useState<Shopping[]>([])
 	const [storageValue] = useMMKVString('shoppings', storage)
+	const [shoppings, setShoppings] = useState<Shopping[]>(storageValue ? JSON.parse(storageValue) : [])
 
 	useEffect(() => {
 		const storedLists = storageValue ? JSON.parse(storageValue) : []

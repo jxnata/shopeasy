@@ -6,15 +6,19 @@ import Purchases, { PurchasesPackage } from 'react-native-purchases'
 
 import * as S from './styles'
 import { Props } from './types'
+import Congratulations from '../../components/congratulations'
 import Icon from '../../components/icon'
+import Pressable from '../../components/shared/pressable'
 import { toast } from '../../components/toast'
 import { useSession } from '../../contexts/session'
-import { Button, ButtonLabel, Container, Label } from '../../theme/global'
+import { Container, Label } from '../../theme/global'
 import { getOfferings } from '../../utils/get-offerings'
 
 function Subscribe({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'subscribe' })
 	const [selectedOffering, setSelectedOffering] = useState<PurchasesPackage>()
+	const [loading, setLoading] = useState(false)
+	const [success, setSuccess] = useState(false)
 	const { checkPremium } = useSession()
 
 	const onClose = () => {
@@ -32,37 +36,47 @@ function Subscribe({ navigation }: Props) {
 		try {
 			if (!selectedOffering) return
 
+			setLoading(true)
+
 			await Purchases.purchaseStoreProduct(selectedOffering.product)
 
 			toast.success(t('purchase_success'))
 
-			checkPremium()
+			setSuccess(true)
 
-			navigation.goBack()
+			checkPremium()
 		} catch (e: unknown) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
 			if (!e.userCancelled) toast.error(t('purchase_error'))
+		} finally {
+			setLoading(false)
 		}
 	}
 
 	const onRestore = async () => {
 		try {
+			setLoading(true)
+
 			await Purchases.restorePurchases()
 
 			toast.success(t('restore_success'))
 
-			checkPremium()
+			setSuccess(true)
 
-			navigation.goBack()
+			checkPremium()
 		} catch {
 			toast.error(t('restore_error'))
+		} finally {
+			setLoading(false)
 		}
 	}
 
 	useEffect(() => {
-		if (offerings.length > 0) setSelectedOffering(offerings[offerings.length - 1])
+		if (offerings.length > 0) setSelectedOffering(offerings[0])
 	}, [offerings])
+
+	if (success) return <Congratulations />
 
 	return (
 		<Container>
@@ -88,10 +102,10 @@ function Subscribe({ navigation }: Props) {
 								<Icon name='sparkles' />
 								<S.FeatureText>{t('feature3')}</S.FeatureText>
 							</S.FeatureLine>
-							{/* <S.FeatureLine>
+							<S.FeatureLine>
 								<Icon name='pie-chart' />
 								<S.FeatureText>{t('feature4')}</S.FeatureText>
-							</S.FeatureLine> */}
+							</S.FeatureLine>
 							<S.FeatureLine>
 								<Icon name='diamond' />
 								<S.FeatureText>{t('feature5')}</S.FeatureText>
@@ -123,10 +137,13 @@ function Subscribe({ navigation }: Props) {
 							))}
 						</S.OfferProducts>
 						<S.ButtonContainer>
-							<Button onPress={onPurchase}>
-								<ButtonLabel>{t('subscribe_button')}</ButtonLabel>
-							</Button>
-							<S.RestoreButton onPress={onRestore}>
+							<Pressable
+								onPress={onPurchase}
+								disabled={loading}
+								title={t('subscribe_button')}
+								loading={loading}
+							/>
+							<S.RestoreButton onPress={onRestore} disabled={loading}>
 								<S.RestoreText>{t('restore_button')}</S.RestoreText>
 							</S.RestoreButton>
 						</S.ButtonContainer>
