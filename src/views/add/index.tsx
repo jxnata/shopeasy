@@ -12,14 +12,12 @@ import Dropdown from '../../components/dropdown'
 import Header from '../../components/header'
 import Input from '../../components/input'
 import Pressable from '../../components/shared/pressable'
-import { useSession } from '../../contexts/session'
 import { addItemToList } from '../../database/models/lists'
 import { Container } from '../../theme/global'
 import { ListItem } from '../../types/models/list-item'
 
 function Add({ navigation, route }: Props) {
 	const { items, listId } = route.params
-	const { current } = useSession()
 	const [tempItems, setTempItems] = useState<string[]>(items)
 	const { t } = useTranslation('translation', { keyPrefix: 'add' })
 	const { control, handleSubmit } = useForm<Partial<ListItem>>({
@@ -36,7 +34,7 @@ function Add({ navigation, route }: Props) {
 
 	const createItem = useCallback(
 		(data: Partial<ListItem>) => {
-			if (!current || !data.name || !listId) return
+			if (!data.name || !listId) return
 
 			try {
 				const newItem = {
@@ -55,7 +53,7 @@ function Add({ navigation, route }: Props) {
 				navigation.goBack()
 			}
 		},
-		[current, listId, navigation, tempItems]
+		[listId, navigation, tempItems]
 	)
 
 	return (

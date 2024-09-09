@@ -654,7 +654,7 @@
 				CODE_SIGN_ENTITLEMENTS = shopeasy/shopeasy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = N9G6UA9982;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = shopeasy/Info.plist;
@@ -694,7 +694,7 @@
 				CODE_SIGN_ENTITLEMENTS = shopeasy/shopeasy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = N9G6UA9982;
 				INFOPLIST_FILE = shopeasy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShopEasy;
@@ -895,7 +895,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = N9G6UA9982;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -945,7 +945,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = N9G6UA9982;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;

@@ -2,6 +2,7 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Linking } from 'react-native'
 import Purchases, { PurchasesPackage } from 'react-native-purchases'
 
 import * as S from './styles'
@@ -46,6 +47,7 @@ function Subscribe({ navigation }: Props) {
 
 			checkPremium()
 		} catch (e: unknown) {
+			console.tron.log(e)
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
 			if (!e.userCancelled) toast.error(t('purchase_error'))
@@ -58,7 +60,12 @@ function Subscribe({ navigation }: Props) {
 		try {
 			setLoading(true)
 
-			await Purchases.restorePurchases()
+			const restored = await Purchases.restorePurchases()
+			console.tron.log(restored.entitlements.active)
+
+			if (Object.keys(restored.entitlements.active).length === 0) {
+				throw new Error('No entitlements found')
+			}
 
 			toast.success(t('restore_success'))
 
@@ -75,6 +82,14 @@ function Subscribe({ navigation }: Props) {
 	useEffect(() => {
 		if (offerings.length > 0) setSelectedOffering(offerings[0])
 	}, [offerings])
+
+	const onOpenPrivacyPolicy = () => {
+		Linking.openURL('https://jxnata.notion.site/Privacy-Policy-b4d7010d371244ac82b6d7befd71f141')
+	}
+
+	const onOpenTermsOfUse = () => {
+		Linking.openURL('https://jxnata.notion.site/Terms-Conditions-7b6092d890ea4d8196fdedc763930f3b')
+	}
 
 	if (success) return <Congratulations />
 
@@ -118,6 +133,14 @@ function Subscribe({ navigation }: Props) {
 					</S.CloseButton>
 
 					<S.Offer>
+						<S.TermsContainer>
+							<S.RestoreButton onPress={onOpenPrivacyPolicy}>
+								<S.RestoreText>{t('privacy_policy')}</S.RestoreText>
+							</S.RestoreButton>
+							<S.RestoreButton onPress={onOpenTermsOfUse}>
+								<S.RestoreText>{t('terms_of_use')}</S.RestoreText>
+							</S.RestoreButton>
+						</S.TermsContainer>
 						<S.OfferProducts>
 							{offerings.map(offer => (
 								<S.OfferButton
@@ -132,7 +155,7 @@ function Subscribe({ navigation }: Props) {
 										<S.OfferTitle>{t(offer.identifier)}</S.OfferTitle>
 									</S.OfferTitleContainer>
 									<S.OfferPrice>{offer.product.priceString}</S.OfferPrice>
-									<S.OfferDescription>{t('subscribe_description')}</S.OfferDescription>
+									<S.OfferDescription>{offer.product.description}</S.OfferDescription>
 								</S.OfferButton>
 							))}
 						</S.OfferProducts>

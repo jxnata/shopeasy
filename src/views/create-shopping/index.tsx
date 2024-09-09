@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -7,7 +7,6 @@ import { Props } from './types'
 import Header from '../../components/header'
 import Input from '../../components/input'
 import { toast } from '../../components/toast'
-import { useSession } from '../../contexts/session'
 import { createShopping } from '../../database/models/shoppings'
 import { Button, ButtonLabel, Container } from '../../theme/global'
 import { Shopping, ShoppingData } from '../../types/models/shopping'
@@ -16,13 +15,10 @@ function CreateShopping({ navigation, route }: Props) {
 	const { list } = route.params
 	const items = list ? list.items : []
 	const { t } = useTranslation('translation', { keyPrefix: 'create-shopping' })
-
-	const { current } = useSession()
-	const currentId = useMemo(() => (current ? current.$id : undefined), [current])
 	const { control, handleSubmit } = useForm<Partial<Shopping>>()
 
 	const onSave = async (form: Partial<ShoppingData>) => {
-		if (!currentId || !form.local) return
+		if (!form.local) return
 
 		try {
 			const data: ShoppingData = {

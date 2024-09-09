@@ -67,8 +67,8 @@ function Expenses({ navigation }: Props) {
 	return (
 		<Container>
 			<S.Content>
-				<Header title={t('title')} />
 				<S.Body>
+					<Header title={t('title')} />
 					<Dropdown
 						label={t('select_list')}
 						placeholder={t('select_list')}

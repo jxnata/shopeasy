@@ -1,4 +1,3 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import React, { useEffect } from 'react'
@@ -43,7 +42,6 @@ function App(): React.JSX.Element {
 			Purchases.configure({ apiKey: REVENUECAT_API_KEY_ANDROID })
 		}
 
-		GoogleSignin.configure()
 		mobileAds().initialize()
 	}, [])
 

@@ -1,10 +1,4 @@
 PODS:
-  - AppAuth (1.7.5):
-    - AppAuth/Core (= 1.7.5)
-    - AppAuth/ExternalUserAgent (= 1.7.5)
-  - AppAuth/Core (1.7.5)
-  - AppAuth/ExternalUserAgent (1.7.5):
-    - AppAuth/Core
   - boost (1.83.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.74.3)
@@ -12,15 +6,7 @@ PODS:
   - glog (0.3.5)
   - Google-Mobile-Ads-SDK (11.7.0):
     - GoogleUserMessagingPlatform (>= 1.1)
-  - GoogleSignIn (7.1.0):
-    - AppAuth (< 2.0, >= 1.7.3)
-    - GTMAppAuth (< 5.0, >= 4.1.1)
-    - GTMSessionFetcher/Core (~> 3.3)
   - GoogleUserMessagingPlatform (2.5.0)
-  - GTMAppAuth (4.1.1):
-    - AppAuth/Core (~> 1.7)
-    - GTMSessionFetcher/Core (< 4.0, >= 3.3)
-  - GTMSessionFetcher/Core (3.5.0)
   - hermes-engine (0.74.3):
     - hermes-engine/Pre-built (= 0.74.3)
   - hermes-engine/Pre-built (0.74.3)
@@ -1304,8 +1290,6 @@ PODS:
     - React-perflogger (= 0.74.3)
     - React-utils (= 0.74.3)
   - RevenueCat (5.2.2)
-  - RNAppleAuthentication (2.3.0):
-    - React-Core
   - RNCPushNotificationIOS (1.11.0):
     - React-Core
   - RNDateTimePicker (8.2.0):
@@ -1333,9 +1317,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNGoogleSignin (12.2.1):
-    - GoogleSignIn (~> 7.1)
-    - React-Core
   - RNLocalize (3.2.0):
     - React-Core
   - RNPurchases (8.0.0):
@@ -1515,11 +1496,9 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGoogleMobileAds (from `../node_modules/react-native-google-mobile-ads`)
-  - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
@@ -1529,12 +1508,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AppAuth
     - Google-Mobile-Ads-SDK
-    - GoogleSignIn
     - GoogleUserMessagingPlatform
-    - GTMAppAuth
-    - GTMSessionFetcher
     - MMKV
     - MMKVCore
     - OneSignalXCFramework
@@ -1662,16 +1637,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  RNAppleAuthentication:
-    :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNCPushNotificationIOS:
     :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGoogleMobileAds:
     :path: "../node_modules/react-native-google-mobile-ads"
-  RNGoogleSignin:
-    :path: "../node_modules/@react-native-google-signin/google-signin"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
   RNPurchases:
@@ -1686,17 +1657,13 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   FBLazyVector: 7e977dd099937dc5458851233141583abba49ff2
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
   Google-Mobile-Ads-SDK: 204b517c9765169144cf39763c7f5d23c57a9db0
-  GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GoogleUserMessagingPlatform: 6b4f48a370e77ce121d034c908cc6ee4fdafaf13
-  GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
-  GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   hermes-engine: 1f547997900dd0752dc0cc0ae6dd16173c49e09b
   MMKV: 817ba1eea17421547e01e087285606eb270a8dcb
   MMKVCore: af055b00e27d88cd92fad301c5fecd1ff9b26dd9
@@ -1756,11 +1723,9 @@ SPEC CHECKSUMS:
   React-utils: a06061b3887c702235d2dac92dacbd93e1ea079e
   ReactCommon: f00e436b3925a7ae44dfa294b43ef360fbd8ccc4
   RevenueCat: ba985d80069c1c4b9c9e0763f1852f2a0bdcc2d6
-  RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNDateTimePicker: 40ffda97d071a98a10fdca4fa97e3977102ccd14
   RNGoogleMobileAds: 2f01ac336ae6c9774979450b2cc96ce873028539
-  RNGoogleSignin: 08dc4ba7eac2096c7fecfe109f0950fa4683c803
   RNLocalize: b77875884750cb6a58cd6865863fe2ba2729b72b
   RNPurchases: 3fa0a17f13bf3eee78d9242d49456268580fb687
   RNReactNativeHapticFeedback: 6d6363faa31a6cb23e467e02304b585ec59f0930

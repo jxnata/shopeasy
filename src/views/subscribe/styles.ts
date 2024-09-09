@@ -102,6 +102,12 @@ export const OfferBadgeText = styled(ButtonLabel)`
 	font-weight: 600;
 	color: white;
 `
+export const TermsContainer = styled.View`
+	flex-direction: row;
+	justify-content: center;
+	margin-bottom: 12px;
+	gap: 8px;
+`
 export const ButtonContainer = styled.View`
 	margin-top: 12px;
 	gap: 8px;

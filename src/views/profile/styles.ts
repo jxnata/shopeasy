@@ -40,7 +40,8 @@ export const ButtonLabel = styled(Font)`
 	color: ${props => props.theme.primary};
 `
 export const InfoValue = styled(Font)`
-	font-weight: 500;
+	font-weight: 400;
+	opacity: 0.8;
 `
 export const LogoutButton = styled(Button)`
 	border-bottom-width: 0;

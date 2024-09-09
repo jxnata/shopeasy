@@ -20,8 +20,7 @@ import { ShoppingList, ShoppingListData } from '../../types/models/shopping-list
 function CreateList({ navigation }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'create' })
 
-	const { current, premium } = useSession()
-	const currentId = useMemo(() => (current ? current.$id : undefined), [current])
+	const { premium } = useSession()
 	const { control, handleSubmit, watch, setValue } = useForm<Partial<ShoppingList>>({
 		defaultValues: { notification_time: Date.now() + 3600000, notification_frequency: 'none' },
 	})
@@ -39,7 +38,7 @@ function CreateList({ navigation }: Props) {
 	)
 
 	const onSave = async (form: Partial<ShoppingListData>) => {
-		if (!currentId || !form.name) return
+		if (!form.name) return
 
 		try {
 			const data: ShoppingListData = {
@@ -88,7 +87,7 @@ function CreateList({ navigation }: Props) {
 		<Container>
 			<S.Content>
 				<S.Body>
-					<Header title={t('title')} />
+					<Header title={t('title')} backButton />
 					<Controller
 						control={control}
 						rules={{ required: true }}

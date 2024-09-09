@@ -1,7 +1,7 @@
 {
 	"translation": {
 		"subscribe": {
-			"description": "¡Disfruta de todas las funciones de ShopEasy y lleva tu experiencia de compra al siguiente nivel!",
+			"description": "¡Disfruta de todas las funciones de ShopEasy Premium y lleva tu experiencia de compra al siguiente nivel!",
 			"premium_features_title": "Funciones Premium:",
 			"feature1": "Sin anuncios",
 			"feature2": "Recibe alertas para tus compras",
@@ -10,6 +10,8 @@
 			"feature5": "Acceso prioritario a nuevas funciones",
 			"subscribe_button": "Continuar",
 			"restore_button": "Restaurar",
+			"terms_of_use": "Términos de uso",
+			"privacy_policy": "Política de privacidad",
 			"subscribe_description": "Todas las funciones incluidas",
 			"$rc_monthly": "Mensual",
 			"$rc_annual": "Anual",
@@ -19,7 +21,7 @@
 			"LIFETIME": "",
 			"offer": "OFERTA",
 			"purchase_error": "Ocurrió un error al suscribirse al producto.",
-			"restore_error": "Ocurrió un error al recuperar tu suscripción.",
+			"restore_error": "No se pudo restaurar la suscripción.",
 			"purchase_success": "¡Suscripción completada!",
 			"restore_success": "¡Suscripción recuperada!"
 		},
@@ -111,8 +113,8 @@
 		},
 		"profile": {
 			"title": "Perfil",
-			"name": "Nombre",
-			"email": "Correo electrónico",
+			"language": "Idioma",
+			"currency": "Moneda",
 			"created_at": "Desde",
 			"premium": "Premium",
 			"premium_button": "Suscribirse a Premium",

@@ -1873,13 +1873,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@invertase/react-native-apple-authentication@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@invertase/react-native-apple-authentication@npm:2.3.0"
-  checksum: 7e70b69cdf61c81e955392fa63827dd675a7c1ae029683f21f1f591cf4564d6ca277a55e594b4a3c1636bbf056bf32ceffe699ea1da20f3fa90d00ab6422b4b0
-  languageName: node
-  linkType: hard
-
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -2526,23 +2519,6 @@ __metadata:
     react: ">=16.6.3"
     react-native: ">=0.58.4"
   checksum: d8c8cdd0d4e8112752a13bf2c426618ec8edd91eacadf03f05375648b5f12ffa761e8676e9d6ac9e5bc5ded73c991ab2219c67fe02e110dfaf38f4cb59695868
-  languageName: node
-  linkType: hard
-
-"@react-native-google-signin/google-signin@npm:^12.2.1":
-  version: 12.2.1
-  resolution: "@react-native-google-signin/google-signin@npm:12.2.1"
-  peerDependencies:
-    expo: ">=50.0.0"
-    react: "*"
-    react-dom: "*"
-    react-native: "*"
-  peerDependenciesMeta:
-    expo:
-      optional: true
-    react-dom:
-      optional: true
-  checksum: 214a51d4b98a74b3f8f26aaf2882d95d37592aebfc59f2c65619234f64aa545a72a7ba3b2cb19eebf02312758ec0f6c12c5fe801bb3da613bf79d9914f247dac
   languageName: node
   linkType: hard
 
@@ -9744,12 +9720,10 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
-    "@invertase/react-native-apple-authentication": ^2.3.0
     "@react-native-community/blur": ^4.4.0
     "@react-native-community/datetimepicker": ^8.2.0
     "@react-native-community/geolocation": ^3.3.0
     "@react-native-community/push-notification-ios": ^1.11.0
-    "@react-native-google-signin/google-signin": ^12.2.1
     "@react-native/babel-preset": 0.74.85
     "@react-native/eslint-config": 0.74.85
     "@react-native/metro-config": 0.74.85

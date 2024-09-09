@@ -1,7 +1,7 @@
 {
 	"translation": {
 		"subscribe": {
-			"description": "Aproveite todos os recursos do ShopEasy e leve sua experiência de compras para o próximo nível!",
+			"description": "Aproveite todos os recursos com o ShopEasy Premium e leve sua experiência de compras para o próximo nível!",
 			"premium_features_title": "Recursos Premium:",
 			"feature1": "Sem anúncios",
 			"feature2": "Receba alertas para suas compras",
@@ -10,6 +10,8 @@
 			"feature5": "Acesso prioritário a novos recursos",
 			"subscribe_button": "Continuar",
 			"restore_button": "Restaurar",
+			"terms_of_use": "Termos de uso",
+			"privacy_policy": "Política de privacidade",
 			"subscribe_description": "Todos os recursos incluídos",
 			"$rc_monthly": "Mensal",
 			"$rc_annual": "Anual",
@@ -19,7 +21,7 @@
 			"LIFETIME": "",
 			"offer": "OFERTA",
 			"purchase_error": "Ocorreu um erro ao assinar o produto.",
-			"restore_error": "Ocorreu um erro ao recuperar sua assinatura.",
+			"restore_error": "Não foi possível restaurar a assinatura.",
 			"purchase_success": "Assinatura concluída!",
 			"restore_success": "Assinatura recuperada!"
 		},
@@ -111,8 +113,8 @@
 		},
 		"profile": {
 			"title": "Perfil",
-			"name": "Nome",
-			"email": "Email",
+			"language": "Idioma",
+			"currency": "Moeda",
 			"created_at": "Desde",
 			"premium": "Premium",
 			"premium_button": "Assinar Premium",

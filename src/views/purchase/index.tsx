@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Linking } from 'react-native'
 import Purchases, { PurchasesPackage } from 'react-native-purchases'
 
 import * as S from './styles'
@@ -39,7 +40,7 @@ function Purchase({ navigation }: Props) {
 
 			checkPremium()
 
-			navigation.replace('home')
+			setInitialized(true)
 		} catch (e: unknown) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
@@ -55,10 +56,18 @@ function Purchase({ navigation }: Props) {
 
 			checkPremium()
 
-			navigation.replace('home')
+			setInitialized(true)
 		} catch {
 			toast.error(t('restore_error'))
 		}
+	}
+
+	const onOpenPrivacyPolicy = () => {
+		Linking.openURL('https://jxnata.notion.site/Privacy-Policy-b4d7010d371244ac82b6d7befd71f141')
+	}
+
+	const onOpenTermsOfUse = () => {
+		Linking.openURL('https://jxnata.notion.site/Terms-Conditions-7b6092d890ea4d8196fdedc763930f3b')
 	}
 
 	useEffect(() => {
@@ -89,10 +98,10 @@ function Purchase({ navigation }: Props) {
 								<Icon name='sparkles' />
 								<S.FeatureText>{t('feature3')}</S.FeatureText>
 							</S.FeatureLine>
-							{/* <S.FeatureLine>
+							<S.FeatureLine>
 								<Icon name='pie-chart' />
 								<S.FeatureText>{t('feature4')}</S.FeatureText>
-							</S.FeatureLine> */}
+							</S.FeatureLine>
 							<S.FeatureLine>
 								<Icon name='diamond' />
 								<S.FeatureText>{t('feature5')}</S.FeatureText>
@@ -105,6 +114,14 @@ function Purchase({ navigation }: Props) {
 					</S.CloseButton>
 
 					<S.Offer>
+						<S.TermsContainer>
+							<S.RestoreButton onPress={onOpenPrivacyPolicy}>
+								<S.RestoreText>{t('privacy_policy')}</S.RestoreText>
+							</S.RestoreButton>
+							<S.RestoreButton onPress={onOpenTermsOfUse}>
+								<S.RestoreText>{t('terms_of_use')}</S.RestoreText>
+							</S.RestoreButton>
+						</S.TermsContainer>
 						<S.OfferProducts>
 							{offerings.map(offer => (
 								<S.OfferButton
@@ -119,7 +136,7 @@ function Purchase({ navigation }: Props) {
 										<S.OfferTitle>{t(offer.identifier)}</S.OfferTitle>
 									</S.OfferTitleContainer>
 									<S.OfferPrice>{offer.product.priceString}</S.OfferPrice>
-									<S.OfferDescription>{t('subscribe_description')}</S.OfferDescription>
+									<S.OfferDescription>{offer.product.description}</S.OfferDescription>
 								</S.OfferButton>
 							))}
 						</S.OfferProducts>

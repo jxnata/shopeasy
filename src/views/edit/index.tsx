@@ -21,8 +21,7 @@ function ListEdit({ navigation, route }: Props) {
 	const list = route.params!.list
 	const { t } = useTranslation('translation', { keyPrefix: 'edit' })
 
-	const { current, premium } = useSession()
-	const currentId = useMemo(() => (current ? current.$id : undefined), [current])
+	const { premium } = useSession()
 	const { control, handleSubmit, watch, setValue } = useForm<Partial<ShoppingList>>({
 		defaultValues: list,
 	})
@@ -40,7 +39,7 @@ function ListEdit({ navigation, route }: Props) {
 	)
 
 	const onSave = async (form: Partial<ShoppingListData>) => {
-		if (!currentId || !form.name) return
+		if (!form.name) return
 
 		try {
 			if (form.notification_id && form.notification_time) {

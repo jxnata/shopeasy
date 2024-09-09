@@ -8,8 +8,6 @@ import { useMMKVString } from 'react-native-mmkv'
 
 import icons from '../assets/data/icon-map.json'
 import Icon from '../components/icon'
-import Loading from '../components/loading'
-import { useSession } from '../contexts/session'
 import { useSettings } from '../contexts/settings'
 import { settings } from '../database'
 import { AppColor } from '../types/all/colors'
@@ -17,7 +15,6 @@ import { StackParamList, TabParamList } from '../types/navigation/stack'
 import { getTheme } from '../utils/get-theme'
 import Add from '../views/add'
 import AddShopping from '../views/add-shopping'
-import Auth from '../views/auth'
 import CreateList from '../views/create'
 import CreateShopping from '../views/create-shopping'
 import ListEdit from '../views/edit'
@@ -85,7 +82,6 @@ const noTabRoutes: (keyof StackParamList)[] = [
 
 const Routes = () => {
 	const { initialized, oppened } = useSettings()
-	const { current, loading } = useSession()
 	const { t } = useTranslation('translation', { keyPrefix: 'root' })
 
 	const scheme = useColorScheme()
@@ -93,24 +89,12 @@ const Routes = () => {
 
 	const colors = getTheme(scheme, (color || 'mono') as AppColor)
 
-	if (loading) return <Loading />
-
 	if (!oppened) {
 		return (
 			<NavigationContainer>
 				<Stack.Navigator initialRouteName='intro' screenOptions={{ headerShown: false }}>
 					<Stack.Screen name='intro' component={Intro} />
 					<Stack.Screen name='onboarding' component={Onboarding} />
-				</Stack.Navigator>
-			</NavigationContainer>
-		)
-	}
-
-	if (!current) {
-		return (
-			<NavigationContainer>
-				<Stack.Navigator initialRouteName='auth' screenOptions={{ headerShown: false }}>
-					<Stack.Screen name='auth' component={Auth} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		)
