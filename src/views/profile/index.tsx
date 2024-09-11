@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useColorScheme } from 'react-native'
+import { Linking, Pressable, useColorScheme } from 'react-native'
 import { getLocales } from 'react-native-localize'
 
 import * as S from './styles'
@@ -74,6 +74,14 @@ function Profile({ navigation }: Props) {
 							</S.PremiumButton>
 						)}
 					</S.InfoContainer>
+					<Pressable onPress={() => Linking.openURL('https://jxnata.github.io')}>
+						<S.DevInfo>
+							<Icon name='heart' size={12} />
+							<S.DevInfoText>
+								{t('developed_by')} <S.DevInfoLink>jxnata</S.DevInfoLink>
+							</S.DevInfoText>
+						</S.DevInfo>
+					</Pressable>
 				</S.Body>
 			</S.Content>
 		</Container>

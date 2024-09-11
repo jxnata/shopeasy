@@ -118,7 +118,8 @@
 			"premium": "Premium",
 			"premium_button": "Subscribe to Premium",
 			"color": "Color",
-			"logout_button": "Log out"
+			"logout_button": "Log out",
+			"developed_by": "Developed with passion by"
 		},
 		"expenses": {
 			"title": "Expenses",

@@ -119,7 +119,8 @@
 			"premium": "Premium",
 			"premium_button": "Suscribirse a Premium",
 			"color": "Color",
-			"logout_button": "Cerrar sesión"
+			"logout_button": "Cerrar sesión",
+			"developed_by": "Desarrollado con pasión por"
 		},
 		"expenses": {
 			"title": "Gastos",

@@ -83,3 +83,16 @@ export const Color = styled.TouchableOpacity`
 	border-radius: 4px;
 	border: solid 2px transparent;
 `
+export const DevInfo = styled.View`
+	padding: 8px;
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
+`
+export const DevInfoText = styled(Font)`
+	font-size: 12px;
+`
+export const DevInfoLink = styled(Font)`
+	font-size: 12px;
+	font-weight: bold;
+`

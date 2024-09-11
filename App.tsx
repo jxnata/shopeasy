@@ -1,7 +1,7 @@
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import React, { useEffect } from 'react'
-import { AppState, AppStateStatus, Platform, StatusBar, useColorScheme } from 'react-native'
+import { AppState, AppStateStatus, StatusBar, useColorScheme } from 'react-native'
 import mobileAds from 'react-native-google-mobile-ads'
 import { useMMKVString } from 'react-native-mmkv'
 import Purchases from 'react-native-purchases'
@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message'
 import { ThemeProvider } from 'styled-components'
 
 import { toastConfig } from './src/components/toast'
-import { REVENUECAT_API_KEY_ANDROID, REVENUECAT_API_KEY_IOS } from './src/constants'
+import { REVENUECAT_API_KEY_IOS } from './src/constants'
 import { SessionProvider } from './src/contexts/session'
 import { SettingsProvider } from './src/contexts/settings'
 import { settings } from './src/database'
@@ -36,12 +36,7 @@ function App(): React.JSX.Element {
 	}, [])
 
 	useEffect(() => {
-		if (Platform.OS === 'ios') {
-			Purchases.configure({ apiKey: REVENUECAT_API_KEY_IOS })
-		} else if (Platform.OS === 'android') {
-			Purchases.configure({ apiKey: REVENUECAT_API_KEY_ANDROID })
-		}
-
+		Purchases.configure({ apiKey: REVENUECAT_API_KEY_IOS })
 		mobileAds().initialize()
 	}, [])
 
