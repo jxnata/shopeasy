@@ -17,6 +17,9 @@ export const ADMOB_INTERSTITIAL_ID_ANDROID = ''
 
 export const ONE_SIGNAL_APP_ID = '3cbaef90-bf6e-41cc-a286-2e87f0af1c92'
 
+export const ONE_DAY = 24 * 60 * 60 * 1000
+export const AI_DAY_LIMIT = 1000
+
 export const DB = 'production'
 
 export const MODELS = {
