@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useCallback, useMemo, useState } from 'react'
+import { CommonActions } from '@react-navigation/native'
+import { debounce, toLower, trim } from 'lodash'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, useColorScheme } from 'react-native'
 
@@ -7,6 +9,7 @@ import * as S from './styles'
 import { Props } from './types'
 import Header from '../../components/header'
 import Icon from '../../components/icon'
+import Input from '../../components/input'
 import ItemRow from '../../components/item'
 import ListFooter from '../../components/list-footer'
 import SuggestionItem, { SuggestionSkeleton } from '../../components/suggestion-item'
@@ -14,7 +17,7 @@ import { toast } from '../../components/toast'
 import { useSession } from '../../contexts/session'
 import { addItemToList } from '../../database/models/lists'
 import { useShoppingList } from '../../hooks/local/useShoppingList'
-import { ButtonIcon, ButtonLabel, Container, Label } from '../../theme/global'
+import { ButtonIcon, ButtonLabel, Container } from '../../theme/global'
 import { getSuggestions } from '../../utils/get-suggestions'
 import { showInterstitial } from '../../utils/show-interstitial'
 
@@ -26,6 +29,7 @@ function ListView({ navigation, route }: Props) {
 
 	const { premium } = useSession()
 
+	const [searchTerm, setSearchTerm] = useState('')
 	const [suggestions, setSuggestions] = useState<string[]>([])
 	const [loadingSuggestions, setLoadingSuggestions] = useState(false)
 
@@ -41,6 +45,18 @@ function ListView({ navigation, route }: Props) {
 	}, [list])
 
 	const itemsList = useMemo(() => items.map(i => i.name), [items])
+
+	const filteredItems = useMemo(() => {
+		return items.filter(i => trim(toLower(i.name)).includes(trim(toLower(searchTerm))))
+	}, [items, searchTerm])
+
+	const handleChange = (e: string) => {
+		setSearchTerm(e)
+	}
+
+	const debouncedResults = useMemo(() => {
+		return debounce(handleChange, 300)
+	}, [])
 
 	const fetchSuggestions = useCallback(async () => {
 		try {
@@ -91,8 +107,23 @@ function ListView({ navigation, route }: Props) {
 
 		if (!premium) showInterstitial()
 
+		navigation.dispatch(
+			CommonActions.reset({
+				index: 1,
+				routes: [
+					{ name: 'main-stack' },
+					{
+						name: 'shoppings-stack',
+						state: {
+							routes: [{ name: 'shoppings' }, { name: 'create-shopping', params: { list } }],
+						},
+					},
+				],
+			})
+		)
+
 		// @ts-ignore
-		navigation.navigate('shoppings-stack', { screen: 'create-shopping', params: { list } })
+		// navigation.navigate('shoppings-stack', { screen: 'create-shopping', params: { list } })
 	}
 
 	const HeaderRight = useCallback(() => {
@@ -101,15 +132,18 @@ function ListView({ navigation, route }: Props) {
 				<S.GhostButton onPress={fetchSuggestions} disabled={loadingSuggestions}>
 					<Icon name='sparkles' />
 				</S.GhostButton>
-				<S.GhostButton onPress={onAdd}>
-					<Icon name='add-circle' />
-				</S.GhostButton>
 				<S.GhostButton onPress={onEdit}>
 					<Icon name='ellipsis-vertical' />
 				</S.GhostButton>
 			</S.Row>
 		)
-	}, [fetchSuggestions, loadingSuggestions, onAdd, onEdit])
+	}, [fetchSuggestions, loadingSuggestions, onEdit])
+
+	useEffect(() => {
+		return () => {
+			debouncedResults.cancel()
+		}
+	})
 
 	return (
 		<Container>
@@ -117,25 +151,27 @@ function ListView({ navigation, route }: Props) {
 				{!!list && (
 					<S.Body>
 						<Header title={list.name} Right={HeaderRight} backButton />
-						<S.ButtonsContainer>
+						{/* <S.ButtonsContainer>
 							{itemsList.length > 3 && (
 								<S.AddButton onPress={fetchSuggestions} disabled={loadingSuggestions}>
 									<Icon name='sparkles' />
 									<Label>{t('ai_suggestions')}</Label>
 								</S.AddButton>
 							)}
-							<S.AddButton onPress={onAdd}>
-								<Icon name='add-circle' />
-								<Label>{t('add_items')}</Label>
-							</S.AddButton>
-						</S.ButtonsContainer>
+						</S.ButtonsContainer> */}
 						<FlatList
-							data={items}
+							data={filteredItems}
 							keyExtractor={item => item.id}
 							renderItem={({ item }) => <ItemRow item={item} listId={listId!} />}
 							ListFooterComponent={<ListFooter />}
 							ListHeaderComponent={
 								<>
+									<Input
+										clearButtonMode='always'
+										placeholder={t('search_placeholder')}
+										onChangeText={debouncedResults}
+									/>
+									<S.Separator />
 									{loadingSuggestions && <SuggestionSkeleton />}
 									{filteredSuggestions.map(item => (
 										<SuggestionItem
@@ -152,18 +188,23 @@ function ListView({ navigation, route }: Props) {
 						/>
 						<S.Cart>
 							<S.Blur blurType={scheme === 'dark' ? 'dark' : 'light'} />
-							<S.CartLeft>
-								<Label>
-									{itemsList.length} {t('items')}
-								</Label>
-							</S.CartLeft>
-							<S.FinishButton
+
+							<S.OutlineButton
 								aria-disabled={!itemsList.length}
 								disabled={!itemsList.length}
 								onPress={onShop}
 							>
-								<ButtonIcon name='cart' />
-								<ButtonLabel>{t('shop_now_button')}</ButtonLabel>
+								<Icon name='cart' />
+								<S.OutlineText>{t('shop_now_button')}</S.OutlineText>
+							</S.OutlineButton>
+
+							<S.FinishButton
+								aria-disabled={!itemsList.length}
+								disabled={!itemsList.length}
+								onPress={onAdd}
+							>
+								<ButtonIcon name='add-circle' />
+								<ButtonLabel>{t('add_items')}</ButtonLabel>
 							</S.FinishButton>
 						</S.Cart>
 					</S.Body>

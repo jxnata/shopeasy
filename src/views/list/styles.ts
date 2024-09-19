@@ -2,7 +2,7 @@ import { BlurView } from '@react-native-community/blur'
 import { Dimensions } from 'react-native'
 import styled from 'styled-components/native'
 
-import { Button, ButtonLabel, Font } from '../../theme/global'
+import { Button, ButtonLabel, Font, Label } from '../../theme/global'
 
 export const Content = styled.SafeAreaView`
 	flex: 1;
@@ -67,6 +67,17 @@ export const CartTotal = styled.View`
 	align-items: baseline;
 	gap: 4px;
 `
+export const OutlineButton = styled(Button)`
+	background: transparent;
+	border: solid 2px ${props => props.theme.primary};
+	width: auto;
+	padding: 4px 16px;
+	opacity: ${props => (props['aria-disabled'] ? 0.6 : 1)};
+`
+export const OutlineText = styled(Label)`
+	font-size: 14px;
+	font-weight: bold;
+`
 export const FinishButton = styled(Button)`
 	width: auto;
 	padding: 4px 16px;
@@ -88,6 +99,7 @@ export const Cart = styled.View`
 	border-radius: 12px;
 	align-items: center;
 	flex-direction: row;
+	justify-content: space-between;
 	gap: 12px;
 	overflow: hidden;
 `
@@ -101,4 +113,7 @@ export const Blur = styled(BlurView)`
 	height: 74px;
 	position: absolute;
 	top: 0;
+`
+export const Separator = styled.View`
+	margin-top: 8px;
 `

@@ -1,5 +1,3 @@
-import lowerCase from 'lodash/lowerCase'
-import trim from 'lodash/trim'
 import React, { useCallback, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -12,16 +10,18 @@ import Dropdown from '../../components/dropdown'
 import Header from '../../components/header'
 import Input from '../../components/input'
 import Pressable from '../../components/shared/pressable'
+import { toast } from '../../components/toast'
 import { addItemToList } from '../../database/models/shoppings'
 import { Container } from '../../theme/global'
 import { ListItem } from '../../types/models/list-item'
+import { checkIncludes } from '../../utils/check-includes'
 
 function AddShopping({ navigation, route }: Props) {
 	const { items, shoppingId } = route.params
 	const [tempItems, setTempItems] = useState<string[]>(items)
 	const { t } = useTranslation('translation', { keyPrefix: 'add' })
 	const { control, handleSubmit } = useForm<Partial<ListItem>>({
-		defaultValues: { qty: 1, have: 0 },
+		defaultValues: { qty: 1 },
 	})
 
 	const nameRef = useRef<TextInput>(null)
@@ -36,9 +36,14 @@ function AddShopping({ navigation, route }: Props) {
 		(data: Partial<ListItem>) => {
 			if (!data.name || !shoppingId) return
 
+			if (checkIncludes(tempItems, data.name)) {
+				toast.error(t('item_exists'))
+				return
+			}
+
 			try {
 				const newItem = {
-					name: trim(lowerCase(data.name)),
+					name: data.name.trim(),
 					have: data.have || 0,
 					qty: 1,
 					unit: data.unit || null,
@@ -53,7 +58,7 @@ function AddShopping({ navigation, route }: Props) {
 				navigation.goBack()
 			}
 		},
-		[shoppingId, navigation, tempItems]
+		[shoppingId, tempItems, t, navigation]
 	)
 
 	return (
@@ -89,6 +94,7 @@ function AddShopping({ navigation, route }: Props) {
 							render={({ field: { onChange, onBlur, value } }) => (
 								<Input
 									label={t('item_have')}
+									placeholder='0'
 									ref={haveRef}
 									keyboardType='number-pad'
 									maxLength={5}

@@ -61,7 +61,6 @@ function Subscribe({ navigation }: Props) {
 			setLoading(true)
 
 			const restored = await Purchases.restorePurchases()
-			console.tron.log(restored.entitlements.active)
 
 			if (Object.keys(restored.entitlements.active).length === 0) {
 				throw new Error('No entitlements found')

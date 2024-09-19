@@ -101,7 +101,8 @@
 			"none": "Nenhum",
 			"day": "Diariamente",
 			"dayOfWeek": "Semanalmente",
-			"month": "Mensalmente"
+			"month": "Mensalmente",
+			"search_placeholder": "Pesquisar itens"
 		},
 		"shopping": {
 			"title": "Compras",
@@ -145,7 +146,8 @@
 			"search_placeholder": "O que você quer comprar?",
 			"unit": "Unidade",
 			"unit_label": "Unidade",
-			"confirm_button": "Adicionar"
+			"confirm_button": "Adicionar",
+			"item_exists": "Item já existe nesta lista."
 		},
 		"edit": {
 			"title": "Editar lista",
