@@ -47,7 +47,6 @@ function Subscribe({ navigation }: Props) {
 
 			checkPremium()
 		} catch (e: unknown) {
-			console.tron.log(e)
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
 			if (!e.userCancelled) toast.error(t('purchase_error'))

@@ -117,3 +117,13 @@ export const Blur = styled(BlurView)`
 export const Separator = styled.View`
 	margin-top: 8px;
 `
+export const EmptyText = styled(Font)`
+	font-size: 14px;
+	text-align: center;
+	opacity: 0.7;
+`
+export const EmptyContainer = styled.View`
+	flex: 1;
+	justify-content: center;
+	padding-bottom: 12px;
+`

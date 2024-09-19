@@ -102,7 +102,12 @@
 			"day": "Diariamente",
 			"dayOfWeek": "Semanalmente",
 			"month": "Mensualmente",
-			"search_placeholder": "Buscar artículos"
+			"search_placeholder": "Buscar o anñadir artículos",
+			"sort": "Ordenar artículos",
+			"creation": "Fecha de creación",
+			"alphabet": "Por nombre",
+			"add": "Añadir",
+			"no_items": "Aún no hay artículos en esta lista."
 		},
 		"shopping": {
 			"title": "Compras",

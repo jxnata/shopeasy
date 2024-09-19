@@ -102,7 +102,12 @@
 			"day": "Daily",
 			"dayOfWeek": "Weekly",
 			"month": "Monthly",
-			"search_placeholder": "Search items"
+			"search_placeholder": "Search or add items",
+			"sort": "Sort items",
+			"creation": "Creation order",
+			"alphabet": "Alphabetical order",
+			"add": "Add",
+			"no_items": "You don't have any items yet."
 		},
 		"shopping": {
 			"title": "Shopping",

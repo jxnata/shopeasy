@@ -102,7 +102,12 @@
 			"day": "Diariamente",
 			"dayOfWeek": "Semanalmente",
 			"month": "Mensalmente",
-			"search_placeholder": "Pesquisar itens"
+			"search_placeholder": "Pesquisar ou adicionar itens",
+			"sort": "Ordenar itens",
+			"creation": "Ordem de criação",
+			"alphabet": "Alfabético",
+			"add": "Adicionar",
+			"no_items": "Não há itens nesta lista."
 		},
 		"shopping": {
 			"title": "Compras",
