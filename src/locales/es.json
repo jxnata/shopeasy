@@ -101,7 +101,13 @@
 			"none": "Ninguno",
 			"day": "Diariamente",
 			"dayOfWeek": "Semanalmente",
-			"month": "Mensualmente"
+			"month": "Mensualmente",
+			"search_placeholder": "Buscar o anñadir artículos",
+			"sort": "Ordenar artículos",
+			"creation": "Fecha de creación",
+			"alphabet": "Por nombre",
+			"add": "Añadir",
+			"no_items": "Aún no hay artículos en esta lista."
 		},
 		"shopping": {
 			"title": "Compras",
@@ -145,7 +151,8 @@
 			"search_placeholder": "¿Qué quieres comprar?",
 			"unit": "Unidad",
 			"unit_label": "Unidad",
-			"confirm_button": "Añadir"
+			"confirm_button": "Añadir",
+			"item_exists": "El artículo ya existe en esta lista."
 		},
 		"edit": {
 			"title": "Editar lista",

@@ -41,7 +41,7 @@ function CreateShopping({ navigation, route }: Props) {
 		<Container>
 			<S.Content>
 				<S.Body>
-					<Header title={t('title')} />
+					<Header backButton title={t('title')} />
 					<Controller
 						control={control}
 						rules={{ required: true }}
@@ -57,7 +57,7 @@ function CreateShopping({ navigation, route }: Props) {
 							/>
 						)}
 					/>
-
+					<S.Separator />
 					<Button onPress={handleSubmit(onSave)}>
 						<ButtonLabel>{t('create_button')}</ButtonLabel>
 					</Button>

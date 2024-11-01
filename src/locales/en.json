@@ -101,7 +101,13 @@
 			"none": "None",
 			"day": "Daily",
 			"dayOfWeek": "Weekly",
-			"month": "Monthly"
+			"month": "Monthly",
+			"search_placeholder": "Search or add items",
+			"sort": "Sort items",
+			"creation": "Creation order",
+			"alphabet": "Alphabetical order",
+			"add": "Add",
+			"no_items": "You don't have any items yet."
 		},
 		"shopping": {
 			"title": "Shopping",
@@ -144,7 +150,8 @@
 			"search_placeholder": "What do you want to buy?",
 			"unit": "Unit",
 			"unit_label": "Unit",
-			"confirm_button": "Add"
+			"confirm_button": "Add",
+			"item_exists": "Item already exists in list."
 		},
 		"edit": {
 			"title": "Edit list",

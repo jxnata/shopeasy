@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useCallback, useMemo, useState } from 'react'
+import { CommonActions } from '@react-navigation/native'
+import { debounce, toLower, trim } from 'lodash'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, useColorScheme } from 'react-native'
+import { FlatList, TextInput, useColorScheme } from 'react-native'
+import ContextMenu from 'react-native-context-menu-view'
 
 import * as S from './styles'
 import { Props } from './types'
 import Header from '../../components/header'
 import Icon from '../../components/icon'
+import Input from '../../components/input'
 import ItemRow from '../../components/item'
 import ListFooter from '../../components/list-footer'
 import SuggestionItem, { SuggestionSkeleton } from '../../components/suggestion-item'
@@ -26,21 +30,41 @@ function ListView({ navigation, route }: Props) {
 
 	const { premium } = useSession()
 
+	const [searchTerm, setSearchTerm] = useState('')
+	const [sortBy, setSortBy] = useState('creation')
 	const [suggestions, setSuggestions] = useState<string[]>([])
 	const [loadingSuggestions, setLoadingSuggestions] = useState(false)
+
+	const inputSearchRef = useRef<TextInput>(null)
 
 	const list = useShoppingList(listId)
 
 	const items = useMemo(() => {
 		if (!list) return []
 
+		if (sortBy === 'creation') {
+			return [...list.items].reverse()
+		}
+
 		return [...list.items].sort((a, b) => {
 			if (a.checked !== b.checked) return a.checked ? 1 : -1
 			return a.name.localeCompare(b.name)
 		})
-	}, [list])
+	}, [list, sortBy])
 
 	const itemsList = useMemo(() => items.map(i => i.name), [items])
+
+	const filteredItems = useMemo(() => {
+		return items.filter(i => trim(toLower(i.name)).includes(trim(toLower(searchTerm))))
+	}, [items, searchTerm])
+
+	const handleChange = (e: string) => {
+		setSearchTerm(e)
+	}
+
+	const debouncedResults = useMemo(() => {
+		return debounce(handleChange, 300)
+	}, [])
 
 	const fetchSuggestions = useCallback(async () => {
 		try {
@@ -65,7 +89,7 @@ function ListView({ navigation, route }: Props) {
 	const onAdd = useCallback(() => {
 		if (!list) return
 
-		if (!premium && (itemsList.length === 0 || itemsList.length % 10 === 0)) {
+		if (!premium && (itemsList.length === 3 || itemsList.length % 10 === 0)) {
 			showInterstitial()
 		}
 
@@ -91,9 +115,40 @@ function ListView({ navigation, route }: Props) {
 
 		if (!premium) showInterstitial()
 
-		// @ts-ignore
-		navigation.navigate('shoppings-stack', { screen: 'create-shopping', params: { list } })
+		navigation.dispatch(
+			CommonActions.reset({
+				index: 1,
+				routes: [
+					{ name: 'main-stack' },
+					{
+						name: 'shoppings-stack',
+						state: {
+							routes: [{ name: 'shoppings' }, { name: 'create-shopping', params: { list } }],
+						},
+					},
+				],
+			})
+		)
 	}
+
+	const createItem = useCallback(() => {
+		if (!list || !searchTerm) return
+
+		const newItem = {
+			name: searchTerm.trim(),
+			have: 0,
+			qty: 1,
+			unit: null,
+			price: null,
+			checked: false,
+		}
+		addItemToList(list.id, newItem)
+		setSearchTerm('')
+
+		if (!inputSearchRef.current) return
+
+		inputSearchRef.current.clear()
+	}, [list, searchTerm])
 
 	const HeaderRight = useCallback(() => {
 		return (
@@ -101,15 +156,40 @@ function ListView({ navigation, route }: Props) {
 				<S.GhostButton onPress={fetchSuggestions} disabled={loadingSuggestions}>
 					<Icon name='sparkles' />
 				</S.GhostButton>
-				<S.GhostButton onPress={onAdd}>
-					<Icon name='add-circle' />
-				</S.GhostButton>
+				<ContextMenu
+					title={t('options')}
+					actions={[
+						{ title: t('creation'), systemIcon: 'list.bullet', selected: sortBy === 'creation' },
+						{ title: t('alphabet'), systemIcon: 'a.circle.fill', selected: sortBy === 'alphabet' },
+					]}
+					onPress={e => {
+						switch (e.nativeEvent.index) {
+							case 0:
+								setSortBy('creation')
+								break
+							case 1:
+								setSortBy('alphabet')
+								break
+						}
+					}}
+					dropdownMenuMode
+				>
+					<S.GhostButton>
+						<Icon name='swap-vertical' />
+					</S.GhostButton>
+				</ContextMenu>
 				<S.GhostButton onPress={onEdit}>
 					<Icon name='ellipsis-vertical' />
 				</S.GhostButton>
 			</S.Row>
 		)
-	}, [fetchSuggestions, loadingSuggestions, onAdd, onEdit])
+	}, [fetchSuggestions, loadingSuggestions, onEdit, sortBy, t])
+
+	useEffect(() => {
+		return () => {
+			debouncedResults.cancel()
+		}
+	})
 
 	return (
 		<Container>
@@ -117,20 +197,38 @@ function ListView({ navigation, route }: Props) {
 				{!!list && (
 					<S.Body>
 						<Header title={list.name} Right={HeaderRight} backButton />
-						<S.ButtonsContainer>
+						{/* <S.ButtonsContainer>
 							{itemsList.length > 3 && (
 								<S.AddButton onPress={fetchSuggestions} disabled={loadingSuggestions}>
 									<Icon name='sparkles' />
 									<Label>{t('ai_suggestions')}</Label>
 								</S.AddButton>
 							)}
-							<S.AddButton onPress={onAdd}>
-								<Icon name='add-circle' />
-								<Label>{t('add_items')}</Label>
-							</S.AddButton>
-						</S.ButtonsContainer>
+						</S.ButtonsContainer> */}
+						<Input
+							clearButtonMode='always'
+							placeholder={t('search_placeholder')}
+							onChangeText={debouncedResults}
+							ref={inputSearchRef}
+							maxLength={32}
+						/>
+						<S.Separator />
+						{!filteredItems.length && (
+							<S.EmptyContainer>
+								{searchTerm ? (
+									<S.AddButton onPress={createItem}>
+										<Icon name='add-circle' />
+										<Label>
+											{t('add')} "{searchTerm.trim()}"
+										</Label>
+									</S.AddButton>
+								) : (
+									<S.EmptyText>{t('no_items')}</S.EmptyText>
+								)}
+							</S.EmptyContainer>
+						)}
 						<FlatList
-							data={items}
+							data={filteredItems}
 							keyExtractor={item => item.id}
 							renderItem={({ item }) => <ItemRow item={item} listId={listId!} />}
 							ListFooterComponent={<ListFooter />}
@@ -152,18 +250,23 @@ function ListView({ navigation, route }: Props) {
 						/>
 						<S.Cart>
 							<S.Blur blurType={scheme === 'dark' ? 'dark' : 'light'} />
-							<S.CartLeft>
-								<Label>
-									{itemsList.length} {t('items')}
-								</Label>
-							</S.CartLeft>
-							<S.FinishButton
+
+							<S.OutlineButton
 								aria-disabled={!itemsList.length}
 								disabled={!itemsList.length}
 								onPress={onShop}
 							>
-								<ButtonIcon name='cart' />
-								<ButtonLabel>{t('shop_now_button')}</ButtonLabel>
+								<Icon name='cart' />
+								<S.OutlineText>{t('shop_now_button')}</S.OutlineText>
+							</S.OutlineButton>
+
+							<S.FinishButton
+								aria-disabled={!itemsList.length}
+								disabled={!itemsList.length}
+								onPress={onAdd}
+							>
+								<ButtonIcon name='add-circle' />
+								<ButtonLabel>{t('add_items')}</ButtonLabel>
 							</S.FinishButton>
 						</S.Cart>
 					</S.Body>
