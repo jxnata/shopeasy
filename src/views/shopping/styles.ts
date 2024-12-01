@@ -102,3 +102,6 @@ export const Blur = styled(BlurView)`
 	position: absolute;
 	top: 0;
 `
+export const Separator = styled.View`
+	margin-top: 8px;
+`

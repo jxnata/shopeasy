@@ -33,6 +33,17 @@ import Subscribe from '../views/subscribe'
 const Stack = createNativeStackNavigator<StackParamList>()
 const Tab = createBottomTabNavigator<TabParamList>()
 
+const noTabRoutes: (keyof StackParamList)[] = [
+	'create',
+	'edit',
+	'add',
+	'list',
+	'subscribe',
+	'create-shopping',
+	'shopping',
+	'edit-shopping',
+]
+
 const MainStack = () => (
 	<Stack.Navigator screenOptions={{ headerShown: false }}>
 		<Stack.Screen name='home' component={Home} />
@@ -68,17 +79,6 @@ const ProfileStack = () => (
 		<Stack.Screen name='subscribe' component={Subscribe} />
 	</Stack.Navigator>
 )
-
-const noTabRoutes: (keyof StackParamList)[] = [
-	'create',
-	'edit',
-	'add',
-	'list',
-	'subscribe',
-	'create-shopping',
-	'shopping',
-	'edit-shopping',
-]
 
 const Routes = () => {
 	const { initialized, oppened } = useSettings()

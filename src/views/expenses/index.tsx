@@ -40,11 +40,15 @@ function Expenses({ navigation }: Props) {
 	const dropdownLists = useMemo(() => lists.map(l => ({ label: l.name, value: l.id })), [lists])
 
 	const chartData = useMemo(() => {
+		if (!shoppings) return []
+
 		return shoppings.map(e => ({
 			label: new Date(e.date).toLocaleDateString(),
 			value: e.total ? e.total / 100 : 0,
 		}))
 	}, [shoppings])
+
+	const displayChart = useMemo(() => !!average && !!total && !!highest && !!lowest, [average, highest, lowest, total])
 
 	const onGoPremium = useCallback(() => {
 		navigation.navigate('subscribe')
@@ -129,7 +133,7 @@ function Expenses({ navigation }: Props) {
 									</S.InfoRow>
 								)}
 							</S.InfoContainer>
-							{chartData.length > 0 && (
+							{chartData.length > 0 && displayChart && (
 								<S.InfoContainer>
 									<BarChart data={chartData} />
 								</S.InfoContainer>

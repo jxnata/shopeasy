@@ -103,11 +103,12 @@ const ItemRow = ({ item, listId }: Props) => {
 								render={({ field: { onChange, onBlur } }) => (
 									<PriceInput
 										label={t('have')}
+										placeholder='0'
 										mask='9999'
 										keyboardType='number-pad'
 										onChangeText={onChange}
 										onBlur={onBlur}
-										defaultValue={item.have ? item.have.toString() : '0'}
+										defaultValue={item.have ? item.have.toString() : ''}
 									/>
 								)}
 							/>

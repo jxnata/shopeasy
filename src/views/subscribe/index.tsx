@@ -47,7 +47,6 @@ function Subscribe({ navigation }: Props) {
 
 			checkPremium()
 		} catch (e: unknown) {
-			console.tron.log(e)
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
 			if (!e.userCancelled) toast.error(t('purchase_error'))
@@ -61,7 +60,6 @@ function Subscribe({ navigation }: Props) {
 			setLoading(true)
 
 			const restored = await Purchases.restorePurchases()
-			console.tron.log(restored.entitlements.active)
 
 			if (Object.keys(restored.entitlements.active).length === 0) {
 				throw new Error('No entitlements found')

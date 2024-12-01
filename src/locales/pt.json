@@ -101,7 +101,13 @@
 			"none": "Nenhum",
 			"day": "Diariamente",
 			"dayOfWeek": "Semanalmente",
-			"month": "Mensalmente"
+			"month": "Mensalmente",
+			"search_placeholder": "Pesquisar ou adicionar itens",
+			"sort": "Ordenar itens",
+			"creation": "Ordem de criação",
+			"alphabet": "Alfabético",
+			"add": "Adicionar",
+			"no_items": "Não há itens nesta lista."
 		},
 		"shopping": {
 			"title": "Compras",
@@ -109,7 +115,11 @@
 			"items": "itens",
 			"total": "Total:",
 			"finish": "Finalizar",
-			"finish_done": "Concluído"
+			"finish_done": "Concluído",
+			"sort": "Ordenar itens",
+			"creation": "Ordem de criação",
+			"alphabet": "Alfabético",
+			"search_placeholder": "Pesquisar itens"
 		},
 		"profile": {
 			"title": "Perfil",
@@ -145,7 +155,8 @@
 			"search_placeholder": "O que você quer comprar?",
 			"unit": "Unidade",
 			"unit_label": "Unidade",
-			"confirm_button": "Adicionar"
+			"confirm_button": "Adicionar",
+			"item_exists": "Item já existe nesta lista."
 		},
 		"edit": {
 			"title": "Editar lista",

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 import { checkSubscription } from '../../utils/check-subscription'
 
@@ -27,6 +27,10 @@ export function SessionProvider(props: { children: React.ReactNode }) {
 			setPremium(isPremium)
 		} catch {}
 	}
+
+	useEffect(() => {
+		checkPremium()
+	}, [])
 
 	return (
 		<SessionContext.Provider

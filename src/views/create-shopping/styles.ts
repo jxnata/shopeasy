@@ -46,3 +46,6 @@ export const Row = styled.View`
 export const Col = styled.View`
 	flex-direction: column;
 `
+export const Separator = styled.View`
+	margin-top: 8px;
+`
