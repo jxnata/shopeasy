@@ -115,7 +115,11 @@
 			"items": "itens",
 			"total": "Total:",
 			"finish": "Finalizar",
-			"finish_done": "Concluído"
+			"finish_done": "Concluído",
+			"sort": "Ordenar itens",
+			"creation": "Ordem de criação",
+			"alphabet": "Alfabético",
+			"search_placeholder": "Pesquisar itens"
 		},
 		"profile": {
 			"title": "Perfil",

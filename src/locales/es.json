@@ -115,7 +115,11 @@
 			"items": "artículos",
 			"total": "Total:",
 			"finish": "Finalizar",
-			"finish_done": "Completado"
+			"finish_done": "Completado",
+			"sort": "Ordenar artículos",
+			"creation": "Fecha de creación",
+			"alphabet": "Por nombre",
+			"search_placeholder": "Buscar artículos"
 		},
 		"profile": {
 			"title": "Perfil",

@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react'
+import { debounce } from 'lodash'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
@@ -86,10 +87,20 @@ const ShoppingItemRow = ({ item, shoppingId, finished }: Props) => {
 		[item.id, shoppingId]
 	)
 
-	register('price', { onChange: e => updatePrice(e.target.value) })
+	register('price', { onChange: e => debouncedPrice(e.target.value) })
 	register('unit', { onChange: e => updateUnit(e.target.value) })
 	register('qty', { onChange: e => updateQuantity(e.target.value) })
 	register('checked', { onChange: e => updateChecked(e.target.value) })
+
+	const debouncedPrice = useMemo(() => {
+		return debounce(updatePrice, 300)
+	}, [updatePrice])
+
+	useEffect(() => {
+		return () => {
+			debouncedPrice.cancel()
+		}
+	})
 
 	return (
 		<S.Container>

@@ -157,7 +157,7 @@ function ListView({ navigation, route }: Props) {
 					<Icon name='sparkles' />
 				</S.GhostButton>
 				<ContextMenu
-					title={t('options')}
+					title={t('sort')}
 					actions={[
 						{ title: t('creation'), systemIcon: 'list.bullet', selected: sortBy === 'creation' },
 						{ title: t('alphabet'), systemIcon: 'a.circle.fill', selected: sortBy === 'alphabet' },

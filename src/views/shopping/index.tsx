@@ -1,11 +1,14 @@
-import React, { useCallback, useMemo } from 'react'
+import { debounce, toLower, trim } from 'lodash'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, useColorScheme } from 'react-native'
+import { FlatList, TextInput, useColorScheme } from 'react-native'
+import ContextMenu from 'react-native-context-menu-view'
 
 import * as S from './styles'
 import { Props } from './types'
 import Header from '../../components/header'
 import Icon from '../../components/icon'
+import Input from '../../components/input'
 import ListFooter from '../../components/list-footer'
 import { Progress } from '../../components/progress'
 import ShoppingItemRow from '../../components/shopping-item'
@@ -23,6 +26,10 @@ function ShoppingView({ navigation, route }: Props) {
 	const scheme = useColorScheme()
 	const { t } = useTranslation('translation', { keyPrefix: 'shopping' })
 
+	const inputSearchRef = useRef<TextInput>(null)
+	const [sortBy, setSortBy] = useState('creation')
+	const [searchTerm, setSearchTerm] = useState('')
+
 	const { premium } = useSession()
 
 	const shopping = useShopping(shoppingId)
@@ -39,6 +46,10 @@ function ShoppingView({ navigation, route }: Props) {
 	const { percentage, total } = useCart(items)
 
 	const itemsList = useMemo(() => items.map(i => i.name), [items])
+
+	const filteredItems = useMemo(() => {
+		return items.filter(i => trim(toLower(i.name)).includes(trim(toLower(searchTerm))))
+	}, [items, searchTerm])
 
 	const onAdd = useCallback(() => {
 		if (!shopping) return
@@ -60,6 +71,20 @@ function ShoppingView({ navigation, route }: Props) {
 		updateShopping(shopping.id, { finished: true })
 	}
 
+	const handleChange = (e: string) => {
+		setSearchTerm(e)
+	}
+
+	const debouncedResults = useMemo(() => {
+		return debounce(handleChange, 1000)
+	}, [])
+
+	useEffect(() => {
+		return () => {
+			debouncedResults.cancel()
+		}
+	})
+
 	const HeaderRight = useCallback(() => {
 		return (
 			<S.Row>
@@ -68,12 +93,34 @@ function ShoppingView({ navigation, route }: Props) {
 						<Icon name='add-circle' />
 					</S.GhostButton>
 				)}
+				<ContextMenu
+					title={t('sort')}
+					actions={[
+						{ title: t('creation'), systemIcon: 'list.bullet', selected: sortBy === 'creation' },
+						{ title: t('alphabet'), systemIcon: 'a.circle.fill', selected: sortBy === 'alphabet' },
+					]}
+					onPress={e => {
+						switch (e.nativeEvent.index) {
+							case 0:
+								setSortBy('creation')
+								break
+							case 1:
+								setSortBy('alphabet')
+								break
+						}
+					}}
+					dropdownMenuMode
+				>
+					<S.GhostButton>
+						<Icon name='swap-vertical' />
+					</S.GhostButton>
+				</ContextMenu>
 				<S.GhostButton onPress={onEdit}>
 					<Icon name='ellipsis-vertical' />
 				</S.GhostButton>
 			</S.Row>
 		)
-	}, [shopping, onAdd, onEdit])
+	}, [shopping, onAdd, t, sortBy, onEdit])
 
 	return (
 		<Container>
@@ -81,8 +128,16 @@ function ShoppingView({ navigation, route }: Props) {
 				{!!shopping && (
 					<S.Body>
 						<Header title={shopping.local} Right={HeaderRight} backButton />
+						<Input
+							clearButtonMode='always'
+							placeholder={t('search_placeholder')}
+							onChangeText={debouncedResults}
+							ref={inputSearchRef}
+							maxLength={32}
+						/>
+						<S.Separator />
 						<FlatList
-							data={items}
+							data={filteredItems}
 							keyExtractor={item => item.id}
 							renderItem={({ item }) => (
 								<ShoppingItemRow item={item} shoppingId={shoppingId!} finished={shopping.finished} />
