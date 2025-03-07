@@ -22,3 +22,13 @@ export const ButtonContainer = styled.View`
 export const Text = styled(Font)`
 	font-size: 18px;
 `
+export const Row = styled.View`
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+	margin-bottom: 12px;
+`
+export const Label = styled(Font)`
+	font-size: 16px;
+`

@@ -115,6 +115,7 @@
 			"items": "items",
 			"total": "Total:",
 			"finish": "Finish",
+			"reopen": "Reopen",
 			"finish_done": "Completed",
 			"sort": "Sort items",
 			"creation": "Creation order",
@@ -155,7 +156,8 @@
 			"unit": "Unit",
 			"unit_label": "Unit",
 			"confirm_button": "Add",
-			"item_exists": "Item already exists in list."
+			"item_exists": "Item already exists in list.",
+			"add_to_main_list": "Add to main list"
 		},
 		"edit": {
 			"title": "Edit list",
@@ -207,7 +209,8 @@
 			"qty_label": "Quantity",
 			"have": "I have",
 			"havent": "I don't have any",
-			"accept": "Accept"
+			"accept": "Accept",
+			"save": "Save"
 		},
 		"price_history": {
 			"title": "Price history",

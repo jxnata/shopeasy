@@ -27,9 +27,8 @@ function ShoppingView({ navigation, route }: Props) {
 	const { t } = useTranslation('translation', { keyPrefix: 'shopping' })
 
 	const inputSearchRef = useRef<TextInput>(null)
-	const [sortBy, setSortBy] = useState('creation')
+	const [sortBy, setSortBy] = useState('alphabet')
 	const [searchTerm, setSearchTerm] = useState('')
-
 	const { premium } = useSession()
 
 	const shopping = useShopping(shoppingId)
@@ -37,11 +36,17 @@ function ShoppingView({ navigation, route }: Props) {
 	const items = useMemo(() => {
 		if (!shopping) return []
 
+		if (sortBy === 'creation') {
+			return [...shopping.items].reverse().sort((a, b) => {
+				return a.checked ? 1 : -1
+			})
+		}
+
 		return [...shopping.items].sort((a, b) => {
 			if (a.checked !== b.checked) return a.checked ? 1 : -1
 			return a.name.localeCompare(b.name)
 		})
-	}, [shopping])
+	}, [shopping, sortBy])
 
 	const { percentage, total } = useCart(items)
 
@@ -69,6 +74,11 @@ function ShoppingView({ navigation, route }: Props) {
 	const onFinish = () => {
 		if (!shopping) return
 		updateShopping(shopping.id, { finished: true })
+	}
+
+	const onReopen = () => {
+		if (!shopping) return
+		updateShopping(shopping.id, { finished: false })
 	}
 
 	const handleChange = (e: string) => {
@@ -154,6 +164,13 @@ function ShoppingView({ navigation, route }: Props) {
 									<Label>{format(total)}</Label>
 								</S.CartTotal>
 								{!shopping.finished && <Progress percentage={percentage} />}
+								{shopping.finished && (
+									<S.Row>
+										<Label style={{ marginRight: 10 }}>
+											{new Date(shopping.date).toLocaleDateString()}
+										</Label>
+									</S.Row>
+								)}
 							</S.CartLeft>
 							{!shopping.finished && (
 								<S.FinishButton onPress={onFinish}>
@@ -161,7 +178,14 @@ function ShoppingView({ navigation, route }: Props) {
 									<ButtonLabel>{t('finish')}</ButtonLabel>
 								</S.FinishButton>
 							)}
-							{shopping.finished && <Label>{new Date(shopping.date).toLocaleDateString()}</Label>}
+							{shopping.finished && (
+								<S.Row>
+									<S.FinishButton onPress={onReopen}>
+										<ButtonIcon name='refresh-circle' />
+										<ButtonLabel>{t('reopen')}</ButtonLabel>
+									</S.FinishButton>
+								</S.Row>
+							)}
 						</S.Cart>
 					</S.Body>
 				)}
