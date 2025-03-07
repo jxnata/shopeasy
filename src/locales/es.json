@@ -115,6 +115,7 @@
 			"items": "artículos",
 			"total": "Total:",
 			"finish": "Finalizar",
+			"reopen": "Reabrir",
 			"finish_done": "Completado",
 			"sort": "Ordenar artículos",
 			"creation": "Fecha de creación",
@@ -156,7 +157,8 @@
 			"unit": "Unidad",
 			"unit_label": "Unidad",
 			"confirm_button": "Añadir",
-			"item_exists": "El artículo ya existe en esta lista."
+			"item_exists": "El artículo ya existe en esta lista.",
+			"add_to_main_list": "Añadir a la lista principal"
 		},
 		"edit": {
 			"title": "Editar lista",
@@ -208,7 +210,8 @@
 			"qty_label": "Cantidad",
 			"have": "Tengo",
 			"havent": "No tengo ninguno",
-			"accept": "Aceptar"
+			"accept": "Aceptar",
+			"save": "Guardar"
 		},
 		"price_history": {
 			"title": "Historial de precios",

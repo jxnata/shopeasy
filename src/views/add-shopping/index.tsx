@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { TextInput } from 'react-native'
+import { Switch, TextInput } from 'react-native'
 
 import * as S from './styles'
 import { Props } from './types'
@@ -11,7 +11,8 @@ import Header from '../../components/header'
 import Input from '../../components/input'
 import Pressable from '../../components/shared/pressable'
 import { toast } from '../../components/toast'
-import { addItemToList } from '../../database/models/shoppings'
+import { addItemToList as addItemToMainList, getShoppingList } from '../../database/models/lists'
+import { addItemToList, getShopping } from '../../database/models/shoppings'
 import { Container } from '../../theme/global'
 import { ListItem } from '../../types/models/list-item'
 import { checkIncludes } from '../../utils/check-includes'
@@ -19,6 +20,7 @@ import { checkIncludes } from '../../utils/check-includes'
 function AddShopping({ navigation, route }: Props) {
 	const { items, shoppingId } = route.params
 	const [tempItems, setTempItems] = useState<string[]>(items)
+	const [addToMainList, setAddToMainList] = useState(true)
 	const { t } = useTranslation('translation', { keyPrefix: 'add' })
 	const { control, handleSubmit } = useForm<Partial<ListItem>>({
 		defaultValues: { qty: 1 },
@@ -52,13 +54,23 @@ function AddShopping({ navigation, route }: Props) {
 				}
 				addItemToList(shoppingId, newItem)
 				setTempItems([...tempItems, data.name])
+
+				if (addToMainList) {
+					const shopping = getShopping(shoppingId)
+					if (!shopping) return
+
+					const list = getShoppingList(shopping.list_id)
+					if (!list) return
+
+					addItemToMainList(list.id, newItem)
+				}
 			} catch {
 				setTempItems(tempItems.filter(i => i !== data.name))
 			} finally {
 				navigation.goBack()
 			}
 		},
-		[shoppingId, tempItems, t, navigation]
+		[addToMainList, shoppingId, tempItems, t, navigation]
 	)
 
 	return (
@@ -76,7 +88,6 @@ function AddShopping({ navigation, route }: Props) {
 								ref={nameRef}
 								clearButtonMode='while-editing'
 								placeholder={t('search_placeholder')}
-								autoCapitalize='none'
 								maxLength={32}
 								autoFocus
 								onChangeText={onChange}
@@ -118,14 +129,14 @@ function AddShopping({ navigation, route }: Props) {
 								/>
 							)}
 						/>
-						<S.ButtonContainer>
-							<Pressable
-								title={t('confirm_button')}
-								left='add-circle'
-								onPress={handleSubmit(createItem)}
-							/>
-						</S.ButtonContainer>
 					</S.Col>
+					<S.Row>
+						<Switch onValueChange={checked => setAddToMainList(checked)} value={addToMainList} />
+						<S.Label>{t('add_to_main_list')}</S.Label>
+					</S.Row>
+					<S.ButtonContainer>
+						<Pressable title={t('confirm_button')} left='add-circle' onPress={handleSubmit(createItem)} />
+					</S.ButtonContainer>
 				</S.Body>
 			</S.Content>
 		</Container>

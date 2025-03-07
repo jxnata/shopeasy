@@ -81,9 +81,11 @@ export const Row = styled.View`
 export const SaveButton = styled(Button)`
 	width: auto;
 	height: 32px;
-	border-radius: 4px;
+	border-radius: 8px;
 	align-items: center;
-	justify-content: center;
+	background: ${props => props.theme.background};
+	border-width: 0.8px;
+	border-color: ${props => props.theme.successText};
 `
 export const CheckButton = styled(Button)`
 	background: transparent;
@@ -97,4 +99,9 @@ export const CheckButton = styled(Button)`
 `
 export const CheckIcon = styled(ButtonIcon)`
 	color: ${props => props.theme.primary};
+`
+export const QuantityButtonText = styled(Font)`
+	font-size: 12px;
+	font-weight: bold;
+	opacity: 0.8;
 `
